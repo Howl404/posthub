@@ -7,8 +7,10 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  limit,
   query,
   setDoc,
+  startAt,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
@@ -23,8 +25,13 @@ export class PostsService {
 
   postsCollection = collection(this.firestore, 'posts');
 
-  getPostsByLocationId(locationId: string): Observable<Post[]> {
-    const q = query(this.postsCollection, where('location', '==', locationId));
+  getPostsByLocationId(locationId: string, _limit: number, _startAt: number): Observable<Post[]> {
+    const q = query(
+      this.postsCollection,
+      where('location', '==', locationId),
+      limit(_limit),
+      startAt(_startAt),
+    );
     return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
   }
 
