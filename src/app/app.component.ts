@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.postsService
-      .getPostsByLocationId('ms2hZ9CooLq1kaYvCRlF')
+      .getPostsByLocationId('ms2hZ9CooLq1kaYvCRlF', 10, 0)
       .subscribe((value) => console.log(value));
 
     this.postsService.getPostById('1mfhEWaG9jTbJ1IpDfQL').subscribe((value) => console.log(value));

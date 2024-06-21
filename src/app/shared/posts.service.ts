@@ -8,14 +8,14 @@ import {
   doc,
   getDoc,
   limit,
+  orderBy,
   query,
-  setDoc,
   startAt,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { Post, PostDraft } from 'src/app/post';
+import { Post, PostDraft } from 'src/app/post.model';
 
 @Injectable({
   providedIn: 'root',
@@ -29,6 +29,7 @@ export class PostsService {
     const q = query(
       this.postsCollection,
       where('location', '==', locationId),
+      orderBy('date'),
       limit(_limit),
       startAt(_startAt),
     );
