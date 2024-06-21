@@ -6,11 +6,13 @@ import {
   collectionData,
   deleteDoc,
   doc,
+  getDoc,
   query,
   setDoc,
+  updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { Observable, from } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 import { Post, PostDraft } from 'src/app/post';
 
 @Injectable({
@@ -26,8 +28,25 @@ export class PostsService {
     return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
   }
 
+  getPostById(postId: string): Observable<Post> {
+    const docRef = doc(this.postsCollection, postId);
+    const promise = getDoc(docRef);
+    return from(promise).pipe(
+      map((docSnapshot) => {
+        const data = docSnapshot.data();
+        return { ...data, id: docSnapshot.id } as Post;
+      }),
+    );
+  }
+
   createPost(post: PostDraft): Observable<string> {
     const promise = addDoc(this.postsCollection, post).then((response) => response.id);
+    return from(promise);
+  }
+
+  updatePost(postId: string, post: Partial<Post>): Observable<void> {
+    const docRef = doc(this.postsCollection, postId);
+    const promise = updateDoc(docRef, { ...post });
     return from(promise);
   }
 
