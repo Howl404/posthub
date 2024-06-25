@@ -47,10 +47,6 @@ export class CommunitiesService {
     return from(promise);
   }
 
-  // getPostsFromCommunity(communityId: string, _limit: number, _startAt: number) {
-  // TODO: return posts by location from PostsService
-  // }
-
   addPostToCommunity(postId: string, communityId: string): void {
     this.getCommunityById(communityId)
       .pipe(first())
