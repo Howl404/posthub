@@ -1,9 +1,9 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import { FormField } from 'src/app/components/sign-up-modal/form-field.model';
+import { FormField } from '../../form-field.model';
 
 @Component({
-  selector: 'app-dynamic-form-field',
+  selector: 'app-dynamic-form-field[field][name]',
   templateUrl: './dynamic-form-field.component.html',
   styleUrls: ['./dynamic-form-field.component.scss'],
   providers: [
@@ -17,28 +17,31 @@ import { FormField } from 'src/app/components/sign-up-modal/form-field.model';
 export class DynamicFormFieldComponent implements ControlValueAccessor {
   @Input() name!: string;
 
-  @Input() value!: string;
+  @Input() value!: string | boolean;
 
   @Input() field!: FormField;
 
-  private onChange: any = () => {};
+  private onChange: (value: any) => void = () => {};
 
-  private onTouched: any = () => {};
+  private onTouched: () => void = () => {};
 
-  writeValue(value: string): void {
-    this.value = value;
+  writeValue(value: string | boolean): void {
+    console.log(typeof value, value, this.name);
+    if (value !== null) {
+      this.value = value;
+    }
   }
 
-  registerOnChange(fn: any): void {
+  registerOnChange(fn: (value: any) => void): void {
     this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
+  registerOnTouched(fn: () => void): void {
     this.onTouched = fn;
   }
 
-  onValueChange(value: string): void {
-    console.log('change');
+  onValueChange(value: string | boolean): void {
+    console.log(value);
     this.value = value;
     this.onChange(value);
     this.onTouched();

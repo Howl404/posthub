@@ -1,4 +1,4 @@
-import { FormField } from 'src/app/components/sign-up-modal/form-field.model';
+import { FormField } from './form-field.model';
 
 export const signUpFields: FormField[] = [
   {

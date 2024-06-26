@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { DynamicFormFieldComponent } from './dynamic-form-field.component';
 
 describe('DynamicFormFieldComponent', () => {
-  let component: DynamicFormFieldComponent;
-  let fixture: ComponentFixture<DynamicFormFieldComponent>;
+  let component: DynamicFormFieldComponent<unknown>;
+  let fixture: ComponentFixture<DynamicFormFieldComponent<unknown>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({

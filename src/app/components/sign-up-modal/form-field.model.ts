@@ -5,5 +5,7 @@ export interface FormField {
   model: string;
   required: boolean;
   minLength: number | null;
-  validationMessages?: { [key: string]: string };
+  validationMessages?: {
+    [key: string]: string;
+  };
 }
