@@ -8,7 +8,7 @@ import {
   EventEmitter,
   ElementRef,
 } from '@angular/core';
-import { ModalService } from 'src/app/components/modal/modal.service';
+import { ModalService } from './modal.service';
 
 @Component({
   selector: 'app-modal[id]',
