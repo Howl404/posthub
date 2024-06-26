@@ -1,0 +1,18 @@
+<table>
+  <thead>
+    <tr>
+      <th *ngFor="let header of headers" (click)="onHeaderClick(header.propertyKey)">
+        {{ header.value }}
+        <span *ngIf="isSorted(header.propertyKey)">
+          <span *ngIf="sortDirection === 'asc'">🔼</span>
+          <span *ngIf="sortDirection === 'desc'">🔽</span>
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let row of data">
+      <td *ngFor="let header of headers">{{ row[header.propertyKey] }}</td>
+    </tr>
+  </tbody>
+</table>
