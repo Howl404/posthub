@@ -14,6 +14,11 @@ app-modal {
     padding: 20px;
     background: #fff;
     border-radius: 8px;
+    width: fit-content;
+    height: fit-content;
+    position: fixed;
+    inset: 0;
+    margin: auto;
   }
 }
 

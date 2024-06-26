@@ -1,4 +1,13 @@
-import { Component, ViewEncapsulation, ElementRef, Input, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  ViewEncapsulation,
+  OnInit,
+  OnDestroy,
+  Input,
+  Output,
+  EventEmitter,
+  ElementRef,
+} from '@angular/core';
 import { ModalService } from 'src/app/components/modal/modal.service';
 
 @Component({
@@ -9,6 +18,8 @@ import { ModalService } from 'src/app/components/modal/modal.service';
 })
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() id!: string;
+
+  @Output() closed = new EventEmitter<void>();
 
   isOpen = false;
 
@@ -31,11 +42,6 @@ export class ModalComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.modalService.remove(this);
-    this.element.remove();
-  }
-
   open(): void {
     document.body.classList.add('modal-open');
     this.isOpen = true;
@@ -44,5 +50,12 @@ export class ModalComponent implements OnInit, OnDestroy {
   close(): void {
     document.body.classList.remove('modal-open');
     this.isOpen = false;
+    this.closed.emit();
+  }
+
+  ngOnDestroy(): void {
+    this.modalService.remove(this);
+    this.element.remove();
+    this.closed.emit();
   }
 }
