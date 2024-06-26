@@ -1,10 +1,6 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
+import { TableHeader } from 'src/app/shared/table/table-header.model';
 import { TableService } from 'src/app/shared/table/table-service.service';
-
-export interface Header<T> {
-  value: string;
-  propertyKey: keyof T;
-}
 
 @Component({
   selector: 'app-table[headers][initialData]',
@@ -12,7 +8,7 @@ export interface Header<T> {
   styleUrls: ['./table.component.scss'],
 })
 export class TableComponent<T extends object> implements OnInit {
-  @Input() headers!: Header<T>[];
+  @Input() headers!: TableHeader<T>[];
 
   @Input() initialData!: T[];
 
