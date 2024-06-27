@@ -1,5 +1,5 @@
 <div class="pagination">
-  <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+  <button (click)="prevPage()" [disabled]="currentPage === 1">&leftarrow;</button>
   <span>{{ currentPage }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage === lastPage">Next</button>
+  <button (click)="nextPage()" [disabled]="currentPage === lastPage">&rightarrow;</button>
 </div>
