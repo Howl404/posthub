@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { TableHeader } from 'src/app/shared/table/table-header.model';
+import { TableHeader } from '../../shared/table/table-header.model';
 
 export interface CityData {
   name: string;
