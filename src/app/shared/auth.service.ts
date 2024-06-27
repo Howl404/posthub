@@ -10,7 +10,7 @@ import {
 } from '@angular/fire/auth';
 import { Firestore, collection, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { User, UserDraft } from 'src/app/user.model';
+import { User, UserDraft } from '../user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,16 +24,19 @@ export class AuthService {
 
   usersCollection = collection(this.firestore, 'users');
 
-  signUpWithPassword(userDraft: UserDraft): Observable<void> {
+  signUpWithPassword(userDraft: UserDraft): Observable<boolean> {
     const { email, password, ...additionalData } = userDraft;
-    const promise = createUserWithEmailAndPassword(this.auth, email, password).then((userCred) => {
-      const userId = userCred.user.uid;
-      return setDoc(doc(this.usersCollection, userId), { ...additionalData, email, password });
-    });
+    const promise = createUserWithEmailAndPassword(this.auth, email, password).then(
+      async (userCred) => {
+        const userId = userCred.user.uid;
+        await setDoc(doc(this.usersCollection, userId), { ...additionalData, email, password });
+        return true;
+      },
+    );
     return from(promise);
   }
 
-  signUpWithGoogle(): Observable<void> {
+  signUpWithGoogle(): Observable<boolean> {
     const provider = new GoogleAuthProvider();
     const promise = signInWithPopup(this.auth, provider).then(async (result) => {
       const { user: userData } = result;
@@ -55,6 +58,8 @@ export class AuthService {
       if (!userDocSnap.exists()) {
         await setDoc(userDocRef, { ...userDraft, id: userId });
       }
+
+      return true;
     });
     return from(promise);
   }
