@@ -5,6 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
+import { CommonModule } from '@angular/common';
 
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +14,7 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { TableComponent } from './shared/table/table.component';
 import { SignUpModalComponent } from './components/sign-up-modal/sign-up-modal.component';
 import { GenderSelectorComponent } from './components/sign-up-modal/components/gender-selector/gender-selector.component';
 import { DynamicFormFieldComponent } from './components/sign-up-modal/components/dynamic-form-field/dynamic-form-field.component';
@@ -26,12 +28,14 @@ import { CommunitiesService } from './shared/communities.service';
     HeaderComponent,
     SidebarComponent,
     MainPageComponent,
+    TableComponent,
     ModalComponent,
     SignUpModalComponent,
     GenderSelectorComponent,
     DynamicFormFieldComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
