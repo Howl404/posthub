@@ -1,0 +1,8 @@
+<div class="dropdown">
+  <button type="button" (click)="toggleDropdown()">{{ selectedLabel }} ▼</button>
+  <div *ngIf="isDropdownOpen" class="dropdown-content">
+    <button type="button" *ngFor="let option of options" (click)="onOptionSelect(option)">
+      {{ option.label }}
+    </button>
+  </div>
+</div>

@@ -12,9 +12,18 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SortByComponent } from './shared/sort-by/sort-by.component';
+import { PaginationComponent } from './shared/pagination/pagination.component';
 
 @NgModule({
-  declarations: [AppComponent, HeaderComponent, SidebarComponent, MainPageComponent],
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    SidebarComponent,
+    MainPageComponent,
+    SortByComponent,
+    PaginationComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
