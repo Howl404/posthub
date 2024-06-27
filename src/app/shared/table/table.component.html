@@ -4,7 +4,7 @@
       <th *ngFor="let header of headers" (click)="onHeaderClick(header.propertyKey)">
         {{ header.value }}
         <ng-container *ngIf="(currentSortProperty | async) === header.propertyKey">
-          <button class="sort-btn">{{ (sortDirection | async) === 'asc' ? '🔼' : '🔽' }}</button>
+          <span class="sort-icon">{{ (sortDirection | async) === 'asc' ? '🔼' : '🔽' }}</span>
           <button class="reset-btn" type="button" (click)="onResetSort($event)">❌</button>
         </ng-container>
       </th>

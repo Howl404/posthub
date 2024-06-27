@@ -28,14 +28,6 @@ th:hover {
   color: black;
 }
 
-th span {
-  margin-left: 5px;
-}
-
-th span span {
-  display: inline-block;
-}
-
 tbody tr:nth-child(even) {
   background-color: #f2f2f2;
 }
@@ -44,9 +36,9 @@ tbody tr:hover {
   background-color: #e0e0e0;
 }
 
-.reset-btn,
-.sort-btn {
+.reset-btn {
   cursor: pointer;
+  margin-right: auto;
   padding: 0;
   border: 0;
   background-color: transparent;
