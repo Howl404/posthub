@@ -20,7 +20,7 @@ export class AuthService {
 
   auth = inject(Auth);
 
-  user$ = user(this.auth);
+  user$: Observable<UserFire | null> = user(this.auth);
 
   usersCollection = collection(this.firestore, 'users');
 

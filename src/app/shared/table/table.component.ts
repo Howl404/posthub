@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
 import { Observable } from 'rxjs';
+import { SortDirection } from './sort-direction.enum';
 import { TableHeader } from './table-header.model';
 import { TableService } from './table-service.service';
 
@@ -17,9 +18,9 @@ export class TableComponent<T extends object> implements OnInit {
 
   data: Observable<T[]> = this.tableService.data$;
 
-  currentSortProperty = this.tableService.currentSortProperty$;
+  currentSortProperty: Observable<keyof T | null> = this.tableService.currentSortProperty$;
 
-  sortDirection = this.tableService.sortDirection$;
+  sortDirection: Observable<SortDirection> = this.tableService.sortDirection$;
 
   ngOnInit(): void {
     this.tableService.setInitialData(this.initialData);
