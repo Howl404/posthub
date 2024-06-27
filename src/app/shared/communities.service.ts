@@ -9,7 +9,7 @@ import {
   updateDoc,
 } from '@angular/fire/firestore';
 import { Observable, first, from, map } from 'rxjs';
-import { Community, CommunityDraft } from 'src/app/community.model';
+import { Community, CommunityDraft } from '../community.model';
 
 @Injectable({
   providedIn: 'root',

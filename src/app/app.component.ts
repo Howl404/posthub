@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { PostsService } from 'src/app/shared/posts.service';
+import { PostsService } from './shared/posts.service';
 
 @Component({
   selector: 'app-root',

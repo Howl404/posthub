@@ -1,0 +1,57 @@
+<app-modal id="signup-modal" (closed)="onClose(signupForm)">
+  <div class="sign-up-modal">
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+      <h2>Sign Up</h2>
+      <div *ngFor="let field of fields">
+        <app-dynamic-form-field
+          [field]="field"
+          [(ngModel)]="user[field.model.toString()]"
+          (ngModelChange)="onFieldChange(field.model, $event)"
+          [name]="field.name"
+          #inputField="ngModel"
+          [required]="field.required"
+          [minlength]="field.minLength"
+        >
+        </app-dynamic-form-field>
+        <div
+          [@errorState]="
+            inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
+          "
+          class="error"
+        >
+          <div *ngFor="let error of field.validationMessages | keyvalue">
+            <div *ngIf="inputField.errors?.[error.key]">
+              {{ error.value }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <app-gender-selector
+          [(ngModel)]="user['gender']"
+          name="gender"
+          #inputField="ngModel"
+          required
+        ></app-gender-selector>
+        <div
+          [@errorState]="
+            inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
+          "
+          class="error"
+        >
+          <div *ngIf="inputField.errors?.['required']">Gender is required.</div>
+        </div>
+      </div>
+      <div class="separator-container">
+        <span class="separator">or</span>
+      </div>
+      <button type="button" (click)="onContinueWithGoogle(signupForm)">Continue with Google</button>
+      <div class="login-container">
+        <p>Already signed up?</p>
+        <button type="button" (click)="switchToLogIn(signupForm)">Log in</button>
+      </div>
+      <button type="submit" [disabled]="signupForm.invalid && signupForm.touched">Sign Up</button>
+    </form>
+  </div>
+</app-modal>

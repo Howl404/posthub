@@ -1,0 +1,50 @@
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 10px;
+  border: 1px solid #ccc;
+  transition: background-color 0.3s;
+}
+
+thead {
+  background-color: #f8f8f8;
+}
+
+th {
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  position: relative;
+}
+
+th:hover {
+  background-color: #f8f8f8;
+  color: black;
+}
+
+tbody tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+  background-color: #e0e0e0;
+}
+
+.reset-btn {
+  cursor: pointer;
+  margin-right: auto;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    scale: 1.2;
+  }
+  transition: 300ms;
+}

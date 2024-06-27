@@ -1,0 +1,61 @@
+.sign-up-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  h2 {
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+
+  form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .form-group {
+    div {
+      display: block;
+      margin-right: 10px;
+    }
+
+    label {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type='checkbox'] {
+      margin: 0;
+    }
+  }
+
+  .error {
+    transition: opacity 0.5s ease-in-out;
+    color: red;
+  }
+
+  .login-container {
+    display: flex;
+    gap: 20px;
+    align-items: flex-end;
+  }
+
+  .separator-container {
+    display: flex;
+    text-align: center;
+
+    &::after,
+    &::before {
+      content: '';
+      align-self: center;
+      width: 100%;
+      border-top: thin solid black;
+    }
+
+    .separator {
+      padding: 0 8px;
+    }
+  }
+}
