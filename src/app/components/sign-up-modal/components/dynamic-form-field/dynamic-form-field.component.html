@@ -1,0 +1,16 @@
+<div [ngClass]="{ 'form-group': field.type !== 'checkbox' }">
+  <ng-container *ngIf="field.type !== 'checkbox'; else checkboxTemplate">
+    <input
+      placeholder="{{ field.placeholder }}"
+      type="{{ field.type }}"
+      [ngModel]="value"
+      (ngModelChange)="onValueChange($event)"
+    />
+  </ng-container>
+  <ng-template #checkboxTemplate>
+    <label>
+      <input type="checkbox" [ngModel]="value" (ngModelChange)="onValueChange($event)" />
+      {{ field.placeholder }}
+    </label>
+  </ng-template>
+</div>

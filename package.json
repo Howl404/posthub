@@ -14,11 +14,16 @@
     "*.{js, jsx,ts,tsx}": [
       "eslint --quiet --fix"
     ],
-    "*.{js,ts,jsx,tsx,html}": [
+    "*.{js,ts,jsx,tsx,html,scss}": [
       "prettier --write --ignore-unknown"
     ]
   },
   "private": true,
+  "overrides": {
+    "@angular/fire": {
+      "rxfire": "6.0.3"
+    }
+  },
   "dependencies": {
     "@angular/animations": "^15.2.0",
     "@angular/common": "^15.2.0",
