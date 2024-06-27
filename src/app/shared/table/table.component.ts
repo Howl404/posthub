@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, inject } from '@angular/core';
-import { TableHeader } from 'src/app/shared/table/table-header.model';
-import { TableService } from 'src/app/shared/table/table-service.service';
+import { Observable } from 'rxjs';
+import { TableHeader } from './table-header.model';
+import { TableService } from './table-service.service';
 
 @Component({
   selector: 'app-table[headers][initialData]',
@@ -12,33 +13,24 @@ export class TableComponent<T extends object> implements OnInit {
 
   @Input() initialData!: T[];
 
-  data: T[] = [];
+  private tableService = inject(TableService<T>);
 
-  currentSortProperty: keyof T | null = null;
+  data: Observable<T[]> = this.tableService.data$;
 
-  sortDirection: 'asc' | 'desc' = 'asc';
+  currentSortProperty = this.tableService.currentSortProperty$;
 
-  private tableService = inject(TableService);
+  sortDirection = this.tableService.sortDirection$;
 
   ngOnInit(): void {
     this.tableService.setInitialData(this.initialData);
-
-    this.tableService.data$.subscribe((data) => {
-      this.data = data;
-    });
   }
 
   onHeaderClick(property: keyof T): void {
     this.tableService.sortData(property);
-    if (this.currentSortProperty === property) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
-    } else {
-      this.currentSortProperty = property;
-      this.sortDirection = 'asc';
-    }
   }
 
-  isSorted(property: keyof T): boolean {
-    return this.currentSortProperty === property;
+  onResetSort(e: MouseEvent): void {
+    e.stopImmediatePropagation();
+    this.tableService.resetSort();
   }
 }

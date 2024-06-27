@@ -1,38 +1,58 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { SortDirection } from './sort-direction.enum';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TableService<T> {
+  initialData: T[] | undefined;
+
   private dataSubject = new BehaviorSubject<T[]>([]);
+
+  private currentSortPropertySubject = new BehaviorSubject<keyof T | null>(null);
+
+  private sortDirectionSubject = new BehaviorSubject<SortDirection>(SortDirection.asc);
 
   data$ = this.dataSubject.asObservable();
 
-  private currentSortProperty: keyof T | null = null;
+  currentSortProperty$ = this.currentSortPropertySubject.asObservable();
 
-  private sortDirection: 'asc' | 'desc' = 'asc';
+  sortDirection$ = this.sortDirectionSubject.asObservable();
 
   setInitialData(initialData: T[]): void {
-    this.dataSubject.next(initialData);
+    this.initialData = initialData;
+    this.dataSubject.next([...initialData]);
   }
 
   sortData(property: keyof T): void {
     const currentData = this.dataSubject.getValue();
 
-    if (this.currentSortProperty === property) {
-      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    const currentSortProperty = this.currentSortPropertySubject.getValue();
+    let sortDirection = this.sortDirectionSubject.getValue();
+
+    if (currentSortProperty === property) {
+      sortDirection = sortDirection === SortDirection.asc ? SortDirection.desc : SortDirection.asc;
+      this.sortDirectionSubject.next(sortDirection);
     } else {
-      this.currentSortProperty = property;
-      this.sortDirection = 'asc';
+      this.currentSortPropertySubject.next(property);
+      this.sortDirectionSubject.next(SortDirection.asc);
     }
 
     currentData.sort((a, b) => {
-      if (a[property] < b[property]) return this.sortDirection === 'asc' ? -1 : 1;
-      if (a[property] > b[property]) return this.sortDirection === 'asc' ? 1 : -1;
+      if (a[property] < b[property]) return sortDirection === SortDirection.asc ? -1 : 1;
+      if (a[property] > b[property]) return sortDirection === SortDirection.asc ? 1 : -1;
       return 0;
     });
 
     this.dataSubject.next(currentData);
+  }
+
+  resetSort(): void {
+    if (this.initialData) {
+      this.sortDirectionSubject.next(SortDirection.asc);
+      this.currentSortPropertySubject.next(null);
+      this.dataSubject.next([...this.initialData]);
+    }
   }
 }

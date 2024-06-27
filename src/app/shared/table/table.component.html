@@ -3,15 +3,15 @@
     <tr>
       <th *ngFor="let header of headers" (click)="onHeaderClick(header.propertyKey)">
         {{ header.value }}
-        <span *ngIf="isSorted(header.propertyKey)">
-          <span *ngIf="sortDirection === 'asc'">🔼</span>
-          <span *ngIf="sortDirection === 'desc'">🔽</span>
-        </span>
+        <ng-container *ngIf="(currentSortProperty | async) === header.propertyKey">
+          <button class="sort-btn">{{ (sortDirection | async) === 'asc' ? '🔼' : '🔽' }}</button>
+          <button class="reset-btn" type="button" (click)="onResetSort($event)">❌</button>
+        </ng-container>
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of data">
+    <tr *ngFor="let row of data | async">
       <td *ngFor="let header of headers">{{ row[header.propertyKey] }}</td>
     </tr>
   </tbody>
