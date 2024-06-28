@@ -16,6 +16,7 @@
         "plugin:prettier/recommended"
       ],
       "rules": {
+        "no-unused-vars":"error",
         "import/no-cycle": "off",
         "no-plusplus": "off",
         "@typescript-eslint/explicit-member-accessibility": [

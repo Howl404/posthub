@@ -8,6 +8,7 @@ import { TableService } from './table-service.service';
   selector: 'app-table[headers][initialData]',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
+  providers: [TableService],
 })
 export class TableComponent<T extends object> implements OnChanges {
   @Input() headers!: TableHeader<T>[];

@@ -22,12 +22,14 @@ import { GenderSelectorComponent } from './components/sign-up-modal/components/g
 import { DynamicFormFieldComponent } from './components/sign-up-modal/components/dynamic-form-field/dynamic-form-field.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
+// eslint-disable-next-line no-unused-vars
 import { CommunitiesService } from './shared/communities.service';
+import { ViewSwitcherComponent } from './shared/view-switcher/view-switcher.component';
+import { PostCardsComponent } from './shared/post-cards/post-cards.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-
     HeaderComponent,
     SidebarComponent,
     MainPageComponent,
@@ -38,6 +40,8 @@ import { CommunitiesService } from './shared/communities.service';
     SignUpModalComponent,
     GenderSelectorComponent,
     DynamicFormFieldComponent,
+    ViewSwitcherComponent,
+    PostCardsComponent,
   ],
   imports: [
     CommonModule,

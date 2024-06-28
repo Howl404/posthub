@@ -1,6 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TableHeader } from '../../shared/table/table-header.model';
-import { SortOption } from '../../shared/sort-by/sort-option';
+import { PostsService } from '../../shared/posts.service';
+import { Post } from '../../post.model';
+import { CommunitiesService } from '../../shared/communities.service';
+import { ViewService } from '../../shared/view-switcher/view.service';
 
 export interface CityData {
   name: string;
@@ -15,253 +19,21 @@ export interface CityData {
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  sortOptions: SortOption[] = [
-    { value: 'name', label: 'Name' },
-    { value: 'country', label: 'Country' },
-    { value: 'population', label: 'Population' },
-    { value: 'area_km2', label: 'Area (km²)' },
-    { value: 'founded', label: 'Founded' },
+  postsService = inject(PostsService);
+
+  communitiesService = inject(CommunitiesService);
+
+  viewService = inject(ViewService);
+
+  headers: TableHeader<Post>[] = [
+    { value: 'Name', propertyKey: 'authorName' },
+    { value: 'Title', propertyKey: 'title' },
+    { value: 'Description', propertyKey: 'description' },
+    { value: 'Upvotes', propertyKey: 'upvotes' },
+    { value: 'Date', propertyKey: 'date' },
   ];
 
-  headers: TableHeader<CityData>[] = [
-    { value: 'Name', propertyKey: 'name' },
-    { value: 'Country', propertyKey: 'country' },
-    { value: 'Population', propertyKey: 'population' },
-    { value: 'Area (km²)', propertyKey: 'area_km2' },
-    { value: 'Founded', propertyKey: 'founded' },
-  ];
+  viewMode: Observable<number> = this.viewService.viewMode$;
 
-  data: CityData[] = [
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-  ];
+  data$: Observable<Post[]> = this.postsService.getPosts(30, 0);
 }

@@ -39,7 +39,7 @@ export class TableService<T> {
   setInitialData(initialData: T[] | null): void {
     if (!initialData) return;
 
-    this.initialData = initialData;
+    this.initialData = [...initialData];
     this.fullData = [...initialData];
     this.updatePaginatedData();
   }
