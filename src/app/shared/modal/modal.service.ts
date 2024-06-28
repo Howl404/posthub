@@ -7,8 +7,12 @@ import { ModalComponent } from './modal.component';
 export class ModalService {
   private modals: ModalComponent[] = [];
 
+  find(id: string): ModalComponent | undefined {
+    return this.modals.find((modal) => modal.id === id);
+  }
+
   add(modal: ModalComponent): void {
-    if (this.modals.find((x) => x.id === modal.id)) {
+    if (this.find(modal.id)) {
       throw new Error('modal must have a unique id attribute');
     }
 
@@ -16,11 +20,13 @@ export class ModalService {
   }
 
   remove(modal: ModalComponent): void {
-    this.modals = this.modals.filter((x) => x === modal);
+    this.modals = this.modals.filter((x) => x !== modal);
   }
 
   open(id: string): void {
-    const modal = this.modals.find((x) => x.id === id);
+    const modal = this.find(id);
+
+    this.modals.forEach((item) => item.close());
 
     if (!modal) {
       throw new Error(`modal '${id}' not found`);
@@ -30,7 +36,7 @@ export class ModalService {
   }
 
   close(id: string): void {
-    const modal = this.modals.find((x) => x.id === id);
+    const modal = this.find(id);
 
     if (!modal) {
       throw new Error(`modal '${id}' not found`);
