@@ -6,27 +6,37 @@ import { SortDirection } from './sort-direction.enum';
   providedIn: 'root',
 })
 export class TableService<T> {
-  initialData: T[] | undefined;
+  currentPage = 1;
 
-  private dataSubject = new BehaviorSubject<T[]>([]);
+  itemsPerPage = 5;
 
-  private currentSortPropertySubject = new BehaviorSubject<keyof T | null>(null);
+  private initialData: T[] | undefined;
 
-  private sortDirectionSubject = new BehaviorSubject<SortDirection>(SortDirection.asc);
+  private fullData: T[] | null = null;
 
-  data$: Observable<T[]> = this.dataSubject.asObservable();
+  private readonly dataSubject = new BehaviorSubject<T[] | null>(null);
 
-  currentSortProperty$: Observable<keyof T | null> = this.currentSortPropertySubject.asObservable();
+  private readonly currentSortPropertySubject = new BehaviorSubject<keyof T | null>(null);
 
-  sortDirection$: Observable<SortDirection> = this.sortDirectionSubject.asObservable();
+  private readonly sortDirectionSubject = new BehaviorSubject<SortDirection>(SortDirection.asc);
 
-  setInitialData(initialData: T[]): void {
-    this.initialData = initialData;
-    this.dataSubject.next([...initialData]);
+  readonly data$: Observable<T[]> | null = this.dataSubject.asObservable();
+
+  readonly currentSortProperty$: Observable<keyof T | null> =
+    this.currentSortPropertySubject.asObservable();
+
+  readonly sortDirection$: Observable<SortDirection> = this.sortDirectionSubject.asObservable();
+
+  setInitialData(initialData: T[] | null): void {
+    if (!initialData) return;
+
+    this.initialData = [...initialData];
+    this.fullData = [...initialData];
+    this.updatePaginatedData();
   }
 
   sortData(property: keyof T): void {
-    const currentData = this.dataSubject.getValue();
+    if (!this.initialData) return;
 
     const currentSortProperty = this.currentSortPropertySubject.getValue();
     let sortDirection = this.sortDirectionSubject.getValue();
@@ -39,20 +49,41 @@ export class TableService<T> {
       this.sortDirectionSubject.next(SortDirection.asc);
     }
 
-    currentData.sort((a, b) => {
+    this.fullData.sort((a, b) => {
       if (a[property] < b[property]) return sortDirection ? 1 : -1;
       if (a[property] > b[property]) return sortDirection ? -1 : 1;
       return 0;
     });
 
-    this.dataSubject.next(currentData);
+    this.updatePaginatedData();
   }
 
   resetSort(): void {
-    if (this.initialData) {
-      this.sortDirectionSubject.next(SortDirection.asc);
-      this.currentSortPropertySubject.next(null);
-      this.dataSubject.next([...this.initialData]);
-    }
+    if (!this.initialData) return;
+
+    this.sortDirectionSubject.next(SortDirection.asc);
+    this.currentSortPropertySubject.next(null);
+    this.fullData = [...this.initialData];
+    this.updatePaginatedData();
+  }
+
+  setCurrentPage(page: number): void {
+    this.currentPage = page;
+    this.updatePaginatedData();
+  }
+
+  setItemsPerPage(items: number): void {
+    this.itemsPerPage = items;
+    this.updatePaginatedData();
+  }
+
+  private updatePaginatedData(): void {
+    if (!this.initialData) return;
+
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const paginatedData = this.fullData.slice(startIndex, endIndex);
+
+    this.dataSubject.next(paginatedData);
   }
 }

@@ -21,12 +21,7 @@ export class DynamicFormFieldComponent implements ControlValueAccessor {
 
   @Input() field!: FormField;
 
-  private onChange: (value: any) => void = () => {};
-
-  private onTouched: () => void = () => {};
-
   writeValue(value: string | boolean): void {
-    console.log(typeof value, value, this.name);
     if (value !== null) {
       this.value = value;
     }
@@ -41,9 +36,12 @@ export class DynamicFormFieldComponent implements ControlValueAccessor {
   }
 
   onValueChange(value: string | boolean): void {
-    console.log(value);
     this.value = value;
     this.onChange(value);
     this.onTouched();
   }
+
+  private onChange: (value: any) => void = () => {};
+
+  private onTouched: () => void = () => {};
 }

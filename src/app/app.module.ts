@@ -14,13 +14,18 @@ import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
 import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { SortByComponent } from './shared/sort-by/sort-by.component';
+import { PaginationComponent } from './shared/pagination/pagination.component';
 import { TableComponent } from './shared/table/table.component';
 import { SignUpModalComponent } from './components/sign-up-modal/sign-up-modal.component';
 import { GenderSelectorComponent } from './components/sign-up-modal/components/gender-selector/gender-selector.component';
 import { DynamicFormFieldComponent } from './components/sign-up-modal/components/dynamic-form-field/dynamic-form-field.component';
 import { ModalComponent } from './components/modal/modal.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
+// eslint-disable-next-line no-unused-vars
 import { CommunitiesService } from './shared/communities.service';
+import { ViewSwitcherComponent } from './shared/view-switcher/view-switcher.component';
+import { PostCardsComponent } from './shared/post-cards/post-cards.component';
 
 @NgModule({
   declarations: [
@@ -28,11 +33,15 @@ import { CommunitiesService } from './shared/communities.service';
     HeaderComponent,
     SidebarComponent,
     MainPageComponent,
+    SortByComponent,
+    PaginationComponent,
     TableComponent,
     ModalComponent,
     SignUpModalComponent,
     GenderSelectorComponent,
     DynamicFormFieldComponent,
+    ViewSwitcherComponent,
+    PostCardsComponent,
   ],
   imports: [
     CommonModule,

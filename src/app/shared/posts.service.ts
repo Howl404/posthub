@@ -25,6 +25,11 @@ export class PostsService {
 
   postsCollection = collection(this.firestore, 'posts');
 
+  getPosts(_limit: number, _startAt: number): Observable<Post[]> {
+    const q = query(this.postsCollection, orderBy('date'), limit(_limit), startAt(_startAt));
+    return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
+  }
+
   getPostsByLocationId(locationId: string, _limit: number, _startAt: number): Observable<Post[]> {
     const q = query(
       this.postsCollection,

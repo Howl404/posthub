@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { Observable } from 'rxjs';
 import { TableHeader } from '../../shared/table/table-header.model';
+import { PostsService } from '../../shared/posts.service';
+import { Post } from '../../post.model';
+import { ViewService } from '../../shared/view-switcher/view.service';
+import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
 
 export interface CityData {
   name: string;
@@ -14,35 +19,19 @@ export interface CityData {
   styleUrls: ['./main-page.component.scss'],
 })
 export class MainPageComponent {
-  headers: TableHeader<CityData>[] = [
-    { value: 'Name', propertyKey: 'name' },
-    { value: 'Country', propertyKey: 'country' },
-    { value: 'Population', propertyKey: 'population' },
-    { value: 'Area (km²)', propertyKey: 'area_km2' },
-    { value: 'Founded', propertyKey: 'founded' },
+  private readonly postsService = inject(PostsService);
+
+  private readonly viewService = inject(ViewService);
+
+  headers: TableHeader<Post>[] = [
+    { value: 'Name', propertyKey: 'authorName' },
+    { value: 'Title', propertyKey: 'title' },
+    { value: 'Description', propertyKey: 'description' },
+    { value: 'Upvotes', propertyKey: 'upvotes' },
+    { value: 'Date', propertyKey: 'date' },
   ];
 
-  data: CityData[] = [
-    {
-      name: 'Tokyo',
-      country: 'Japan',
-      population: 37435191,
-      area_km2: 2194,
-      founded: '1457 AD',
-    },
-    {
-      name: 'New York City',
-      country: 'United States',
-      population: 8419600,
-      area_km2: 783.8,
-      founded: '1624 AD',
-    },
-    {
-      name: 'Paris',
-      country: 'France',
-      population: 2140526,
-      area_km2: 105.4,
-      founded: '3rd century BC',
-    },
-  ];
+  readonly viewMode$: Observable<ViewMode> = this.viewService.viewMode$;
+
+  readonly data$: Observable<Post[]> = this.postsService.getPosts(30, 0);
 }

@@ -7,7 +7,7 @@
           [field]="field"
           [(ngModel)]="user[field.model.toString()]"
           (ngModelChange)="onFieldChange(field.model, $event)"
-          [name]="field.name"
+          name="{{ field.name }}"
           #inputField="ngModel"
           [required]="field.required"
           [minlength]="field.minLength"

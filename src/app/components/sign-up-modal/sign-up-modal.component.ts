@@ -1,7 +1,7 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { first } from 'rxjs/internal/operators/first';
+import { first } from 'rxjs/operators';
 import { AuthService } from '../../shared/auth.service';
 import { UserDraft } from '../../user.model';
 import { ModalService } from '../modal/modal.service';
@@ -45,9 +45,9 @@ export class SignUpModalComponent {
 
   fields = signUpFields;
 
-  private modalService = inject(ModalService);
+  private readonly modalService = inject(ModalService);
 
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
   switchToLogIn(form: NgForm): void {
     this.modalService.close('signup-modal');

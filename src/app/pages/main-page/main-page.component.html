@@ -1,1 +1,7 @@
-<app-table [headers]="headers" [initialData]="data"></app-table>
+<app-view-switcher></app-view-switcher>
+<ng-container *ngIf="data$ | async as data">
+  <ng-container [ngSwitch]="viewMode$ | async">
+    <app-post-cards *ngSwitchCase="0" [initialData]="data"></app-post-cards>
+    <app-table *ngSwitchCase="1" [headers]="headers" [initialData]="data"></app-table>
+  </ng-container>
+</ng-container>
