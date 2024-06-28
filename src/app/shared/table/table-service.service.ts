@@ -6,35 +6,26 @@ import { SortDirection } from './sort-direction.enum';
   providedIn: 'root',
 })
 export class TableService<T> {
-  private initialData: T[] | undefined;
-
-  private fullData: T[] | null = null;
-
-  private dataSubject = new BehaviorSubject<T[] | null>(null);
-
-  private currentSortPropertySubject = new BehaviorSubject<keyof T | null>(null);
-
-  private sortDirectionSubject = new BehaviorSubject<SortDirection>(SortDirection.asc);
-
   currentPage = 1;
 
   itemsPerPage = 5;
 
-  data$: Observable<T[]> | null = this.dataSubject.asObservable();
+  private initialData: T[] | undefined;
 
-  currentSortProperty$: Observable<keyof T | null> = this.currentSortPropertySubject.asObservable();
+  private fullData: T[] | null = null;
 
-  sortDirection$: Observable<SortDirection> = this.sortDirectionSubject.asObservable();
+  private readonly dataSubject = new BehaviorSubject<T[] | null>(null);
 
-  private updatePaginatedData(): void {
-    if (!this.initialData) return;
+  private readonly currentSortPropertySubject = new BehaviorSubject<keyof T | null>(null);
 
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    const paginatedData = this.fullData.slice(startIndex, endIndex);
+  private readonly sortDirectionSubject = new BehaviorSubject<SortDirection>(SortDirection.asc);
 
-    this.dataSubject.next(paginatedData);
-  }
+  readonly data$: Observable<T[]> | null = this.dataSubject.asObservable();
+
+  readonly currentSortProperty$: Observable<keyof T | null> =
+    this.currentSortPropertySubject.asObservable();
+
+  readonly sortDirection$: Observable<SortDirection> = this.sortDirectionSubject.asObservable();
 
   setInitialData(initialData: T[] | null): void {
     if (!initialData) return;
@@ -84,5 +75,15 @@ export class TableService<T> {
   setItemsPerPage(items: number): void {
     this.itemsPerPage = items;
     this.updatePaginatedData();
+  }
+
+  private updatePaginatedData(): void {
+    if (!this.initialData) return;
+
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const paginatedData = this.fullData.slice(startIndex, endIndex);
+
+    this.dataSubject.next(paginatedData);
   }
 }

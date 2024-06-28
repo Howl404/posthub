@@ -23,11 +23,11 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   isOpen = false;
 
-  private element: HTMLElement = this.el.nativeElement;
+  private readonly element: HTMLElement = this.el.nativeElement;
 
   constructor(
-    private modalService: ModalService,
-    private el: ElementRef,
+    private readonly modalService: ModalService,
+    private readonly el: ElementRef,
   ) {}
 
   ngOnInit(): void {

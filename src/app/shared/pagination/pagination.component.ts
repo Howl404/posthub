@@ -6,7 +6,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./pagination.component.scss'],
 })
 export class PaginationComponent {
-  @Input() initialPage = 1;
+  @Input() private readonly initialPage = 1;
 
   @Input() lastPage!: number;
 

@@ -6,9 +6,9 @@ import { ViewMode } from './view-mode.enum';
   providedIn: 'root',
 })
 export class ViewService {
-  private viewModeSubject = new BehaviorSubject<ViewMode>(ViewMode.Cards);
+  private readonly viewModeSubject = new BehaviorSubject<ViewMode>(ViewMode.Cards);
 
-  viewMode$: Observable<number> = this.viewModeSubject.asObservable();
+  readonly viewMode$: Observable<number> = this.viewModeSubject.asObservable();
 
   setViewMode(mode: number): void {
     this.viewModeSubject.next(mode);

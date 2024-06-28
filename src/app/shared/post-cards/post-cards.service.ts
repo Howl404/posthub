@@ -6,32 +6,22 @@ import { Post } from '../../post.model';
   providedIn: 'root',
 })
 export class PostCardsService {
-  private initialData: Post[] | undefined;
-
-  private fullData: Post[] | null = null;
-
-  private dataSubject = new BehaviorSubject<Post[] | null>(null);
-
-  private currentSortPropertySubject = new BehaviorSubject<keyof Post | null>(null);
-
   currentPage = 1;
 
   itemsPerPage = 5;
 
-  data$: Observable<Post[]> | null = this.dataSubject.asObservable();
+  private initialData: Post[] | undefined;
 
-  currentSortProperty$: Observable<keyof Post | null> =
+  private fullData: Post[] | null = null;
+
+  private readonly dataSubject = new BehaviorSubject<Post[] | null>(null);
+
+  private readonly currentSortPropertySubject = new BehaviorSubject<keyof Post | null>(null);
+
+  readonly data$: Observable<Post[]> | null = this.dataSubject.asObservable();
+
+  readonly currentSortProperty$: Observable<keyof Post | null> =
     this.currentSortPropertySubject.asObservable();
-
-  private updatePaginatedData(): void {
-    if (!this.initialData) return;
-
-    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    const paginatedData = this.fullData.slice(startIndex, endIndex);
-
-    this.dataSubject.next(paginatedData);
-  }
 
   setInitialData(initialData: Post[] | null): void {
     if (!initialData) return;
@@ -71,5 +61,15 @@ export class PostCardsService {
   setItemsPerPage(items: number): void {
     this.itemsPerPage = items;
     this.updatePaginatedData();
+  }
+
+  private updatePaginatedData(): void {
+    if (!this.initialData) return;
+
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    const paginatedData = this.fullData.slice(startIndex, endIndex);
+
+    this.dataSubject.next(paginatedData);
   }
 }

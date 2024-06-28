@@ -13,12 +13,6 @@ import { SortOption } from '../sort-by/sort-option';
 export class PostCardsComponent implements OnChanges {
   @Input() initialData!: Post[] | null;
 
-  private postCardsService = inject(PostCardsService);
-
-  data$: Observable<Post[]> | null = this.postCardsService.data$;
-
-  currentSortProperty$: Observable<keyof Post | null> = this.postCardsService.currentSortProperty$;
-
   lastPage = 1;
 
   sortOptions: SortOption<Post>[] = [
@@ -28,6 +22,13 @@ export class PostCardsComponent implements OnChanges {
     { value: 'upvotes', label: 'Upvotes' },
     { value: 'date', label: 'Date' },
   ];
+
+  private readonly postCardsService = inject(PostCardsService);
+
+  readonly data$: Observable<Post[]> | null = this.postCardsService.data$;
+
+  readonly currentSortProperty$: Observable<keyof Post | null> =
+    this.postCardsService.currentSortProperty$;
 
   ngOnChanges(): void {
     if (this.initialData) {

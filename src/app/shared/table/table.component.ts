@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SortDirection } from './sort-direction.enum';
 import { TableHeader } from './table-header.model';
@@ -15,20 +15,23 @@ export class TableComponent<T extends object> implements OnChanges {
 
   @Input() initialData!: T[] | null;
 
-  private tableService = inject(TableService<T>);
-
-  data$: Observable<T[]> | null = this.tableService.data$;
-
-  currentSortProperty$: Observable<keyof T | null> = this.tableService.currentSortProperty$;
-
-  sortDirection$: Observable<SortDirection> = this.tableService.sortDirection$;
-
   lastPage = 1;
 
-  ngOnChanges(): void {
-    if (this.initialData) {
-      this.tableService.setInitialData(this.initialData);
-      this.lastPage = Math.floor(this.initialData.length / 5);
+  private readonly tableService = inject(TableService<T>);
+
+  readonly data$: Observable<T[]> | null = this.tableService.data$;
+
+  readonly currentSortProperty$: Observable<keyof T | null> =
+    this.tableService.currentSortProperty$;
+
+  readonly sortDirection$: Observable<SortDirection> = this.tableService.sortDirection$;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['initialData']) {
+      const { currentValue } = changes['initialData'];
+
+      this.tableService.setInitialData(currentValue);
+      this.lastPage = Math.ceil(currentValue.length / this.tableService.itemsPerPage);
     }
   }
 
