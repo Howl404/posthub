@@ -51,7 +51,7 @@ export class TableService<T> {
     let sortDirection = this.sortDirectionSubject.getValue();
 
     if (currentSortProperty === property) {
-      sortDirection = sortDirection === SortDirection.asc ? SortDirection.desc : SortDirection.asc;
+      sortDirection = sortDirection ? SortDirection.asc : SortDirection.desc;
       this.sortDirectionSubject.next(sortDirection);
     } else {
       this.currentSortPropertySubject.next(property);
@@ -59,8 +59,8 @@ export class TableService<T> {
     }
 
     this.fullData.sort((a, b) => {
-      if (a[property] < b[property]) return sortDirection === SortDirection.asc ? 1 : -1;
-      if (a[property] > b[property]) return sortDirection === SortDirection.asc ? -1 : 1;
+      if (a[property] < b[property]) return sortDirection ? 1 : -1;
+      if (a[property] > b[property]) return sortDirection ? -1 : 1;
       return 0;
     });
 
