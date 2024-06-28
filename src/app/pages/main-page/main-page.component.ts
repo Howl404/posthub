@@ -5,6 +5,7 @@ import { PostsService } from '../../shared/posts.service';
 import { Post } from '../../post.model';
 import { CommunitiesService } from '../../shared/communities.service';
 import { ViewService } from '../../shared/view-switcher/view.service';
+import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
 
 export interface CityData {
   name: string;
@@ -33,7 +34,7 @@ export class MainPageComponent {
     { value: 'Date', propertyKey: 'date' },
   ];
 
-  viewMode: Observable<number> = this.viewService.viewMode$;
+  viewMode$: Observable<ViewMode> = this.viewService.viewMode$;
 
   data$: Observable<Post[]> = this.postsService.getPosts(30, 0);
 }

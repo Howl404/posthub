@@ -1,4 +1,4 @@
 <div>
-  <button [class.active]="viewMode === 0" (click)="setViewMode(0)">Cards</button>
-  <button [class.active]="viewMode === 1" (click)="setViewMode(1)">Table</button>
+  <button [class.active]="!viewMode" (click)="setViewMode(0)">Cards</button>
+  <button [class.active]="viewMode" (click)="setViewMode(1)">Table</button>
 </div>

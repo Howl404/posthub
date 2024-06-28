@@ -1,5 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ViewService } from './view.service';
+import { ViewMode } from './view-mode.enum';
 
 @Component({
   selector: 'app-view-switcher',
@@ -7,7 +8,7 @@ import { ViewService } from './view.service';
   styleUrls: ['./view-switcher.component.scss'],
 })
 export class ViewSwitcherComponent implements OnInit {
-  viewMode = 0;
+  viewMode: ViewMode = ViewMode.Cards;
 
   viewService = inject(ViewService);
 
@@ -17,7 +18,7 @@ export class ViewSwitcherComponent implements OnInit {
     });
   }
 
-  setViewMode(mode: number): void {
+  setViewMode(mode: ViewMode): void {
     this.viewService.setViewMode(mode);
   }
 }
