@@ -50,7 +50,7 @@ export class SignUpModalComponent {
   private authService = inject(AuthService);
 
   switchToLogIn(form: NgForm): void {
-    this.modalService.close('signup-modal');
+    this.modalService.close('sign-up-modal');
     this.modalService.open('login-modal');
     this.onClose(form);
   }
@@ -72,7 +72,7 @@ export class SignUpModalComponent {
         .signUpWithPassword(userDraft)
         .pipe(first())
         .subscribe(() => {
-          this.modalService.close('signup-modal');
+          this.modalService.close('sign-up-modal');
           this.onClose(form);
         });
     } else {
@@ -85,7 +85,7 @@ export class SignUpModalComponent {
       .signUpWithGoogle()
       .pipe(first())
       .subscribe(() => {
-        this.modalService.close('signup-modal');
+        this.modalService.close('sign-up-modal');
         this.onClose(form);
       });
   }

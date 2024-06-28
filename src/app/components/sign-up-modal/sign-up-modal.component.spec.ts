@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SignUpModalComponent } from './sign-up-modal.component';
 
-describe('SignUpModalComponent', () => {
+describe('signUpModalComponent', () => {
   let component: SignUpModalComponent;
   let fixture: ComponentFixture<SignUpModalComponent>;
 
