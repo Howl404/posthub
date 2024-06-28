@@ -6,6 +6,7 @@ import { AuthService } from '../../shared/auth.service';
 import { UserDraft } from '../../user.model';
 import { ModalService } from '../../shared/modal/modal.service';
 import { signUpFields } from './sign-up-fields';
+import { Modals } from '../../shared/modal/modals.enum';
 
 export const defaultSignUpUserState = {
   name: '',
@@ -49,9 +50,11 @@ export class SignUpModalComponent {
 
   private authService = inject(AuthService);
 
+  readonly modalId = Modals.SignUp;
+
   switchToLogIn(form: NgForm): void {
-    this.modalService.close('sign-up-modal');
-    this.modalService.open('login-modal');
+    this.modalService.close(Modals.SignUp);
+    this.modalService.open(Modals.LogIn);
     this.onClose(form);
   }
 
@@ -72,7 +75,7 @@ export class SignUpModalComponent {
         .signUpWithPassword(userDraft)
         .pipe(first())
         .subscribe(() => {
-          this.modalService.close('sign-up-modal');
+          this.modalService.close(Modals.SignUp);
           this.onClose(form);
         });
     } else {
@@ -85,7 +88,7 @@ export class SignUpModalComponent {
       .signUpWithGoogle()
       .pipe(first())
       .subscribe(() => {
-        this.modalService.close('sign-up-modal');
+        this.modalService.close(Modals.SignUp);
         this.onClose(form);
       });
   }

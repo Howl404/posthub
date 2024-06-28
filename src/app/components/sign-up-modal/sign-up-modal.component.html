@@ -1,5 +1,5 @@
-<app-modal id="sign-up-modal" (closed)="onClose(signUpForm)">
-  <div class="sign-up-modal">
+<app-modal id="{{ modalId }}" (closed)="onClose(signUpForm)">
+  <div class="{{ modalId }}">
     <form #signUpForm="ngForm" (ngSubmit)="onSubmit(signUpForm)">
       <h2>Sign Up</h2>
       <div *ngFor="let field of fields">

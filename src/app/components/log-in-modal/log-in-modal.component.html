@@ -1,1 +1,45 @@
-<p>log-in-modal works!</p>
+<app-modal id="{{ modalId }}" (closed)="onClose(logInForm)">
+  <div class="{{ modalId }}">
+    <form #logInForm="ngForm" (ngSubmit)="onSubmit(logInForm)">
+      <h2>Log In</h2>
+      <div *ngFor="let field of fields">
+        <app-dynamic-form-field
+          [field]="field"
+          [(ngModel)]="user[field.model.toString()]"
+          (ngModelChange)="onFieldChange(field.model, $event)"
+          [name]="field.name"
+          #inputField="ngModel"
+          [required]="field.required"
+          [minlength]="field.minLength"
+        >
+        </app-dynamic-form-field>
+        <div
+          [@errorState]="
+            inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
+          "
+          class="error"
+        >
+          <div *ngFor="let error of field.validationMessages | keyvalue">
+            <div *ngIf="inputField.errors?.[error.key]">
+              {{ error.value }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="separator-container">
+        <span class="separator">or</span>
+      </div>
+      <button type="button" (click)="onContinueWithGoogle(logInForm)">Continue with Google</button>
+      <div class="login-container">
+        <p>Don't have account?</p>
+        <button type="button" (click)="switchToSignUp(logInForm)">Sign Up</button>
+      </div>
+      <div *ngIf="error" class="error">
+        {{ error }}
+      </div>
+
+      <button type="submit" [disabled]="logInForm.invalid && logInForm.touched">Log In</button>
+    </form>
+  </div>
+</app-modal>
