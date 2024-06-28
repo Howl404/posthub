@@ -1,0 +1,41 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cards-container {
+  display: grid;
+  gap: 10px;
+
+  .card {
+    padding: 2px;
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+    background-color: white;
+
+    &.active {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+    p {
+      margin: 0;
+    }
+
+    .card-header,
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
