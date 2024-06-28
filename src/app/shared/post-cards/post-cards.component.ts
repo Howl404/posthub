@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, inject } from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Post } from '../../post.model';
 import { PostCardsService } from './post-cards.service';
@@ -30,10 +30,12 @@ export class PostCardsComponent implements OnChanges {
   readonly currentSortProperty$: Observable<keyof Post | null> =
     this.postCardsService.currentSortProperty$;
 
-  ngOnChanges(): void {
-    if (this.initialData) {
-      this.postCardsService.setInitialData(this.initialData);
-      this.lastPage = Math.floor(this.initialData.length / 5);
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['initialData']) {
+      const { currentValue } = changes['initialData'];
+
+      this.postCardsService.setInitialData(currentValue);
+      this.lastPage = Math.floor(currentValue.length / 5);
     }
   }
 
