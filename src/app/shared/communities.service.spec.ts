@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { CommunitiesService } from 'src/app/shared/communities.service';
+import { CommunitiesService } from './communities.service';
 
 describe('CommunitiesService', () => {
   let service: CommunitiesService;

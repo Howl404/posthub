@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { PostsService } from 'src/app/shared/posts.service';
+import { PostsService } from './posts.service';
 
 describe('PostsService', () => {
   let service: PostsService;
