@@ -17,10 +17,11 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { TableComponent } from './shared/table/table.component';
 import { SignUpModalComponent } from './components/sign-up-modal/sign-up-modal.component';
 import { GenderSelectorComponent } from './components/sign-up-modal/components/gender-selector/gender-selector.component';
-import { DynamicFormFieldComponent } from './components/sign-up-modal/components/dynamic-form-field/dynamic-form-field.component';
-import { ModalComponent } from './components/modal/modal.component';
+import { DynamicFormFieldComponent } from './shared/dynamic-form-field/dynamic-form-field.component';
+import { ModalComponent } from './shared/modal/modal.component';
 import { MainPageComponent } from './pages/main-page/main-page.component';
 import { CommunitiesService } from './shared/communities.service';
+import { LogInModalComponent } from './components/log-in-modal/log-in-modal.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { CommunitiesService } from './shared/communities.service';
     SignUpModalComponent,
     GenderSelectorComponent,
     DynamicFormFieldComponent,
+    LogInModalComponent,
   ],
   imports: [
     CommonModule,

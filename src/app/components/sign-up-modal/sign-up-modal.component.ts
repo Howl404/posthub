@@ -4,7 +4,7 @@ import { NgForm } from '@angular/forms';
 import { first } from 'rxjs/internal/operators/first';
 import { AuthService } from '../../shared/auth.service';
 import { UserDraft } from '../../user.model';
-import { ModalService } from '../modal/modal.service';
+import { ModalService } from '../../shared/modal/modal.service';
 import { signUpFields } from './sign-up-fields';
 
 export const defaultSignUpUserState = {

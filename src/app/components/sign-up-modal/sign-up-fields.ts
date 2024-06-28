@@ -1,4 +1,4 @@
-import { FormField } from './form-field.model';
+import { FormField } from '../../shared/form-field.model';
 
 export const signUpFields: FormField[] = [
   {
