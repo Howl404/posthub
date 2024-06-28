@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnChanges, inject } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SortDirection } from './sort-direction.enum';
 import { TableHeader } from './table-header.model';
@@ -9,21 +9,30 @@ import { TableService } from './table-service.service';
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent<T extends object> implements OnInit {
+export class TableComponent<T extends object> implements OnChanges {
   @Input() headers!: TableHeader<T>[];
 
-  @Input() initialData!: T[];
+  @Input() initialData!: T[] | null;
 
   private tableService = inject(TableService<T>);
 
-  data: Observable<T[]> = this.tableService.data$;
+  data$: Observable<T[]> | null = this.tableService.data$;
 
-  currentSortProperty: Observable<keyof T | null> = this.tableService.currentSortProperty$;
+  currentSortProperty$: Observable<keyof T | null> = this.tableService.currentSortProperty$;
 
-  sortDirection: Observable<SortDirection> = this.tableService.sortDirection$;
+  sortDirection$: Observable<SortDirection> = this.tableService.sortDirection$;
 
-  ngOnInit(): void {
-    this.tableService.setInitialData(this.initialData);
+  lastPage = 1;
+
+  ngOnChanges(): void {
+    if (this.initialData) {
+      this.tableService.setInitialData(this.initialData);
+      this.lastPage = Math.floor(this.initialData.length / 5);
+    }
+  }
+
+  onPageChange(page: number): void {
+    this.tableService.setCurrentPage(page);
   }
 
   onHeaderClick(property: keyof T): void {

@@ -3,16 +3,26 @@
     <tr>
       <th *ngFor="let header of headers" (click)="onHeaderClick(header.propertyKey)">
         {{ header.value }}
-        <ng-container *ngIf="(currentSortProperty | async) === header.propertyKey">
-          <span class="sort-icon">{{ (sortDirection | async) ? '&uparrow;' : '&downarrow;' }}</span>
+        <ng-container *ngIf="(currentSortProperty$ | async) === header.propertyKey">
+          <span class="sort-icon">{{
+            (sortDirection$ | async) ? '&uparrow;' : '&downarrow;'
+          }}</span>
           <button class="reset-btn" type="button" (click)="onResetSort($event)">❌</button>
         </ng-container>
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let row of data | async">
-      <td *ngFor="let header of headers">{{ row[header.propertyKey] }}</td>
-    </tr>
+    <ng-container *ngIf="data$ | async as data; else noDataTemplate">
+      <tr *ngFor="let row of data">
+        <td *ngFor="let header of headers">{{ row[header.propertyKey] }}</td>
+      </tr>
+    </ng-container>
   </tbody>
 </table>
+
+<app-pagination [lastPage]="lastPage" (pageChange)="onPageChange($event)"></app-pagination>
+
+<ng-template #noDataTemplate>
+  <td class="no-data" [colSpan]="headers.length">No Data</td>
+</ng-template>
