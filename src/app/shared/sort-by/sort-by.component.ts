@@ -6,10 +6,10 @@ import { SortOption } from './sort-option';
   templateUrl: './sort-by.component.html',
   styleUrls: ['./sort-by.component.scss'],
 })
-export class SortByComponent {
-  @Input() options!: SortOption[];
+export class SortByComponent<T extends object> {
+  @Input() options!: SortOption<T>[];
 
-  @Output() selected = new EventEmitter<string>();
+  @Output() selected = new EventEmitter<SortOption<T>>();
 
   isDropdownOpen = false;
 
@@ -19,9 +19,9 @@ export class SortByComponent {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  onOptionSelect(option: SortOption): void {
+  onOptionSelect(option: SortOption<T>): void {
     this.selectedLabel = option.label;
-    this.selected.emit(option.value);
+    this.selected.emit(option);
     this.isDropdownOpen = false;
   }
 }
