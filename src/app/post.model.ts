@@ -1,4 +1,5 @@
 export interface Post {
+  authorName: string;
   location: string;
   id: string;
   title: string;

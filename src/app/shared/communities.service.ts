@@ -54,4 +54,13 @@ export class CommunitiesService {
         this.updateCommunity(communityId, { postsId: [...value.postsId, postId] }),
       );
   }
+
+  deletePostFromCommunity(postId: string, communityId: string): void {
+    this.getCommunityById(communityId)
+      .pipe(first())
+      .subscribe((value) => {
+        const postsId = value.postsId.filter((id) => id !== postId);
+        this.updateCommunity(communityId, { postsId });
+      });
+  }
 }

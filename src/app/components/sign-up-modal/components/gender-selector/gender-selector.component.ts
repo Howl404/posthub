@@ -16,10 +16,6 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 export class GenderSelectorComponent implements ControlValueAccessor {
   @Input() gender!: string;
 
-  private onChange: any = () => {};
-
-  private onTouched: any = () => {};
-
   writeValue(gender: string): void {
     this.gender = gender;
   }
@@ -37,4 +33,8 @@ export class GenderSelectorComponent implements ControlValueAccessor {
     this.onChange(gender);
     this.onTouched();
   }
+
+  private onChange: any = () => {};
+
+  private onTouched: any = () => {};
 }
