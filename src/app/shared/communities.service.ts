@@ -11,7 +11,7 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { Observable, first, from, map } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 import { Community, CommunityDraft } from '../community.model';
 
 @Injectable({
@@ -63,20 +63,20 @@ export class CommunitiesService {
     return from(promise);
   }
 
-  addPostToCommunity(postId: string, communityId: string): void {
-    this.getCommunityById(communityId)
-      .pipe(first())
-      .subscribe((value) =>
-        this.updateCommunity(communityId, { postsId: [...value.postsId, postId] }),
-      );
-  }
+  // addPostToCommunity(postId: string, communityId: string): void {
+  //   this.getCommunityById(communityId)
+  //     .pipe(first())
+  //     .subscribe((value) =>
+  //       this.updateCommunity(communityId, { postsId: [...value.postsId, postId] }),
+  //     );
+  // }
 
-  deletePostFromCommunity(postId: string, communityId: string): void {
-    this.getCommunityById(communityId)
-      .pipe(first())
-      .subscribe((value) => {
-        const postsId = value.postsId.filter((id) => id !== postId);
-        this.updateCommunity(communityId, { postsId });
-      });
-  }
+  // deletePostFromCommunity(postId: string, communityId: string): void {
+  //   this.getCommunityById(communityId)
+  //     .pipe(first())
+  //     .subscribe((value) => {
+  //       const postsId = value.postsId.filter((id) => id !== postId);
+  //       this.updateCommunity(communityId, { postsId });
+  //     });
+  // }
 }

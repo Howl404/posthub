@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ModalService } from '../../shared/modal/modal.service';
+import { UserService } from '../../shared/user.service';
 
 @Component({
   selector: 'app-header',
@@ -7,5 +8,9 @@ import { ModalService } from '../../shared/modal/modal.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  userService = inject(UserService);
+
+  user$ = this.userService.user$;
+
   constructor(public modalService: ModalService) {}
 }

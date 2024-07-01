@@ -14,10 +14,27 @@
         <h2>Members {{ communityData.joinedAmount }}</h2>
       </div>
 
-      <div class="buttons-container">
-        <button type="button">Join Community \ Leave</button>
-        <button type="button">Create post</button>
-        <button type="button">Edit</button>
+      <div *ngIf="user$ | async as user" class="buttons-container">
+        <button
+          *ngIf="!user.joinedCommunitiesId.includes(communityData.id)"
+          type="button"
+          (click)="onJoinCommunity(user)"
+        >
+          Join Community
+        </button>
+        <button
+          *ngIf="user.joinedCommunitiesId.includes(communityData.id)"
+          type="button"
+          (click)="onLeaveCommunity(user)"
+        >
+          Leave Community
+        </button>
+        <button type="button" (click)="onCreatePost()">Create post</button>
+        <ng-container
+          *ngIf="communityData.ownerId === user.id || communityData.moderatorsIds.includes(user.id)"
+        >
+          <button type="button" (click)="onEditCommunity()">Edit</button>
+        </ng-container>
       </div>
     </div>
   </div>

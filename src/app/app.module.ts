@@ -13,8 +13,6 @@ import { HeaderComponent } from './components/header/header.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { SignUpModalComponent } from './components/sign-up-modal/sign-up-modal.component';
 import { GenderSelectorComponent } from './components/sign-up-modal/components/gender-selector/gender-selector.component';
-// eslint-disable-next-line no-unused-vars
-import { CommunitiesService } from './shared/communities.service';
 import { SharedModule } from './shared/shared-module.module';
 
 @NgModule({

@@ -10,6 +10,8 @@ import { PostsService } from '../../shared/posts.service';
 import { ViewService } from '../../shared/view-switcher/view.service';
 import { postsTableHeaders } from '../main-page/main-page.component';
 import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
+import { User } from '../../user.model';
+import { UserService } from '../../shared/user.service';
 
 @Component({
   selector: 'app-community-page',
@@ -35,6 +37,10 @@ export class CommunityPageComponent implements OnInit {
 
   private readonly viewService = inject(ViewService);
 
+  private readonly userService = inject(UserService);
+
+  readonly user$: Observable<User> = this.userService.user$;
+
   readonly viewMode$: Observable<ViewMode> = this.viewService.viewMode$;
 
   ngOnInit(): void {
@@ -53,6 +59,24 @@ export class CommunityPageComponent implements OnInit {
           this.modalService.open('community-not-found');
         }
       });
+
+    this.user$.subscribe(console.log);
+  }
+
+  onCreatePost(): void {
+    console.log('createpost');
+  }
+
+  onEditCommunity(): void {
+    console.log('edit');
+  }
+
+  onJoinCommunity(userData: User): void {
+    this.userService.joinCommunity(this.communityData.id, userData.id, userData);
+  }
+
+  onLeaveCommunity(userData: User): void {
+    this.userService.leaveCommunity(this.communityData.id, userData.id, userData);
   }
 
   redirectToMainPage(): void {

@@ -1,3 +1,6 @@
 <button type="button" (click)="this.modalService.open('signup-modal')">Sign Up</button>
 <button type="button">Log In</button>
+<ng-container *ngIf="user$ | async as user">
+  {{ user.name }}
+</ng-container>
 <app-sign-up-modal></app-sign-up-modal>
