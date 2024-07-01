@@ -26,7 +26,7 @@ export class ModalService {
   open(id: string): void {
     const modal = this.find(id);
 
-    this.modals.forEach((item) => item.close());
+    this.modals.filter((item) => item.id !== id).forEach((item) => item.close());
 
     if (!modal) {
       throw new Error(`modal '${id}' not found`);
