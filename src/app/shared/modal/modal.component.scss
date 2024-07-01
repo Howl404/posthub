@@ -1,7 +1,6 @@
 app-modal {
-  display: none;
-
   .modal-overlay {
+    display: none;
     position: fixed;
     inset: 0;
     z-index: 10000;
@@ -25,7 +24,7 @@ app-modal {
 body.modal-open {
   overflow: hidden;
 
-  app-modal {
+  .modal-open {
     display: block;
   }
 }

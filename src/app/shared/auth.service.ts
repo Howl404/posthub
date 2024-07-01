@@ -8,9 +8,10 @@ import {
   signInWithEmailAndPassword,
   User as UserFire,
 } from '@angular/fire/auth';
-import { Firestore, collection, doc, setDoc, getDoc } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
-import { UserDraft } from '../user.model';
+import { Firestore, collection, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
+import { Observable, catchError, from, map, throwError } from 'rxjs';
+import { FirebaseError } from '@angular/fire/app';
+import { User, UserDraft } from '../user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -66,6 +67,35 @@ export class AuthService {
 
   logInWithEmailAndPassword(email: string, password: string): Observable<UserFire> {
     const promise = signInWithEmailAndPassword(this.auth, email, password);
-    return from(promise).pipe(map((userCred) => userCred.user));
+    return from(promise).pipe(
+      map((userCred) => userCred.user),
+      catchError((error: unknown) => {
+        if (error instanceof FirebaseError) {
+          return throwError(() => new Error(`Ошибка при входе: ${error.message}`));
+        }
+        return throwError(() => new Error('Ошибка при входе'));
+      }),
+    );
+  }
+
+  logOut(): void {
+    this.auth.signOut();
+  }
+
+  updateUser(userId: string, userData: Partial<User>): Observable<void> {
+    const docRef = doc(this.usersCollection, userId);
+    const promise = updateDoc(docRef, { ...userData });
+    return from(promise);
+  }
+
+  getUserById(userId: string): Observable<User> {
+    const docRef = doc(this.usersCollection, userId);
+    const promise = getDoc(docRef);
+    return from(promise).pipe(
+      map((docSnapshot) => {
+        const data = docSnapshot.data();
+        return { ...data, id: docSnapshot.id } as User;
+      }),
+    );
   }
 }

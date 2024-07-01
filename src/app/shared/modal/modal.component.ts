@@ -39,7 +39,7 @@ export class ModalComponent implements OnInit, OnDestroy {
 
   handleOverlayClick(event: MouseEvent): void {
     const element = event.target as HTMLElement;
-    if (element.className === 'modal-overlay') {
+    if (element.classList.contains('modal-overlay')) {
       this.close();
     }
   }

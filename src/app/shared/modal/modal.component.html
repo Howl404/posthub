@@ -1,4 +1,4 @@
-<div class="modal-overlay" (click)="handleOverlayClick($event)">
+<div class="modal-overlay" [class.modal-open]="isOpen" (click)="handleOverlayClick($event)">
   <div class="modal-body">
     <ng-content></ng-content>
   </div>

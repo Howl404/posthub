@@ -52,6 +52,7 @@ export class CommunityPageComponent implements OnInit {
         }),
       )
       .subscribe((communityData) => {
+        console.log(communityData);
         if (communityData) {
           this.communityData = communityData;
           this.posts = this.postsService.getPostsByLocationId(communityData.id, 20, 0);
