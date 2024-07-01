@@ -66,8 +66,8 @@ export class LogInModalComponent {
         .pipe(
           first(),
           catchError((error: unknown) => {
-            if (typeof error === 'string') {
-              this.error = error;
+            if (error instanceof Error) {
+              this.error = error.message;
             }
 
             return EMPTY;
