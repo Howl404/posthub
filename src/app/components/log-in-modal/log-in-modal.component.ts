@@ -1,13 +1,13 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { EMPTY, catchError, first, of } from 'rxjs';
+import { EMPTY, catchError, first } from 'rxjs';
 import { AuthService } from '../../shared/auth.service';
 import { ModalService } from '../../shared/modal/modal.service';
 import { logInFields } from './log-in-fields';
 import { Modals } from '../../shared/modal/modals.enum';
 
-export const defaultLogInUserState = {
+export const DEFAULT_LOGIN_USER_STATE = {
   email: '',
   password: '',
 };
@@ -37,13 +37,13 @@ export const defaultLogInUserState = {
   ],
 })
 export class LogInModalComponent {
-  user = { ...defaultLogInUserState };
+  user = { ...DEFAULT_LOGIN_USER_STATE };
 
   fields = logInFields;
 
-  private modalService = inject(ModalService);
+  private readonly modalService = inject(ModalService);
 
-  private authService = inject(AuthService);
+  private readonly authService = inject(AuthService);
 
   readonly modalId = Modals.LogIn;
 
@@ -65,8 +65,11 @@ export class LogInModalComponent {
         .logInWithEmailAndPassword(this.user.email, this.user.password)
         .pipe(
           first(),
-          catchError((error) => {
-            this.error = error;
+          catchError((error: unknown) => {
+            if (typeof error === 'string') {
+              this.error = error;
+            }
+
             return EMPTY;
           }),
         )
@@ -92,6 +95,6 @@ export class LogInModalComponent {
   onClose(form: NgForm): void {
     form.resetForm();
     this.error = null;
-    this.user = { ...defaultLogInUserState };
+    this.user = { ...DEFAULT_LOGIN_USER_STATE };
   }
 }

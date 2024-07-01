@@ -68,8 +68,11 @@ export class AuthService {
     const promise = signInWithEmailAndPassword(this.auth, email, password);
     return from(promise).pipe(
       map((userCred) => userCred.user),
-      catchError((error) => {
-        return throwError(() => new Error(`Ошибка при входе: ${error.message}`));
+      catchError((error: unknown) => {
+        if (typeof error === 'string') {
+          return throwError(() => new Error(`Ошибка при входе: ${error.message}`));
+        }
+        return throwError(() => new Error('Ошибка при входе'));
       }),
     );
   }

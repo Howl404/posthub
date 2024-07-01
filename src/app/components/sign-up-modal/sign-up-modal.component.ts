@@ -8,7 +8,7 @@ import { ModalService } from '../../shared/modal/modal.service';
 import { signUpFields } from './sign-up-fields';
 import { Modals } from '../../shared/modal/modals.enum';
 
-export const defaultSignUpUserState = {
+export const DEFAULT_SIGNUP_USER_STATE = {
   name: '',
   email: '',
   password: '',
@@ -42,7 +42,7 @@ export const defaultSignUpUserState = {
   ],
 })
 export class SignUpModalComponent {
-  user = { ...defaultSignUpUserState };
+  user = { ...DEFAULT_SIGNUP_USER_STATE };
 
   fields = signUpFields;
 
@@ -95,6 +95,6 @@ export class SignUpModalComponent {
 
   onClose(form: NgForm): void {
     form.resetForm();
-    this.user = { ...defaultSignUpUserState };
+    this.user = { ...DEFAULT_SIGNUP_USER_STATE };
   }
 }
