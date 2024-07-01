@@ -10,6 +10,7 @@ import {
 } from '@angular/fire/auth';
 import { Firestore, collection, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, catchError, from, map, throwError } from 'rxjs';
+import { FirebaseError } from '@angular/fire/app';
 import { User, UserDraft } from '../user.model';
 
 @Injectable({
@@ -69,7 +70,7 @@ export class AuthService {
     return from(promise).pipe(
       map((userCred) => userCred.user),
       catchError((error: unknown) => {
-        if (typeof error === 'string') {
+        if (error instanceof FirebaseError) {
           return throwError(() => new Error(`Ошибка при входе: ${error.message}`));
         }
         return throwError(() => new Error('Ошибка при входе'));
