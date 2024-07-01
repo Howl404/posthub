@@ -1,3 +1,14 @@
-<button type="button" (click)="this.modalService.open('signup-modal')">Sign Up</button>
-<button type="button">Log In</button>
 <app-sign-up-modal></app-sign-up-modal>
+<app-log-in-modal></app-log-in-modal>
+
+<ng-container *ngIf="user$ | async as user; else noUserTemplate">
+  <div>
+    {{ user.displayName }}
+    <button type="button" (click)="onLogOut()">Log Out</button>
+  </div>
+</ng-container>
+
+<ng-template #noUserTemplate>
+  <button type="button" (click)="onSignUp()">Sign Up</button>
+  <button type="button" (click)="onLogIn()">Log In</button>
+</ng-template>

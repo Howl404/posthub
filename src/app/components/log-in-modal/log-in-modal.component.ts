@@ -1,26 +1,21 @@
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { first } from 'rxjs/operators';
+import { EMPTY, catchError, first } from 'rxjs';
 import { AuthService } from '../../shared/auth.service';
-import { UserDraft } from '../../user.model';
 import { ModalService } from '../../shared/modal/modal.service';
-import { signUpFields } from './sign-up-fields';
+import { logInFields } from './log-in-fields';
 import { Modals } from '../../shared/modal/modals.enum';
 
-export const DEFAULT_SIGNUP_USER_STATE = {
-  name: '',
+export const DEFAULT_LOGIN_USER_STATE = {
   email: '',
   password: '',
-  gender: '',
-  dob: '',
-  subscribed: false,
 };
 
 @Component({
-  selector: 'app-sign-up-modal',
-  templateUrl: './sign-up-modal.component.html',
-  styleUrls: ['./sign-up-modal.component.scss'],
+  selector: 'app-log-in-modal',
+  templateUrl: './log-in-modal.component.html',
+  styleUrls: ['./log-in-modal.component.scss'],
   animations: [
     trigger('errorState', [
       state(
@@ -41,20 +36,22 @@ export const DEFAULT_SIGNUP_USER_STATE = {
     ]),
   ],
 })
-export class SignUpModalComponent {
-  user = { ...DEFAULT_SIGNUP_USER_STATE };
+export class LogInModalComponent {
+  user = { ...DEFAULT_LOGIN_USER_STATE };
 
-  fields = signUpFields;
+  fields = logInFields;
 
   private readonly modalService = inject(ModalService);
 
   private readonly authService = inject(AuthService);
 
-  readonly modalId = Modals.SignUp;
+  readonly modalId = Modals.LogIn;
 
-  switchToLogIn(form: NgForm): void {
-    this.modalService.close(Modals.SignUp);
-    this.modalService.open(Modals.LogIn);
+  error: string | null = null;
+
+  switchToSignUp(form: NgForm): void {
+    this.modalService.close(Modals.LogIn);
+    this.modalService.open(Modals.SignUp);
     this.onClose(form);
   }
 
@@ -64,18 +61,20 @@ export class SignUpModalComponent {
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
-      const userDraft: UserDraft = {
-        ...this.user,
-        commentsId: [],
-        postsId: [],
-        joinedCommunitiesId: [],
-      };
-
       this.authService
-        .signUpWithPassword(userDraft)
-        .pipe(first())
+        .logInWithEmailAndPassword(this.user.email, this.user.password)
+        .pipe(
+          first(),
+          catchError((error: unknown) => {
+            if (error instanceof Error) {
+              this.error = error.message;
+            }
+
+            return EMPTY;
+          }),
+        )
         .subscribe(() => {
-          this.modalService.close(Modals.SignUp);
+          this.modalService.close(Modals.LogIn);
           this.onClose(form);
         });
     } else {
@@ -88,13 +87,14 @@ export class SignUpModalComponent {
       .signUpWithGoogle()
       .pipe(first())
       .subscribe(() => {
-        this.modalService.close(Modals.SignUp);
+        this.modalService.close(Modals.LogIn);
         this.onClose(form);
       });
   }
 
   onClose(form: NgForm): void {
     form.resetForm();
-    this.user = { ...DEFAULT_SIGNUP_USER_STATE };
+    this.error = null;
+    this.user = { ...DEFAULT_LOGIN_USER_STATE };
   }
 }

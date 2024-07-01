@@ -9,7 +9,8 @@ import {
   User as UserFire,
 } from '@angular/fire/auth';
 import { Firestore, collection, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, catchError, from, map, throwError } from 'rxjs';
+import { FirebaseError } from '@angular/fire/app';
 import { User, UserDraft } from '../user.model';
 
 @Injectable({
@@ -66,7 +67,19 @@ export class AuthService {
 
   logInWithEmailAndPassword(email: string, password: string): Observable<UserFire> {
     const promise = signInWithEmailAndPassword(this.auth, email, password);
-    return from(promise).pipe(map((userCred) => userCred.user));
+    return from(promise).pipe(
+      map((userCred) => userCred.user),
+      catchError((error: unknown) => {
+        if (error instanceof FirebaseError) {
+          return throwError(() => new Error(`Ошибка при входе: ${error.message}`));
+        }
+        return throwError(() => new Error('Ошибка при входе'));
+      }),
+    );
+  }
+
+  logOut(): void {
+    this.auth.signOut();
   }
 
   updateUser(userId: string, userData: Partial<User>): Observable<void> {
