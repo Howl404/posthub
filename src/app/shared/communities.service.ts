@@ -3,10 +3,13 @@ import {
   Firestore,
   addDoc,
   collection,
+  collectionData,
   deleteDoc,
   doc,
   getDoc,
+  query,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
 import { Observable, first, from, map } from 'rxjs';
 import { Community, CommunityDraft } from '../community.model';
@@ -18,6 +21,11 @@ export class CommunitiesService {
   firestore = inject(Firestore);
 
   communitiesCollection = collection(this.firestore, 'communities');
+
+  getCommunityByName(communityName: string): Observable<Community[]> {
+    const q = query(this.communitiesCollection, where('name', '==', communityName));
+    return collectionData(q, { idField: 'id' }) as Observable<Community[]>;
+  }
 
   getCommunityById(communityId: string): Observable<Community> {
     const docRef = doc(this.communitiesCollection, communityId);
