@@ -22,9 +22,17 @@ export class CommunitiesService {
 
   communitiesCollection = collection(this.firestore, 'communities');
 
-  getCommunityByName(communityName: string): Observable<Community[]> {
+  getCommunityByName(communityName: string): Observable<Community | null> {
     const q = query(this.communitiesCollection, where('name', '==', communityName));
-    return collectionData(q, { idField: 'id' }) as Observable<Community[]>;
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((communities) => {
+        const community = communities[0] as Community | undefined;
+        if (community) {
+          return community;
+        }
+        return null;
+      }),
+    );
   }
 
   getCommunityById(communityId: string): Observable<Community> {

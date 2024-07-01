@@ -19,6 +19,8 @@ import { ModalService } from './modal.service';
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() id!: string;
 
+  @Input() customOnClose: () => void | undefined;
+
   @Output() closed = new EventEmitter<void>();
 
   isOpen = false;
@@ -51,6 +53,9 @@ export class ModalComponent implements OnInit, OnDestroy {
     document.body.classList.remove('modal-open');
     this.isOpen = false;
     this.closed.emit();
+    if (this.customOnClose) {
+      this.customOnClose();
+    }
   }
 
   ngOnDestroy(): void {

@@ -1,0 +1,25 @@
+.header-color {
+  height: 50px;
+  border-radius: 8px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: space-around;
+}
+
+.data-container {
+  display: flex;
+  gap: 20px;
+}
+
+.buttons-container {
+  display: flex;
+  gap: 20px;
+}
+
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}

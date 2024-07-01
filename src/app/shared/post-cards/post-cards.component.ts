@@ -35,7 +35,7 @@ export class PostCardsComponent implements OnChanges {
       const { currentValue } = changes['initialData'];
 
       this.postCardsService.setInitialData(currentValue);
-      this.lastPage = Math.floor(currentValue.length / 5);
+      this.lastPage = Math.ceil(currentValue.length / this.postCardsService.itemsPerPage);
     }
   }
 
