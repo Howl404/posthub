@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { first, map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CommunitiesService } from '../../shared/communities.service';
 import { Community } from '../../community.model';
@@ -21,9 +21,9 @@ import { Modals } from '../../shared/modal/modals.enum';
   styleUrls: ['./community-page.component.scss'],
 })
 export class CommunityPageComponent implements OnInit {
-  communityData: Community | undefined;
+  communityData$: Observable<Community> | undefined;
 
-  posts: Observable<Post[]> | undefined;
+  posts$: Observable<Post[]> | undefined;
 
   readonly headers = postsTableHeaders;
 
@@ -44,21 +44,18 @@ export class CommunityPageComponent implements OnInit {
   readonly viewMode$: Observable<ViewMode> = this.viewService.viewMode$;
 
   ngOnInit(): void {
-    this.route.paramMap
-      .pipe(
-        switchMap((params) => {
-          const name = params.get('name') || '';
-          return this.communitiesService.getCommunityByName(name);
-        }),
-        filterWithSideEffect(
-          (value) => !!value,
-          () => this.modalService.open('community-not-found'),
-        ),
-      )
-      .subscribe((communityData) => {
-        this.communityData = communityData;
-        this.posts = this.postsService.getPostsByLocationId(communityData.id, 20, 0);
-      });
+    this.communityData$ = this.route.paramMap.pipe(
+      map((params) => params.get('name') || ''),
+      switchMap((name) => this.communitiesService.getCommunityByName(name)),
+      filterWithSideEffect(
+        (value) => !!value,
+        () => this.modalService.open('community-not-found'),
+      ),
+    );
+
+    this.communityData$.pipe(first()).subscribe((communityData) => {
+      this.posts$ = this.postsService.getPostsByLocationId(communityData.id, 20, 0);
+    });
   }
 
   onCreatePost(): void {
@@ -66,15 +63,15 @@ export class CommunityPageComponent implements OnInit {
   }
 
   onEditCommunity(): void {
-    console.log('editcommunity');
+    this.modalService.open(Modals.EditCommunity);
   }
 
-  onJoinCommunity(userData: User): void {
-    this.userService.joinCommunity(this.communityData.id, userData.id, userData);
+  onJoinCommunity(communityId: string, userData: User): void {
+    this.userService.joinCommunity(communityId, userData.id, userData);
   }
 
-  onLeaveCommunity(userData: User): void {
-    this.userService.leaveCommunity(this.communityData.id, userData.id, userData);
+  onLeaveCommunity(communityId: string, userData: User): void {
+    this.userService.leaveCommunity(communityId, userData.id, userData);
   }
 
   onNonAuthorizedClick(): void {

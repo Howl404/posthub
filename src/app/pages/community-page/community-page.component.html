@@ -1,7 +1,9 @@
 <app-not-found-modal></app-not-found-modal>
 
-<ng-container *ngIf="communityData; else spinnerTemplate">
+<ng-container *ngIf="communityData$ | async as communityData; else spinnerTemplate">
   <app-create-post-modal [locationId]="communityData.id"></app-create-post-modal>
+  <app-edit-community-modal [community]="communityData"></app-edit-community-modal>
+
   <div class="header-color" [style.background-color]="communityData.backgroundColor"></div>
 
   <div>
@@ -19,20 +21,22 @@
         <button
           *ngIf="!user.joinedCommunitiesId.includes(communityData.id)"
           type="button"
-          (click)="onJoinCommunity(user)"
+          (click)="onJoinCommunity(communityData.id, user)"
         >
           Join
         </button>
         <button
           *ngIf="user.joinedCommunitiesId.includes(communityData.id)"
           type="button"
-          (click)="onLeaveCommunity(user)"
+          (click)="onLeaveCommunity(communityData.id, user)"
         >
           Leave
         </button>
 
         <ng-container
-          *ngIf="communityData.ownerId === user.id || communityData.moderatorsIds.includes(user.id)"
+          *ngIf="
+            communityData.ownerId === user.id || communityData.moderatorsNames.includes(user.name)
+          "
         >
           <button type="button" (click)="onEditCommunity()">Edit</button>
         </ng-container>
@@ -42,7 +46,7 @@
 
   <app-view-switcher></app-view-switcher>
 
-  <ng-container *ngIf="posts | async as data; else spinnerTemplate">
+  <ng-container *ngIf="posts$ | async as data; else spinnerTemplate">
     <ng-container [ngSwitch]="viewMode$ | async">
       <app-post-cards *ngSwitchCase="0" [initialData]="data"></app-post-cards>
       <app-table *ngSwitchCase="1" [headers]="headers" [initialData]="data"></app-table>

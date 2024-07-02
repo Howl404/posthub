@@ -4,7 +4,7 @@ export interface Community {
   backgroundColor: string;
   joinedAmount: number;
   ownerId: string;
-  moderatorsIds: string[];
+  moderatorsNames: string[];
 }
 
 export type CommunityDraft = Omit<Community, 'id'>;

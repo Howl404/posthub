@@ -3,4 +3,5 @@ export enum Modals {
   LogIn = 'log-in-modal',
   CommunityNotFound = 'community-not-found',
   CreatePost = 'create-post-modal',
+  EditCommunity = 'edit-community-modal',
 }
