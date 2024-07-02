@@ -1,5 +1,5 @@
 <div class="pagination">
   <button (click)="prevPage()" [disabled]="currentPage === 1">&leftarrow;</button>
-  <span>{{ currentPage }}</span>
+  <span>{{ currentPage }} of {{ lastPage }}</span>
   <button (click)="nextPage()" [disabled]="currentPage === lastPage">&rightarrow;</button>
 </div>
