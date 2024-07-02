@@ -51,4 +51,8 @@ export class PostCardsComponent implements OnChanges {
     e.stopImmediatePropagation();
     this.postCardsService.resetSort();
   }
+
+  trackById(index: number, post: Post): string {
+    return post.id;
+  }
 }

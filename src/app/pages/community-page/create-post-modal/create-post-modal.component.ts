@@ -65,7 +65,7 @@ export class CreatePostModalComponent {
         upvotes: 0,
         date: new Date(),
         authorName: this.userService.getCurrentUser().name,
-        commentsId: [],
+        commentsAmount: 0,
         upvotesByDay: [],
       };
 

@@ -1,6 +1,15 @@
 import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, first, from, map, of, switchMap } from 'rxjs';
-import { Firestore, collection, doc, getDoc, updateDoc } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  collectionData,
+  doc,
+  getDoc,
+  query,
+  updateDoc,
+  where,
+} from '@angular/fire/firestore';
 import { User } from '../user.model';
 import { AuthService } from './auth.service';
 import { CommunitiesService } from './communities.service';
@@ -9,17 +18,17 @@ import { CommunitiesService } from './communities.service';
   providedIn: 'root',
 })
 export class UserService {
-  firestore = inject(Firestore);
+  readonly firestore = inject(Firestore);
 
-  usersCollection = collection(this.firestore, 'users');
+  private readonly usersCollection = collection(this.firestore, 'users');
 
-  communitiesService = inject(CommunitiesService);
+  private readonly communitiesService = inject(CommunitiesService);
 
-  user = new BehaviorSubject<User | null>(null);
+  private readonly user = new BehaviorSubject<User | null>(null);
 
-  user$ = this.user.asObservable();
+  readonly user$ = this.user.asObservable();
 
-  authService = inject(AuthService);
+  readonly authService = inject(AuthService);
 
   constructor() {
     this.authService.userFire$
@@ -32,6 +41,10 @@ export class UserService {
         }),
       )
       .subscribe((user) => this.user.next(user));
+  }
+
+  getCurrentUser(): User | null {
+    return this.user.getValue();
   }
 
   joinCommunity(communityId: string, userId: string, userData: Partial<User>): Observable<void> {
@@ -71,6 +84,19 @@ export class UserService {
       map((docSnapshot) => {
         const data = docSnapshot.data();
         return { ...data, id: docSnapshot.id } as User;
+      }),
+    );
+  }
+
+  getUserByName(userName: string): Observable<User | null> {
+    const q = query(this.usersCollection, where('name', '==', userName));
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((users) => {
+        const community = users[0] as User | undefined;
+        if (community) {
+          return community;
+        }
+        return null;
       }),
     );
   }

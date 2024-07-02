@@ -5,12 +5,12 @@ export interface Post {
   title: string;
   description: string;
   upvotes: number;
-  date: string;
+  date: Date;
   upvotesByDay: {
     day: string;
     upvotes: number;
   }[];
-  commentsId: string[];
+  commentsAmount: number;
 }
 
 export type PostDraft = Omit<Post, 'id'>;

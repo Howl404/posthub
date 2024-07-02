@@ -1,11 +1,13 @@
 <nav>
-  <h2>PostHub</h2>
+  <a routerLink="/"><h2>PostHub</h2></a>
 
   <div>Search <input /></div>
 
   <ng-container *ngIf="user$ | async as user; else noUserTemplate">
-    <div>
-      {{ user.name }}
+    <div class="user-container">
+      <h2>
+        {{ user.name }}
+      </h2>
       <button type="button" (click)="onLogOut()">Log Out</button>
     </div>
   </ng-container>

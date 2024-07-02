@@ -18,6 +18,12 @@ body {
     sans-serif !important;
 }
 
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 input,
 button {
   padding: 10px 20px;
@@ -41,6 +47,6 @@ button {
 }
 
 main {
-  padding: 20px;
+  padding: 10px 20px;
   overflow-y: overlay;
 }

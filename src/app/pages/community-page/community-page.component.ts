@@ -1,5 +1,5 @@
 import { Component, OnInit, inject } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CommunitiesService } from '../../shared/communities.service';
@@ -13,6 +13,7 @@ import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
 import { User } from '../../user.model';
 import { UserService } from '../../shared/user.service';
 import { filterWithSideEffect } from '../../utils/filterWithSideEffect';
+import { Modals } from '../../shared/modal/modals.enum';
 
 @Component({
   selector: 'app-community-page',
@@ -27,8 +28,6 @@ export class CommunityPageComponent implements OnInit {
   readonly headers = postsTableHeaders;
 
   private readonly route = inject(ActivatedRoute);
-
-  private readonly router = inject(Router);
 
   private readonly communitiesService = inject(CommunitiesService);
 
@@ -63,11 +62,11 @@ export class CommunityPageComponent implements OnInit {
   }
 
   onCreatePost(): void {
-    console.log('createpost');
+    this.modalService.open(Modals.CreatePost);
   }
 
   onEditCommunity(): void {
-    console.log('edit');
+    console.log('editcommunity');
   }
 
   onJoinCommunity(userData: User): void {
@@ -78,7 +77,7 @@ export class CommunityPageComponent implements OnInit {
     this.userService.leaveCommunity(this.communityData.id, userData.id, userData);
   }
 
-  redirectToMainPage(): void {
-    this.router.navigateByUrl('');
+  onNonAuthorizedClick(): void {
+    this.modalService.open(Modals.LogIn);
   }
 }

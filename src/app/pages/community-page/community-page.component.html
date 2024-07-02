@@ -1,12 +1,9 @@
-<app-modal id="community-not-found" [customOnClose]="redirectToMainPage.bind(this)">
-  <p>
-    There aren’t any communities with that name. Double-check the community name or try searching
-    for similar communities.
-  </p>
-</app-modal>
+<app-not-found-modal></app-not-found-modal>
 
-<ng-container class="page-container" *ngIf="communityData; else spinnerTemplate">
+<ng-container *ngIf="communityData; else spinnerTemplate">
+  <app-create-post-modal [locationId]="communityData.id"></app-create-post-modal>
   <div class="header-color" [style.background-color]="communityData.backgroundColor"></div>
+
   <div>
     <div class="header-container">
       <div class="data-container">
@@ -14,22 +11,26 @@
         <h2>Members {{ communityData.joinedAmount }}</h2>
       </div>
 
-      <div *ngIf="user$ | async as user" class="buttons-container">
+      <div *ngIf="user$ | async as user; else notAuthorizedButtons" class="buttons-container">
+        <button type="button" (click)="onCreatePost()">
+          <mat-icon>add</mat-icon>
+          Create a post
+        </button>
         <button
           *ngIf="!user.joinedCommunitiesId.includes(communityData.id)"
           type="button"
           (click)="onJoinCommunity(user)"
         >
-          Join Community
+          Join
         </button>
         <button
           *ngIf="user.joinedCommunitiesId.includes(communityData.id)"
           type="button"
           (click)="onLeaveCommunity(user)"
         >
-          Leave Community
+          Leave
         </button>
-        <button type="button" (click)="onCreatePost()">Create post</button>
+
         <ng-container
           *ngIf="communityData.ownerId === user.id || communityData.moderatorsIds.includes(user.id)"
         >
@@ -40,6 +41,7 @@
   </div>
 
   <app-view-switcher></app-view-switcher>
+
   <ng-container *ngIf="posts | async as data; else spinnerTemplate">
     <ng-container [ngSwitch]="viewMode$ | async">
       <app-post-cards *ngSwitchCase="0" [initialData]="data"></app-post-cards>
@@ -49,5 +51,15 @@
 </ng-container>
 
 <ng-template #spinnerTemplate>
-  <div>Spinner</div>
+  <app-loading-block></app-loading-block>
+</ng-template>
+
+<ng-template #notAuthorizedButtons>
+  <div class="buttons-container">
+    <button type="button" (click)="onNonAuthorizedClick()">
+      <mat-icon>add</mat-icon>
+      Create a post
+    </button>
+    <button type="button" (click)="onNonAuthorizedClick()">Join</button>
+  </div>
 </ng-template>
