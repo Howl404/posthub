@@ -12,6 +12,7 @@ import { postsTableHeaders } from '../main-page/main-page.component';
 import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
 import { User } from '../../user.model';
 import { UserService } from '../../shared/user.service';
+import { filterWithSideEffect } from '../../utils/filterWithSideEffect';
 
 @Component({
   selector: 'app-community-page',
@@ -50,18 +51,15 @@ export class CommunityPageComponent implements OnInit {
           const name = params.get('name') || '';
           return this.communitiesService.getCommunityByName(name);
         }),
+        filterWithSideEffect(
+          (value) => !!value,
+          () => this.modalService.open('community-not-found'),
+        ),
       )
       .subscribe((communityData) => {
-        console.log(communityData);
-        if (communityData) {
-          this.communityData = communityData;
-          this.posts = this.postsService.getPostsByLocationId(communityData.id, 20, 0);
-        } else {
-          this.modalService.open('community-not-found');
-        }
+        this.communityData = communityData;
+        this.posts = this.postsService.getPostsByLocationId(communityData.id, 20, 0);
       });
-
-    this.user$.subscribe(console.log);
   }
 
   onCreatePost(): void {
