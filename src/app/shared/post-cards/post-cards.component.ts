@@ -16,9 +16,9 @@ export class PostCardsComponent implements OnChanges {
   lastPage = 1;
 
   sortOptions: SortOption<Post>[] = [
-    { value: 'authorName', label: 'Name' },
+    { value: 'authorName', label: 'Author' },
     { value: 'title', label: 'Title' },
-    { value: 'description', label: 'Country' },
+    { value: 'description', label: 'Description' },
     { value: 'upvotes', label: 'Upvotes' },
     { value: 'date', label: 'Date' },
   ];
