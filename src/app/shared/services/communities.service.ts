@@ -12,7 +12,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { Community, CommunityDraft } from '../community.model';
+import { Community, CommunityDraft } from '../models/community.model';
 
 @Injectable({
   providedIn: 'root',

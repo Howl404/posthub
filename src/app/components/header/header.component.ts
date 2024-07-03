@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
-import { ModalService } from '../../shared/modal/modal.service';
-import { UserService } from '../../shared/user.service';
-import { Modals } from '../../shared/modal/modals.enum';
-import { AuthService } from '../../shared/auth.service';
+import { ModalService } from '../../shared/components/modal/modal.service';
+import { UserService } from '../../shared/services/user.service';
+import { Modals } from '../../shared/components/modal/modals.enum';
+import { AuthService } from '../../shared/services/auth.service';
 
 @Component({
   selector: 'app-header',

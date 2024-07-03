@@ -2,11 +2,11 @@ import { Component, Input, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { first, switchMap } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { Modals } from '../../../../shared/modal/modals.enum';
-import { ModalService } from '../../../../shared/modal/modal.service';
-import { PostsService } from '../../../../shared/posts.service';
-import { PostDraft } from '../../../../post.model';
-import { UserService } from '../../../../shared/user.service';
+import { Modals } from '../../../../shared/components/modal/modals.enum';
+import { ModalService } from '../../../../shared/components/modal/modal.service';
+import { PostsService } from '../../../../shared/services/posts.service';
+import { PostDraft } from '../../../../shared/models/post.model';
+import { UserService } from '../../../../shared/services/user.service';
 import { createPostFields } from './create-post-fields';
 
 export const DEFAULT_POST_STATE = {

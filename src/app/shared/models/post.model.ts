@@ -1,3 +1,5 @@
+import { Upvote } from './upvote.model';
+
 export interface Post {
   authorName: string;
   location: string;
@@ -6,10 +8,7 @@ export interface Post {
   description: string;
   upvotes: number;
   date: Date;
-  upvotesByDay: {
-    day: string;
-    upvotes: number;
-  }[];
+  upvotesByDay: Upvote[];
   commentsAmount: number;
 }
 

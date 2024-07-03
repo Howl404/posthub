@@ -15,7 +15,7 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { Post, PostDraft } from '../post.model';
+import { Post, PostDraft } from '../models/post.model';
 
 @Injectable({
   providedIn: 'root',

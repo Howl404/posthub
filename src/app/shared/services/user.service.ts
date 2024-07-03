@@ -10,7 +10,7 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { User } from '../user.model';
+import { User } from '../models/user.model';
 import { AuthService } from './auth.service';
 import { CommunitiesService } from './communities.service';
 

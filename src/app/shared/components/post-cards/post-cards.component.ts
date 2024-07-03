@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Post } from '../../post.model';
+import { Post } from '../../models/post.model';
 import { PostCardsService } from './post-cards.service';
 import { SortOption } from '../sort-by/sort-option';
 

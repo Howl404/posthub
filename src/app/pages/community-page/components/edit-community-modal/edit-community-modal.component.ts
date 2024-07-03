@@ -3,13 +3,13 @@ import { NgForm, NgModel } from '@angular/forms';
 import { Observable, first } from 'rxjs';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Community } from '../../../../community.model';
-import { ModalService } from '../../../../shared/modal/modal.service';
-import { Modals } from '../../../../shared/modal/modals.enum';
-import { CommunitiesService } from '../../../../shared/communities.service';
+import { Community } from '../../../../shared/models/community.model';
+import { ModalService } from '../../../../shared/components/modal/modal.service';
+import { Modals } from '../../../../shared/components/modal/modals.enum';
+import { CommunitiesService } from '../../../../shared/services/communities.service';
 import { editCommunityFields } from './edit-community-fields';
-import { UserService } from '../../../../shared/user.service';
-import { User } from '../../../../user.model';
+import { UserService } from '../../../../shared/services/user.service';
+import { User } from '../../../../shared/models/user.model';
 
 @Component({
   selector: 'app-edit-community-modal[community]',

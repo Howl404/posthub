@@ -11,7 +11,7 @@ import {
 import { Firestore, collection, doc, setDoc, getDoc, updateDoc } from '@angular/fire/firestore';
 import { Observable, catchError, from, map, throwError } from 'rxjs';
 import { FirebaseError } from '@angular/fire/app';
-import { User, UserDraft } from '../user.model';
+import { User, UserDraft } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',

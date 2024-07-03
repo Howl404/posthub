@@ -2,18 +2,18 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { first, map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { CommunitiesService } from '../../shared/communities.service';
-import { Community } from '../../community.model';
-import { ModalService } from '../../shared/modal/modal.service';
-import { Post } from '../../post.model';
-import { PostsService } from '../../shared/posts.service';
-import { ViewService } from '../../shared/view-switcher/view.service';
+import { CommunitiesService } from '../../shared/services/communities.service';
+import { Community } from '../../shared/models/community.model';
+import { ModalService } from '../../shared/components/modal/modal.service';
+import { Post } from '../../shared/models/post.model';
+import { PostsService } from '../../shared/services/posts.service';
+import { ViewService } from '../../shared/components/view-switcher/view.service';
 import { postsTableHeaders } from '../main-page/main-page.component';
-import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
-import { User } from '../../user.model';
-import { UserService } from '../../shared/user.service';
+import { ViewMode } from '../../shared/components/view-switcher/view-mode.enum';
+import { User } from '../../shared/models/user.model';
+import { UserService } from '../../shared/services/user.service';
 import { filterWithSideEffect } from '../../utils/filterWithSideEffect';
-import { Modals } from '../../shared/modal/modals.enum';
+import { Modals } from '../../shared/components/modal/modals.enum';
 
 @Component({
   selector: 'app-community-page',
