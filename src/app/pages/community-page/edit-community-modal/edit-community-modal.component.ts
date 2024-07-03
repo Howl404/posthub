@@ -75,7 +75,7 @@ export class EditCommunityModalComponent implements OnChanges {
     this.communityEdit[field] = value;
   }
 
-  onSubmit(event: SubmitEvent, form: NgForm): void {
+  onSubmit(form: NgForm): void {
     if (form.valid) {
       const oldName = this.community.name.toString();
       this.communitiesService

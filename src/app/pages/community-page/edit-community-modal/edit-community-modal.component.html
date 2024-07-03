@@ -1,6 +1,6 @@
 <app-modal id="{{ modalId }}" (closed)="onClose(editCommunityForm)">
   <div class="{{ modalId }}">
-    <form #editCommunityForm="ngForm" (ngSubmit)="onSubmit($event, editCommunityForm)">
+    <form #editCommunityForm="ngForm" (ngSubmit)="onSubmit(editCommunityForm)">
       <ng-container *ngIf="user$ | async as user">
         <div *ngFor="let field of fields">
           <app-dynamic-form-field
