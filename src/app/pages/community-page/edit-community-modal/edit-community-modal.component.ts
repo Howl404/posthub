@@ -36,8 +36,7 @@ import { User } from '../../../user.model';
   ],
 })
 export class EditCommunityModalComponent implements OnChanges {
-  // eslint-disable-next-line @typescript-eslint/prefer-readonly
-  @Input() private community!: Community | undefined;
+  @Input() community!: Community | undefined;
 
   communityEdit: Community | undefined;
 
