@@ -41,9 +41,26 @@
   }
 }
 
+.moderators-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
 .moderator-item {
   width: fit-content;
   position: relative;
+}
+
+.moderators-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  button {
+    padding: 5px;
+    border: transparent;
+  }
 }
 
 .reset-btn {

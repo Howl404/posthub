@@ -1,33 +1,33 @@
 <app-modal id="{{ modalId }}" (closed)="onClose(editCommunityForm)">
   <div class="{{ modalId }}">
     <form #editCommunityForm="ngForm" (ngSubmit)="onSubmit($event, editCommunityForm)">
-      <div *ngFor="let field of fields">
-        <app-dynamic-form-field
-          [field]="field"
-          [(ngModel)]="communityEdit[field.model.toString()]"
-          (ngModelChange)="onFieldChange(field.model, $event)"
-          name="{{ field.name }}"
-          #inputField="ngModel"
-          [required]="field.required"
-          [minlength]="field.minLength"
-        >
-        </app-dynamic-form-field>
-        <div
-          [@errorState]="
-            inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
-          "
-          class="error"
-        >
-          <div *ngFor="let error of field.validationMessages | keyvalue">
-            <div *ngIf="inputField.errors?.[error.key]">
-              {{ error.value }}
+      <ng-container *ngIf="user$ | async as user">
+        <div *ngFor="let field of fields">
+          <app-dynamic-form-field
+            [field]="field"
+            [(ngModel)]="communityEdit[field.model.toString()]"
+            (ngModelChange)="onFieldChange(field.model, $event)"
+            name="{{ field.name }}"
+            #inputField="ngModel"
+            [required]="field.required"
+            [minlength]="field.minLength"
+          >
+          </app-dynamic-form-field>
+          <div
+            [@errorState]="
+              inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
+            "
+            class="error"
+          >
+            <div *ngFor="let error of field.validationMessages | keyvalue">
+              <div *ngIf="inputField.errors?.[error.key]">
+                {{ error.value }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <div class="moderators-section">
-        <div>
+        <div class="moderators-section">
           <div class="moderators-header">
             <span>List of moderators</span>
             <button type="button" [disabled]="inputField.errors" (click)="addModerator(inputField)">
@@ -40,6 +40,7 @@
             name="moderatorName"
             [required]="true"
             #inputField="ngModel"
+            placeholder="Moderator name"
           />
           <div
             [@errorState]="
@@ -50,26 +51,28 @@
             <div *ngIf="inputField.errors?.['required']">Name is required.</div>
           </div>
         </div>
-      </div>
-      <div class="moderators-list">
-        <ng-container *ngFor="let moderator of communityEdit.moderatorsNames">
-          <div class="moderator-item">
-            {{ moderator }}
+        <div class="moderators-list">
+          <ng-container *ngFor="let moderator of communityEdit.moderatorsNames">
+            <div class="moderator-item">
+              {{ moderator }}
 
-            <ng-container *ngIf="user$ | async as user">
               <ng-container *ngIf="moderator !== user.name">
                 <button class="reset-btn" type="button" (click)="deleteModerator(moderator)">
                   <mat-icon>close</mat-icon>
                 </button>
               </ng-container>
-            </ng-container>
-          </div>
-        </ng-container>
-      </div>
+            </div>
+          </ng-container>
+        </div>
 
-      <button type="submit" [disabled]="editCommunityForm.invalid && editCommunityForm.touched">
-        Update Community
-      </button>
+        <button type="submit" [disabled]="editCommunityForm.invalid && editCommunityForm.touched">
+          Update Community
+        </button>
+
+        <ng-container *ngIf="user.id === communityEdit.ownerId">
+          <button type="button" (click)="onDelete()">Delete Community</button>
+        </ng-container>
+      </ng-container>
     </form>
   </div>
 </app-modal>

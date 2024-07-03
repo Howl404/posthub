@@ -19,14 +19,19 @@
           Create a post
         </button>
         <button
-          *ngIf="!user.joinedCommunitiesId.includes(communityData.id)"
+          *ngIf="
+            !user.joinedCommunitiesId.includes(communityData.id) &&
+            communityData.ownerId !== user.id
+          "
           type="button"
           (click)="onJoinCommunity(communityData.id, user)"
         >
           Join
         </button>
         <button
-          *ngIf="user.joinedCommunitiesId.includes(communityData.id)"
+          *ngIf="
+            user.joinedCommunitiesId.includes(communityData.id) && communityData.ownerId !== user.id
+          "
           type="button"
           (click)="onLeaveCommunity(communityData.id, user)"
         >

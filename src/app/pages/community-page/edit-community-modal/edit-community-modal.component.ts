@@ -36,25 +36,26 @@ import { User } from '../../../user.model';
   ],
 })
 export class EditCommunityModalComponent implements OnChanges {
-  @Input() community!: Community | undefined;
+  // eslint-disable-next-line @typescript-eslint/prefer-readonly
+  @Input() private community!: Community | undefined;
 
-  communityEdit: Community;
+  communityEdit: Community | undefined;
 
   moderatorName = '';
 
   readonly fields = editCommunityFields;
 
+  readonly modalId = Modals.EditCommunity;
+
+  private readonly userService = inject(UserService);
+
+  readonly user$: Observable<User | null> = this.userService.user$;
+
   private readonly modalService = inject(ModalService);
 
   private readonly communitiesService = inject(CommunitiesService);
 
-  private readonly userService = inject(UserService);
-
-  user$: Observable<User | null> = this.userService.user$;
-
   private readonly router = inject(Router);
-
-  readonly modalId = Modals.EditCommunity;
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['community']) {
@@ -98,6 +99,15 @@ export class EditCommunityModalComponent implements OnChanges {
     this.communityEdit.moderatorsNames = this.communityEdit.moderatorsNames.filter(
       (item) => item !== moderator,
     );
+  }
+
+  onDelete(): void {
+    // eslint-disable-next-line no-restricted-globals
+    const isConfirmed = confirm('Are you sure?');
+    if (isConfirmed) {
+      // this.communitiesService.deleteCommunity(this.community.id);
+      // TODO: Delete community from everyone + delete posts inside community
+    }
   }
 
   onClose(form: NgForm): void {
