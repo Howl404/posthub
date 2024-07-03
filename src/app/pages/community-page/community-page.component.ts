@@ -49,7 +49,7 @@ export class CommunityPageComponent implements OnInit {
       switchMap((name) => this.communitiesService.getCommunityByName(name)),
       filterWithSideEffect(
         (value) => !!value,
-        () => this.modalService.open(Modals.CommunityNotFound),
+        () => this.modalService.open(Modals.NotFound),
       ),
     );
 

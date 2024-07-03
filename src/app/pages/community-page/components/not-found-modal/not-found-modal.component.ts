@@ -1,14 +1,16 @@
-import { Component, inject } from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Modals } from '../../../shared/modal/modals.enum';
+import { Modals } from '../../../../shared/modal/modals.enum';
 
 @Component({
-  selector: 'app-not-found-modal',
+  selector: 'app-not-found-modal[text]',
   templateUrl: './not-found-modal.component.html',
   styleUrls: ['./not-found-modal.component.scss'],
 })
 export class NotFoundModalComponent {
-  readonly modalId = Modals.CommunityNotFound;
+  @Input() text!: string;
+
+  readonly modalId = Modals.NotFound;
 
   private readonly router = inject(Router);
 

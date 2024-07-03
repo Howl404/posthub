@@ -55,12 +55,13 @@ export class PostsService {
     ) as Observable<Post[]>;
   }
 
-  getPostById(postId: string): Observable<Post> {
+  getPostById(postId: string): Observable<Post | null> {
     const docRef = doc(this.postsCollection, postId);
     const promise = getDoc(docRef);
     return from(promise).pipe(
       map((docSnapshot) => {
         const data = docSnapshot.data();
+        if (!data) return null;
         return {
           ...data,
           date: new Date(data['date']),
