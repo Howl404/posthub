@@ -1,6 +1,10 @@
 <app-sort-by [options]="sortOptions" (selected)="onSortChange($event)"></app-sort-by>
 <div class="container">
-  <div class="card" *ngFor="let post of data$ | async; trackBy: trackById">
+  <div
+    class="card"
+    *ngFor="let post of data$ | async; trackBy: trackById"
+    (click)="loadCommunityAndNavigate(post)"
+  >
     <div class="header">
       <div class="header-content">
         <p>{{ post.authorName }}</p>

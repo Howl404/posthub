@@ -6,7 +6,7 @@ import {
   collectionData,
   deleteDoc,
   doc,
-  getDoc,
+  docData,
   limit,
   orderBy,
   query,
@@ -57,15 +57,12 @@ export class PostsService {
 
   getPostById(postId: string): Observable<Post | null> {
     const docRef = doc(this.postsCollection, postId);
-    const promise = getDoc(docRef);
-    return from(promise).pipe(
-      map((docSnapshot) => {
-        const data = docSnapshot.data();
+    return docData(docRef, { idField: 'id' }).pipe(
+      map((data) => {
         if (!data) return null;
         return {
           ...data,
           date: new Date(data['date']),
-          id: docSnapshot.id,
         } as Post;
       }),
     );

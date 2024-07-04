@@ -6,7 +6,7 @@ import {
   collectionData,
   deleteDoc,
   doc,
-  getDoc,
+  docData,
   query,
   updateDoc,
   where,
@@ -27,21 +27,16 @@ export class CommunitiesService {
     return collectionData(q, { idField: 'id' }).pipe(
       map((communities) => {
         const community = communities[0] as Community | undefined;
-        if (community) {
-          return community;
-        }
-        return null;
+        return community || null;
       }),
     );
   }
 
-  getCommunityById(communityId: string): Observable<Community> {
+  getCommunityById(communityId: string): Observable<Community | null> {
     const docRef = doc(this.communitiesCollection, communityId);
-    const promise = getDoc(docRef);
-    return from(promise).pipe(
-      map((docSnapshot) => {
-        const data = docSnapshot.data();
-        return { ...data, id: docSnapshot.id } as Community;
+    return docData(docRef, { idField: 'id' }).pipe(
+      map((data) => {
+        return (data as Community) || null;
       }),
     );
   }

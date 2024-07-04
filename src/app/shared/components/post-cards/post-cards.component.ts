@@ -1,8 +1,10 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, first } from 'rxjs';
+import { Router } from '@angular/router';
 import { Post } from '../../models/post.model';
 import { PostCardsService } from './post-cards.service';
 import { SortOption } from '../sort-by/sort-option';
+import { CommunitiesService } from '../../services/communities.service';
 
 @Component({
   selector: 'app-post-cards[initialData]',
@@ -24,6 +26,10 @@ export class PostCardsComponent implements OnChanges {
   ];
 
   private readonly postCardsService = inject(PostCardsService);
+
+  private readonly communitiesService = inject(CommunitiesService);
+
+  private readonly router = inject(Router);
 
   readonly data$: Observable<Post[]> | null = this.postCardsService.data$;
 
@@ -50,6 +56,17 @@ export class PostCardsComponent implements OnChanges {
   onResetSort(e: MouseEvent): void {
     e.stopImmediatePropagation();
     this.postCardsService.resetSort();
+  }
+
+  loadCommunityAndNavigate(post: Post): void {
+    this.communitiesService
+      .getCommunityById('sds')
+      .pipe(first())
+      .subscribe((community) => {
+        const name = community?.name ?? '';
+
+        this.router.navigate(['/r/', name, post.id]);
+      });
   }
 
   trackById(index: number, post: Post): string {

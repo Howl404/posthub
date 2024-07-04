@@ -3,6 +3,7 @@ export interface Comment {
   text: string;
   author: string;
   location: string;
+  date: Date;
 }
 
 export type CommentDraft = Omit<Comment, 'id'>;

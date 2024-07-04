@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { RouterLink } from '@angular/router';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PostCardsComponent } from './components/post-cards/post-cards.component';
 import { SortByComponent } from './components/sort-by/sort-by.component';
@@ -24,7 +25,7 @@ import { TimeAgoPipe } from './time-ago.pipe';
     LoadingBlockComponent,
     TimeAgoPipe,
   ],
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [CommonModule, FormsModule, MatIconModule, RouterLink],
   exports: [
     PaginationComponent,
     PostCardsComponent,

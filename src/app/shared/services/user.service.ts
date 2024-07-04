@@ -5,7 +5,7 @@ import {
   collection,
   collectionData,
   doc,
-  getDoc,
+  docData,
   query,
   updateDoc,
   where,
@@ -79,11 +79,12 @@ export class UserService {
 
   getUserById(userId: string): Observable<User> {
     const docRef = doc(this.usersCollection, userId);
-    const promise = getDoc(docRef);
-    return from(promise).pipe(
-      map((docSnapshot) => {
-        const data = docSnapshot.data();
-        return { ...data, id: docSnapshot.id } as User;
+    return docData(docRef, { idField: 'id' }).pipe(
+      map((data) => {
+        if (!data) return null;
+        return {
+          ...data,
+        } as User;
       }),
     );
   }
@@ -92,11 +93,8 @@ export class UserService {
     const q = query(this.usersCollection, where('name', '==', userName));
     return collectionData(q, { idField: 'id' }).pipe(
       map((users) => {
-        const community = users[0] as User | undefined;
-        if (community) {
-          return community;
-        }
-        return null;
+        const result = users ? (users[0] as User) : null;
+        return result;
       }),
     );
   }

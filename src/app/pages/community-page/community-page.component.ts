@@ -74,7 +74,7 @@ export class CommunityPageComponent implements OnInit {
     this.userService.leaveCommunity(communityId, userData.id, userData);
   }
 
-  onNonAuthorizedClick(): void {
+  onNonAuthorized(): void {
     this.modalService.open(Modals.LogIn);
   }
 }
