@@ -4,6 +4,10 @@
   gap: 20px;
 }
 
+.header {
+  position: relative;
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -46,6 +50,9 @@ tbody tr:hover {
   position: absolute;
   cursor: pointer;
   right: 10px;
+  color: #ff0000;
+  top: 0;
+  bottom: 0;
   padding: 0;
   border: 0;
   background-color: transparent;

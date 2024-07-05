@@ -3,12 +3,15 @@ import {
   Firestore,
   addDoc,
   collection,
+  collectionData,
   deleteDoc,
   doc,
   getDoc,
+  query,
   updateDoc,
+  where,
 } from '@angular/fire/firestore';
-import { Observable, first, from, map } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 import { Community, CommunityDraft } from '../community.model';
 
 @Injectable({
@@ -18,6 +21,19 @@ export class CommunitiesService {
   firestore = inject(Firestore);
 
   communitiesCollection = collection(this.firestore, 'communities');
+
+  getCommunityByName(communityName: string): Observable<Community | null> {
+    const q = query(this.communitiesCollection, where('name', '==', communityName));
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((communities) => {
+        const community = communities[0] as Community | undefined;
+        if (community) {
+          return community;
+        }
+        return null;
+      }),
+    );
+  }
 
   getCommunityById(communityId: string): Observable<Community> {
     const docRef = doc(this.communitiesCollection, communityId);
@@ -45,22 +61,5 @@ export class CommunitiesService {
     const docRef = doc(this.communitiesCollection, communityId);
     const promise = deleteDoc(docRef);
     return from(promise);
-  }
-
-  addPostToCommunity(postId: string, communityId: string): void {
-    this.getCommunityById(communityId)
-      .pipe(first())
-      .subscribe((value) =>
-        this.updateCommunity(communityId, { postsId: [...value.postsId, postId] }),
-      );
-  }
-
-  deletePostFromCommunity(postId: string, communityId: string): void {
-    this.getCommunityById(communityId)
-      .pipe(first())
-      .subscribe((value) => {
-        const postsId = value.postsId.filter((id) => id !== postId);
-        this.updateCommunity(communityId, { postsId });
-      });
   }
 }

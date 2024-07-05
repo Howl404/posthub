@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { User } from '@angular/fire/auth';
 import { ModalService } from '../../shared/modal/modal.service';
+import { UserService } from '../../shared/user.service';
 import { Modals } from '../../shared/modal/modals.enum';
 import { AuthService } from '../../shared/auth.service';
 
@@ -11,11 +10,13 @@ import { AuthService } from '../../shared/auth.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+  userService = inject(UserService);
+
+  user$ = this.userService.user$;
+
   private readonly modalService = inject(ModalService);
 
   private readonly authService = inject(AuthService);
-
-  readonly user$: Observable<User> = this.authService.user$;
 
   onLogIn(): void {
     this.modalService.open(Modals.LogIn);

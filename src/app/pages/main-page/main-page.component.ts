@@ -6,6 +6,14 @@ import { Post } from '../../post.model';
 import { ViewService } from '../../shared/view-switcher/view.service';
 import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
 
+export const postsTableHeaders: TableHeader<Post>[] = [
+  { value: 'Name', propertyKey: 'authorName' },
+  { value: 'Title', propertyKey: 'title' },
+  { value: 'Description', propertyKey: 'description' },
+  { value: 'Upvotes', propertyKey: 'upvotes' },
+  { value: 'Date', propertyKey: 'date' },
+];
+
 export interface CityData {
   name: string;
   country: string;
@@ -23,15 +31,17 @@ export class MainPageComponent {
 
   private readonly viewService = inject(ViewService);
 
-  headers: TableHeader<Post>[] = [
-    { value: 'Name', propertyKey: 'authorName' },
-    { value: 'Title', propertyKey: 'title' },
-    { value: 'Description', propertyKey: 'description' },
-    { value: 'Upvotes', propertyKey: 'upvotes' },
-    { value: 'Date', propertyKey: 'date' },
-  ];
+  headers = postsTableHeaders;
 
   readonly viewMode$: Observable<ViewMode> = this.viewService.viewMode$;
 
   readonly data$: Observable<Post[]> = this.postsService.getPosts(30, 0);
+
+  // constructor() {
+  //   this.data$.pipe(first()).subscribe((posts) => {
+  //     posts.forEach((post) => {
+  //       this.postsService.updatePost(post.id, { commentsAmount: 0 });
+  //     });
+  //   });
+  // }
 }

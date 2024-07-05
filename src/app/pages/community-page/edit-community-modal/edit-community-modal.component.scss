@@ -1,0 +1,81 @@
+:host {
+  display: none;
+}
+
+.edit-community-modal {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+
+  h2 {
+    margin-right: auto;
+    margin-bottom: 0;
+  }
+
+  form {
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .form-group {
+    div {
+      display: block;
+      margin-right: 10px;
+    }
+
+    label {
+      display: flex;
+      gap: 10px;
+    }
+
+    input[type='checkbox'] {
+      margin: 0;
+    }
+  }
+
+  .error {
+    transition: opacity 0.5s ease-in-out;
+    color: red;
+  }
+}
+
+.moderators-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.moderator-item {
+  width: fit-content;
+  position: relative;
+}
+
+.moderators-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+
+  button {
+    padding: 5px;
+    border: transparent;
+  }
+}
+
+.reset-btn {
+  position: absolute;
+  cursor: pointer;
+  right: -40px;
+  color: #ff0000;
+  top: 0;
+  bottom: 0;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+
+  &:hover {
+    scale: 1.2;
+  }
+  transition: 300ms;
+}

@@ -32,7 +32,7 @@
           [(ngModel)]="user['gender']"
           name="gender"
           #inputField="ngModel"
-          required
+          [required]="true"
         ></app-gender-selector>
         <div
           [@errorState]="

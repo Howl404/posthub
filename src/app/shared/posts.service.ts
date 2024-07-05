@@ -27,7 +27,14 @@ export class PostsService {
 
   getPosts(_limit: number, _startAt: number): Observable<Post[]> {
     const q = query(this.postsCollection, orderBy('date'), limit(_limit), startAt(_startAt));
-    return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((posts) =>
+        posts.map((post) => ({
+          ...post,
+          date: new Date(post['date']),
+        })),
+      ),
+    ) as Observable<Post[]>;
   }
 
   getPostsByLocationId(locationId: string, _limit: number, _startAt: number): Observable<Post[]> {
@@ -38,7 +45,14 @@ export class PostsService {
       limit(_limit),
       startAt(_startAt),
     );
-    return collectionData(q, { idField: 'id' }) as Observable<Post[]>;
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((posts) =>
+        posts.map((post) => ({
+          ...post,
+          date: new Date(post['date']),
+        })),
+      ),
+    ) as Observable<Post[]>;
   }
 
   getPostById(postId: string): Observable<Post> {
@@ -47,13 +61,21 @@ export class PostsService {
     return from(promise).pipe(
       map((docSnapshot) => {
         const data = docSnapshot.data();
-        return { ...data, id: docSnapshot.id } as Post;
+        return {
+          ...data,
+          date: new Date(data['date']),
+          id: docSnapshot.id,
+        } as Post;
       }),
     );
   }
 
   createPost(post: PostDraft): Observable<string> {
-    const promise = addDoc(this.postsCollection, post).then((response) => response.id);
+    const formattedPost = {
+      ...post,
+      date: post.date.getTime(),
+    };
+    const promise = addDoc(this.postsCollection, formattedPost).then((response) => response.id);
     return from(promise);
   }
 

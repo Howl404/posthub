@@ -19,6 +19,8 @@ import { ModalService } from './modal.service';
 export class ModalComponent implements OnInit, OnDestroy {
   @Input() id!: string;
 
+  @Input() customOnClose: () => void | undefined;
+
   @Output() closed = new EventEmitter<void>();
 
   isOpen = false;
@@ -43,14 +45,21 @@ export class ModalComponent implements OnInit, OnDestroy {
   }
 
   open(): void {
-    document.body.classList.add('modal-open');
-    this.isOpen = true;
+    if (!this.isOpen) {
+      document.body.classList.add('modal-open');
+      this.isOpen = true;
+    }
   }
 
   close(): void {
-    document.body.classList.remove('modal-open');
-    this.isOpen = false;
-    this.closed.emit();
+    if (this.isOpen) {
+      document.body.classList.remove('modal-open');
+      this.isOpen = false;
+      this.closed.emit();
+      if (this.customOnClose) {
+        this.customOnClose();
+      }
+    }
   }
 
   ngOnDestroy(): void {

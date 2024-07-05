@@ -21,12 +21,12 @@ export class AuthService {
 
   auth = inject(Auth);
 
-  user$: Observable<UserFire | null> = user(this.auth);
+  userFire$: Observable<UserFire> = user(this.auth);
 
   usersCollection = collection(this.firestore, 'users');
 
-  signUpWithPassword(userDraft: UserDraft): Observable<boolean> {
-    const { email, password, ...additionalData } = userDraft;
+  signUpWithPassword(userDraft: UserDraft, password: string): Observable<boolean> {
+    const { email, ...additionalData } = userDraft;
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then(
       async (userCred) => {
         const userId = userCred.user.uid;
@@ -41,7 +41,7 @@ export class AuthService {
     const provider = new GoogleAuthProvider();
     const promise = signInWithPopup(this.auth, provider).then(async (result) => {
       const { user: userData } = result;
-      const userDraft: Partial<UserDraft> = {
+      const userDraft: UserDraft = {
         email: userData.email || '',
         name: userData.displayName || '',
         gender: '',
@@ -50,6 +50,7 @@ export class AuthService {
         commentsId: [],
         postsId: [],
         joinedCommunitiesId: [],
+        moderatingCommunitiesId: [],
       };
       const userId = userData.uid;
 
@@ -57,7 +58,7 @@ export class AuthService {
       const userDocSnap = await getDoc(userDocRef);
 
       if (!userDocSnap.exists()) {
-        await setDoc(userDocRef, { ...userDraft, id: userId });
+        await setDoc(userDocRef, { ...userDraft });
       }
 
       return true;

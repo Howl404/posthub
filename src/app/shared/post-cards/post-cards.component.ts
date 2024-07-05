@@ -16,9 +16,9 @@ export class PostCardsComponent implements OnChanges {
   lastPage = 1;
 
   sortOptions: SortOption<Post>[] = [
-    { value: 'authorName', label: 'Name' },
+    { value: 'authorName', label: 'Author' },
     { value: 'title', label: 'Title' },
-    { value: 'description', label: 'Country' },
+    { value: 'description', label: 'Description' },
     { value: 'upvotes', label: 'Upvotes' },
     { value: 'date', label: 'Date' },
   ];
@@ -35,7 +35,7 @@ export class PostCardsComponent implements OnChanges {
       const { currentValue } = changes['initialData'];
 
       this.postCardsService.setInitialData(currentValue);
-      this.lastPage = Math.floor(currentValue.length / 5);
+      this.lastPage = Math.ceil(currentValue.length / this.postCardsService.itemsPerPage);
     }
   }
 
@@ -50,5 +50,9 @@ export class PostCardsComponent implements OnChanges {
   onResetSort(e: MouseEvent): void {
     e.stopImmediatePropagation();
     this.postCardsService.resetSort();
+  }
+
+  trackById(index: number, post: Post): string {
+    return post.id;
   }
 }

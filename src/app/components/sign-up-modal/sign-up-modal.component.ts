@@ -64,15 +64,17 @@ export class SignUpModalComponent {
 
   onSubmit(form: NgForm): void {
     if (form.valid) {
+      const { password, ...userDraftWithoutPassword } = this.user;
       const userDraft: UserDraft = {
-        ...this.user,
+        ...userDraftWithoutPassword,
         commentsId: [],
         postsId: [],
         joinedCommunitiesId: [],
+        moderatingCommunitiesId: [],
       };
 
       this.authService
-        .signUpWithPassword(userDraft)
+        .signUpWithPassword(userDraft, password)
         .pipe(first())
         .subscribe(() => {
           this.modalService.close(Modals.SignUp);

@@ -1,0 +1,74 @@
+<app-not-found-modal></app-not-found-modal>
+
+<ng-container *ngIf="communityData$ | async as communityData; else spinnerTemplate">
+  <app-create-post-modal [locationId]="communityData.id"></app-create-post-modal>
+  <app-edit-community-modal [community]="communityData"></app-edit-community-modal>
+
+  <div class="header-color" [style.background-color]="communityData.backgroundColor"></div>
+
+  <div>
+    <div class="header-container">
+      <div class="data-container">
+        <h1>r/{{ communityData.name }}</h1>
+        <h2>Members {{ communityData.joinedAmount }}</h2>
+      </div>
+
+      <div *ngIf="user$ | async as user; else notAuthorizedButtons" class="buttons-container">
+        <button type="button" (click)="onCreatePost()">
+          <mat-icon>add</mat-icon>
+          Create a post
+        </button>
+        <button
+          *ngIf="
+            !user.joinedCommunitiesId.includes(communityData.id) &&
+            communityData.ownerId !== user.id
+          "
+          type="button"
+          (click)="onJoinCommunity(communityData.id, user)"
+        >
+          Join
+        </button>
+        <button
+          *ngIf="
+            user.joinedCommunitiesId.includes(communityData.id) && communityData.ownerId !== user.id
+          "
+          type="button"
+          (click)="onLeaveCommunity(communityData.id, user)"
+        >
+          Leave
+        </button>
+
+        <ng-container
+          *ngIf="
+            communityData.ownerId === user.id || communityData.moderatorsNames.includes(user.name)
+          "
+        >
+          <button type="button" (click)="onEditCommunity()">Edit</button>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+
+  <app-view-switcher></app-view-switcher>
+
+  <ng-container *ngIf="posts$ | async as data; else spinnerTemplate">
+    <ng-container [ngSwitch]="viewMode$ | async">
+      <app-post-cards *ngSwitchCase="0" [initialData]="data"></app-post-cards>
+      <app-table *ngSwitchCase="1" [headers]="headers" [initialData]="data"></app-table>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #spinnerTemplate>
+  <app-loading-block></app-loading-block>
+</ng-template>
+
+<ng-template #notAuthorizedButtons>
+  <div class="buttons-container">
+    <button type="button" (click)="onNonAuthorizedClick()">
+      <mat-icon>add</mat-icon>
+      Create a post
+    </button>
+    <button type="button" (click)="onNonAuthorizedClick()">Join</button>
+  </div>
+</ng-template>
