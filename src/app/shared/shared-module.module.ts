@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { PaginationComponent } from './components/pagination/pagination.component';
 import { PostCardsComponent } from './components/post-cards/post-cards.component';
 import { SortByComponent } from './components/sort-by/sort-by.component';
@@ -31,7 +32,7 @@ import { EditPostModalComponent } from '../pages/community-page/post-page/edit-p
     UpvoteComponent,
     EditPostModalComponent,
   ],
-  imports: [CommonModule, FormsModule, MatIconModule, RouterLink],
+  imports: [CommonModule, FormsModule, MatIconModule, RouterLink, NgxEchartsModule.forChild()],
   exports: [
     PaginationComponent,
     PostCardsComponent,

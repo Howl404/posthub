@@ -1,6 +1,7 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Observable, first, map, switchMap, tap } from 'rxjs';
+import { EChartsOption } from 'echarts';
 import { PostsService } from '../../../shared/services/posts.service';
 import { filterWithSideEffect } from '../../../utils/filterWithSideEffect';
 import { ModalService } from '../../../shared/components/modal/modal.service';
@@ -84,5 +85,30 @@ export class PostPageComponent implements OnInit {
 
   onEdit(): void {
     this.modalService.open(Modals.EditPost);
+  }
+
+  returnCharts(post: Post): EChartsOption {
+    const sortedUpvotes = post.upvotesByDay.sort((a, b) => a.date.getTime() - b.date.getTime());
+
+    const categories = sortedUpvotes.map((upvote) => upvote.date.toDateString());
+
+    const data = sortedUpvotes.map((upvote) => upvote.amount);
+
+    return {
+      xAxis: {
+        type: 'category',
+        data: categories,
+      },
+      yAxis: {
+        type: 'value',
+      },
+      series: [
+        {
+          data,
+          type: 'line',
+          smooth: true,
+        },
+      ],
+    };
   }
 }

@@ -5,6 +5,7 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { provideFirestore, getFirestore } from '@angular/fire/firestore';
 import { FormsModule } from '@angular/forms';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { environment } from '../environments/environment';
@@ -30,6 +31,10 @@ import { LogInModalComponent } from './components/log-in-modal/log-in-modal.comp
     BrowserAnimationsModule,
     FormsModule,
     SharedModule,
+    NgxEchartsModule.forRoot({
+      // eslint-disable-next-line import/no-extraneous-dependencies
+      echarts: () => import('echarts'),
+    }),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore()),

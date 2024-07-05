@@ -1,6 +1,6 @@
-<app-modal id="{{ modalId }}" (closed)="onClose(editCommunityForm)">
+<app-modal id="{{ modalId }}" (closed)="onClose(editPostForm)">
   <div class="{{ modalId }}">
-    <form #editCommunityForm="ngForm" (ngSubmit)="onSubmit(editCommunityForm)">
+    <form #editPostForm="ngForm" (ngSubmit)="onSubmit(editPostForm)">
       <ng-container *ngIf="user$ | async as user">
         <div *ngFor="let field of fields">
           <app-dynamic-form-field
@@ -27,8 +27,8 @@
           </div>
         </div>
 
-        <button type="submit" [disabled]="editCommunityForm.invalid && editCommunityForm.touched">
-          Update Community
+        <button type="submit" [disabled]="editPostForm.invalid && editPostForm.touched">
+          Update Post
         </button>
       </ng-container>
     </form>

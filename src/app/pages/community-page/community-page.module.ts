@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { NgxEchartsModule } from 'ngx-echarts';
 import { CommunityPageComponent } from './community-page.component';
 import { CommunityPageRoutingModule } from './community-page-routing.module';
 import { SharedModule } from '../../shared/shared-module.module';
@@ -17,7 +18,13 @@ import { PostPageComponent } from './post-page/post-page.component';
     EditCommunityModalComponent,
     PostPageComponent,
   ],
-  imports: [CommonModule, SharedModule, FormsModule, CommunityPageRoutingModule],
+  imports: [
+    NgxEchartsModule.forChild(),
+    CommonModule,
+    SharedModule,
+    FormsModule,
+    CommunityPageRoutingModule,
+  ],
   exports: [CommunityPageComponent],
 })
 export class CommunityPageModule {}
