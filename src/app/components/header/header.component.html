@@ -1,7 +1,31 @@
 <nav>
   <a routerLink="/"><h2>PostHub</h2></a>
 
-  <div>Search <input /></div>
+  <div>
+    <input
+      [(ngModel)]="search"
+      (ngModelChange)="onSearchChange($event)"
+      placeholder="Search"
+      #input
+    />
+    <div class="dropdown" *ngIf="search">
+      <div class="results" *ngIf="searchResults$ | async as results">
+        <ng-container *ngIf="results.length; else noResults">
+          <a
+            class="item"
+            *ngFor="let community of results"
+            [routerLink]="['/r/', community.name]"
+            (click)="resetSearch()"
+          >
+            {{ community.name }}
+          </a>
+        </ng-container>
+      </div>
+      <ng-template #noResults>
+        <div class="not-found">Nothing Found</div>
+      </ng-template>
+    </div>
+  </div>
 
   <ng-container *ngIf="user$ | async as user; else noUserTemplate">
     <div class="user-container">
