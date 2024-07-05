@@ -2,3 +2,59 @@
   padding: 16px;
   border-right: 1px solid #0003;
 }
+
+nav {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+
+  a {
+    display: flex;
+    gap: 6px;
+    text-decoration: none;
+    color: #000;
+    padding: 6px;
+    border-radius: 8px;
+
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition:
+      background-color 0.3s,
+      color 0.3s;
+    background-color: white;
+
+    &.active {
+      background-color: #007bff;
+      color: white;
+      border-color: #007bff;
+    }
+
+    &:hover {
+      background-color: #e0e0e0;
+    }
+  }
+}
+
+.links {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
+}
+
+hr {
+  width: 100%;
+  border-color: #0003;
+}
+
+h2 {
+  font-size: 12px;
+  color: #576f76;
+}
+
+.add-community {
+  width: 100%;
+  margin-bottom: 20px;
+  justify-content: flex-start;
+  gap: 6px;
+}

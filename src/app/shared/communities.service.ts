@@ -11,8 +11,10 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, forkJoin, from, map } from 'rxjs';
+
 import { Community, CommunityDraft } from '../community.model';
+import { User } from '../user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -61,5 +63,15 @@ export class CommunitiesService {
     const docRef = doc(this.communitiesCollection, communityId);
     const promise = deleteDoc(docRef);
     return from(promise);
+  }
+
+  getUserCommunities(user: User): Observable<Community[]> {
+    const neededCommunitiesIds = [
+      ...new Set([...user.joinedCommunitiesId, ...user.moderatingCommunitiesId]),
+    ];
+
+    const communityObservables = neededCommunitiesIds.map((id) => this.getCommunityById(id));
+
+    return forkJoin(communityObservables);
   }
 }

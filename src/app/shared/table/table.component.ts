@@ -31,7 +31,7 @@ export class TableComponent<T extends object> implements OnChanges {
       const { currentValue } = changes['initialData'];
 
       this.tableService.setInitialData(currentValue);
-      this.lastPage = Math.ceil(currentValue.length / this.tableService.itemsPerPage);
+      this.lastPage = Math.ceil(currentValue.length / this.tableService.itemsPerPage) || 1;
     }
   }
 

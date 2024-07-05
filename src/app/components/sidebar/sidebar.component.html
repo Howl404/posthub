@@ -1,3 +1,22 @@
 <nav>
-  <p>sidebar works!</p>
+  <div class="links">
+    <a routerLink="/"><mat-icon>home</mat-icon>Home</a>
+    <a *ngIf="user" [routerLink]="['/u/', user.name]"><mat-icon>perm_identity</mat-icon>Profile</a>
+  </div>
+  <hr />
+  <div>
+    <h2>COMMUNITIES</h2>
+    <button class="add-community" (click)="onCreateCommunity()">
+      <mat-icon>add</mat-icon>Create a community
+    </button>
+    <div class="communities-container" *ngIf="user">
+      <a *ngFor="let community of communities$ | async" [routerLink]="['/r/', community.name]">
+        <mat-icon>group</mat-icon> {{ community.name }}
+      </a>
+    </div>
+  </div>
 </nav>
+
+<ng-container *ngIf="user">
+  <app-create-community-modal [user]="user"></app-create-community-modal>
+</ng-container>
