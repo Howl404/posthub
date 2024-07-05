@@ -1,4 +1,9 @@
 export interface Upvote {
-  date: string;
+  date: Date;
+  amount: number;
+}
+
+export interface UpvoteDTO {
+  date: number;
   amount: number;
 }

@@ -1,0 +1,36 @@
+<app-modal id="{{ modalId }}" (closed)="onClose(editCommunityForm)">
+  <div class="{{ modalId }}">
+    <form #editCommunityForm="ngForm" (ngSubmit)="onSubmit(editCommunityForm)">
+      <ng-container *ngIf="user$ | async as user">
+        <div *ngFor="let field of fields">
+          <app-dynamic-form-field
+            [field]="field"
+            [(ngModel)]="postEdit[field.model.toString()]"
+            (ngModelChange)="onFieldChange(field.model, $event)"
+            name="{{ field.name }}"
+            #inputField="ngModel"
+            [required]="field.required"
+            [minlength]="field.minLength"
+          >
+          </app-dynamic-form-field>
+          <div
+            [@errorState]="
+              inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
+            "
+            class="error"
+          >
+            <div *ngFor="let error of field.validationMessages | keyvalue">
+              <div *ngIf="inputField.errors?.[error.key]">
+                {{ error.value }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button type="submit" [disabled]="editCommunityForm.invalid && editCommunityForm.touched">
+          Update Community
+        </button>
+      </ng-container>
+    </form>
+  </div>
+</app-modal>

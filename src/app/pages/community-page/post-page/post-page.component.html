@@ -4,6 +4,7 @@
 ></app-not-found-modal>
 
 <ng-container *ngIf="post$ | async as post">
+  <app-edit-post-modal [post]="post"></app-edit-post-modal>
   <div class="header">
     <div class="header-flex">
       <a [routerLink]="['/r/', communityName]">r/{{ communityName }}</a>
@@ -18,38 +19,26 @@
     <p>{{ post.description }}</p>
 
     <div class="footer">
-      <div>
-        <mat-icon> {{ post.upvotes > 1 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
-        {{ post.upvotes }}
-      </div>
-      <div>
+      <app-upvote [post]="post"></app-upvote>
+      <div class="comment-amount">
         <mat-icon>comment</mat-icon>
         {{ post.commentsAmount }}
       </div>
     </div>
+
     <div class="add-comment">
       <ng-container *ngIf="user$ | async as user; else nonAuthorized">
         <input placeholder="Comment" [(ngModel)]="comment" name="comment" />
         <button type="button" (click)="onAddComment(user.name, post)" [disabled]="!comment.length">
           <mat-icon>add</mat-icon> Add comment
         </button>
+        <button *ngIf="user.postsId.includes(post.id)" (click)="onEdit()">Edit</button>
       </ng-container>
     </div>
 
     <div class="comments-container">
       <ng-container *ngIf="comments$ | async as comments">
-        <ng-container *ngFor="let comment of comments">
-          <div class="comment">
-            <div class="comment-header">
-              <a [routerLink]="['/u/', comment.author]">{{ comment.author }}</a>
-              <p>{{ comment.date | timeAgo }}</p>
-            </div>
-
-            <p>
-              {{ comment.text }}
-            </p>
-          </div>
-        </ng-container>
+        <app-comment *ngFor="let comment of comments" [comment]="comment"></app-comment>
       </ng-container>
     </div>
   </div>

@@ -1,0 +1,21 @@
+<div class="upvote-buttons-container">
+  <ng-container *ngIf="user$ | async as user; else nonAuthorizedVote">
+    <button [disabled]="user.upvotedPostsId.includes(post.id)" (click)="onUpvote(user, post)">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    {{ post.upvotes }}
+    <button [disabled]="!user.upvotedPostsId.includes(post.id)" (click)="onDownvote(user, post)">
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+  </ng-container>
+
+  <ng-template #nonAuthorizedVote>
+    <button mat-icon-button (click)="onNonAuthorized()">
+      <mat-icon>arrow_upward</mat-icon>
+    </button>
+    {{ post.upvotes }}
+    <button mat-icon-button (click)="onNonAuthorized()">
+      <mat-icon>arrow_downward</mat-icon>
+    </button>
+  </ng-template>
+</div>

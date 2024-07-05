@@ -81,4 +81,8 @@ export class PostPageComponent implements OnInit {
   onNonAuthorized(): void {
     this.modalService.open(Modals.LogIn);
   }
+
+  onEdit(): void {
+    this.modalService.open(Modals.EditPost);
+  }
 }

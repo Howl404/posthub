@@ -67,6 +67,7 @@ export class SignUpModalComponent {
       const { password, ...userDraftWithoutPassword } = this.user;
       const userDraft: UserDraft = {
         ...userDraftWithoutPassword,
+        upvotedPostsId: [],
         commentsId: [],
         postsId: [],
         joinedCommunitiesId: [],

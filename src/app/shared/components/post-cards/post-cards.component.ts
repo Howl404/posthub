@@ -60,7 +60,7 @@ export class PostCardsComponent implements OnChanges {
 
   loadCommunityAndNavigate(post: Post): void {
     this.communitiesService
-      .getCommunityById('sds')
+      .getCommunityById(post.location)
       .pipe(first())
       .subscribe((community) => {
         const name = community?.name ?? '';

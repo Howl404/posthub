@@ -9,9 +9,7 @@ import {
   collectionData,
   query,
   addDoc,
-  deleteDoc,
   doc,
-  updateDoc,
   docData,
 } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
@@ -61,23 +59,13 @@ export class CommentsService {
   }
 
   createComment(comment: CommentDraft): Observable<string> {
-    const formattedPost = {
+    const formattedComment = {
       ...comment,
       date: comment.date.getTime(),
     };
-    const promise = addDoc(this.commentsCollection, formattedPost).then((response) => response.id);
-    return from(promise);
-  }
-
-  updatePost(commentId: string, comment: Partial<Comment>): Observable<void> {
-    const docRef = doc(this.commentsCollection, commentId);
-    const promise = updateDoc(docRef, { ...comment });
-    return from(promise);
-  }
-
-  deletePost(commentId: string): Observable<void> {
-    const docRef = doc(this.commentsCollection, commentId);
-    const promise = deleteDoc(docRef);
+    const promise = addDoc(this.commentsCollection, formattedComment).then(
+      (response) => response.id,
+    );
     return from(promise);
   }
 }

@@ -5,6 +5,7 @@ export interface User {
   gender: string;
   dob: string;
   subscribed: boolean;
+  upvotedPostsId: string[];
   moderatingCommunitiesId: string[];
   commentsId: string[];
   postsId: string[];

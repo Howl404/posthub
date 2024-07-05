@@ -15,7 +15,8 @@ import {
   where,
 } from '@angular/fire/firestore';
 import { Observable, from, map } from 'rxjs';
-import { Post, PostDraft } from '../models/post.model';
+import { Post, PostDraft, PostDTO } from '../models/post.model';
+import { Upvote } from '../models/upvote.model';
 
 @Injectable({
   providedIn: 'root',
@@ -47,10 +48,16 @@ export class PostsService {
     );
     return collectionData(q, { idField: 'id' }).pipe(
       map((posts) =>
-        posts.map((post) => ({
-          ...post,
-          date: new Date(post['date']),
-        })),
+        posts
+          .map((post) => ({
+            ...post,
+            date: new Date(post['date']),
+            upvotesByDay: post['upvotesByDay'].map((upvote) => ({
+              ...upvote,
+              date: new Date(upvote.date),
+            })),
+          }))
+          .reverse(),
       ),
     ) as Observable<Post[]>;
   }
@@ -63,6 +70,10 @@ export class PostsService {
         return {
           ...data,
           date: new Date(data['date']),
+          upvotesByDay: data['upvotesByDay'].map((upvote) => ({
+            ...upvote,
+            date: new Date(upvote.date),
+          })),
         } as Post;
       }),
     );
@@ -77,7 +88,7 @@ export class PostsService {
     return from(promise);
   }
 
-  updatePost(postId: string, post: Partial<Post>): Observable<void> {
+  updatePost(postId: string, post: Partial<PostDTO>): Observable<void> {
     const docRef = doc(this.postsCollection, postId);
     const promise = updateDoc(docRef, { ...post });
     return from(promise);
@@ -87,5 +98,67 @@ export class PostsService {
     const docRef = doc(this.postsCollection, postId);
     const promise = deleteDoc(docRef);
     return from(promise);
+  }
+
+  upvotePost(post: Post): Observable<void> {
+    const currentDate = new Date();
+
+    const upvotesForCurrentDay = post.upvotesByDay.find((upvote) => {
+      const date = new Date(upvote.date);
+
+      return date.getDate() === currentDate.getDate();
+    });
+
+    if (upvotesForCurrentDay) {
+      upvotesForCurrentDay.amount += 1;
+    } else {
+      const newUpvote: Upvote = {
+        date: currentDate,
+        amount: 1,
+      };
+      post.upvotesByDay.push(newUpvote);
+    }
+
+    const upvotes = post.upvotesByDay.map((upvote) => {
+      return { ...upvote, date: upvote.date.getTime() };
+    });
+
+    return this.updatePost(post.id, {
+      ...post,
+      date: post.date.getTime(),
+      upvotesByDay: upvotes,
+      upvotes: post.upvotes + 1,
+    });
+  }
+
+  downvotePost(post: Post): Observable<void> {
+    const currentDate = new Date();
+
+    const upvotesForCurrentDay = post.upvotesByDay.find((upvote) => {
+      const date = new Date(upvote.date);
+
+      return date.getDate() === currentDate.getDate();
+    });
+
+    if (upvotesForCurrentDay) {
+      upvotesForCurrentDay.amount -= 1;
+    } else if (!upvotesForCurrentDay) {
+      const newUpvote: Upvote = {
+        date: currentDate,
+        amount: -1,
+      };
+      post.upvotesByDay.push(newUpvote);
+    }
+
+    const upvotes = post.upvotesByDay.map((upvote) => {
+      return { ...upvote, date: upvote.date.getTime() };
+    });
+
+    return this.updatePost(post.id, {
+      ...post,
+      date: post.date.getTime(),
+      upvotesByDay: upvotes,
+      upvotes: post.upvotes - 1,
+    });
   }
 }

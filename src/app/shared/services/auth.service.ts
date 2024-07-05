@@ -21,7 +21,7 @@ export class AuthService {
 
   auth = inject(Auth);
 
-  userFire$: Observable<UserFire> = user(this.auth);
+  userFire$: Observable<UserFire | null> = user(this.auth);
 
   usersCollection = collection(this.firestore, 'users');
 
@@ -47,6 +47,7 @@ export class AuthService {
         gender: '',
         dob: '',
         subscribed: false,
+        upvotedPostsId: [],
         commentsId: [],
         postsId: [],
         joinedCommunitiesId: [],

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { first, map, switchMap } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { CommunitiesService } from '../../shared/services/communities.service';
 import { Community } from '../../shared/models/community.model';
@@ -53,9 +53,11 @@ export class CommunityPageComponent implements OnInit {
       ),
     );
 
-    this.communityData$.pipe(first()).subscribe((communityData) => {
-      this.posts$ = this.postsService.getPostsByLocationId(communityData.id, 20, 0);
-    });
+    this.posts$ = this.communityData$.pipe(
+      switchMap((communityData) => {
+        return this.postsService.getPostsByLocationId(communityData.id, 20, 0);
+      }),
+    );
   }
 
   onCreatePost(): void {

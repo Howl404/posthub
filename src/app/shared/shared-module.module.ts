@@ -12,6 +12,9 @@ import { ModalComponent } from './components/modal/modal.component';
 import { DynamicFormFieldComponent } from './components/dynamic-form-field/dynamic-form-field.component';
 import { LoadingBlockComponent } from './components/loading-block/loading-block.component';
 import { TimeAgoPipe } from './time-ago.pipe';
+import { CommentComponent } from '../pages/community-page/post-page/comment/comment.component';
+import { UpvoteComponent } from '../pages/community-page/post-page/upvote/upvote.component';
+import { EditPostModalComponent } from '../pages/community-page/post-page/edit-post-modal/edit-post-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +27,9 @@ import { TimeAgoPipe } from './time-ago.pipe';
     DynamicFormFieldComponent,
     LoadingBlockComponent,
     TimeAgoPipe,
+    CommentComponent,
+    UpvoteComponent,
+    EditPostModalComponent,
   ],
   imports: [CommonModule, FormsModule, MatIconModule, RouterLink],
   exports: [
@@ -37,6 +43,9 @@ import { TimeAgoPipe } from './time-ago.pipe';
     LoadingBlockComponent,
     TimeAgoPipe,
     MatIconModule,
+    CommentComponent,
+    UpvoteComponent,
+    EditPostModalComponent,
   ],
 })
 export class SharedModule {}
