@@ -1,4 +1,7 @@
-<app-not-found-modal></app-not-found-modal>
+<app-not-found-modal
+  text="There aren’t any communities with that name. Double-check the community name or try searching
+      for similar communities."
+></app-not-found-modal>
 
 <ng-container *ngIf="communityData$ | async as communityData; else spinnerTemplate">
   <app-create-post-modal [locationId]="communityData.id"></app-create-post-modal>
@@ -65,10 +68,10 @@
 
 <ng-template #notAuthorizedButtons>
   <div class="buttons-container">
-    <button type="button" (click)="onNonAuthorizedClick()">
+    <button type="button" (click)="onNonAuthorized()">
       <mat-icon>add</mat-icon>
       Create a post
     </button>
-    <button type="button" (click)="onNonAuthorizedClick()">Join</button>
+    <button type="button" (click)="onNonAuthorized()">Join</button>
   </div>
 </ng-template>

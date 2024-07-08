@@ -1,0 +1,54 @@
+:host {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.header {
+  .author-name {
+    font-size: 16px;
+  }
+
+  .header-flex {
+    display: flex;
+    gap: 20px;
+
+    p {
+      margin: 0;
+    }
+  }
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.comments-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.footer {
+  display: flex;
+  gap: 20px;
+}
+
+.add-comment {
+  display: flex;
+  gap: 10px;
+
+  button {
+    padding: 8px;
+    border-radius: 20px;
+  }
+}
+
+.comment-amount {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}

@@ -1,0 +1,6 @@
+<ng-container *ngIf="(viewMode$ | async).toString() as viewMode">
+  <div>
+    <button [class.active]="!+viewMode" (click)="setViewMode(0)">Cards</button>
+    <button [class.active]="+viewMode" (click)="setViewMode(1)">Table</button>
+  </div>
+</ng-container>

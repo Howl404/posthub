@@ -2,13 +2,14 @@ import { Component, inject, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { first, switchMap } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
-import { ModalService } from '../../../shared/modal/modal.service';
-import { Modals } from '../../../shared/modal/modals.enum';
-import { UserService } from '../../../shared/user.service';
+
+import { ModalService } from '../../../shared/components/modal/modal.service';
+import { Modals } from '../../../shared/components/modal/modals.enum';
+import { CommunityDraft } from '../../../shared/models/community.model';
+import { CommunitiesService } from '../../../shared/services/communities.service';
+import { UserService } from '../../../shared/services/user.service';
 import { createCommunityFields } from './create-community-fields';
-import { CommunityDraft } from '../../../community.model';
-import { User } from '../../../user.model';
-import { CommunitiesService } from '../../../shared/communities.service';
+import { User } from '../../../shared/models/user.model';
 
 export const DEFAULT_COMMUNITY_STATE = {
   name: '',

@@ -2,11 +2,11 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { first } from 'rxjs/operators';
-import { AuthService } from '../../shared/auth.service';
-import { UserDraft } from '../../user.model';
-import { ModalService } from '../../shared/modal/modal.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { UserDraft } from '../../shared/models/user.model';
+import { ModalService } from '../../shared/components/modal/modal.service';
 import { signUpFields } from './sign-up-fields';
-import { Modals } from '../../shared/modal/modals.enum';
+import { Modals } from '../../shared/components/modal/modals.enum';
 
 export const DEFAULT_SIGNUP_USER_STATE = {
   name: '',
@@ -67,8 +67,7 @@ export class SignUpModalComponent {
       const { password, ...userDraftWithoutPassword } = this.user;
       const userDraft: UserDraft = {
         ...userDraftWithoutPassword,
-        commentsId: [],
-        postsId: [],
+        upvotedPostsId: [],
         joinedCommunitiesId: [],
         moderatingCommunitiesId: [],
       };

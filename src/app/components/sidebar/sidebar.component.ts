@@ -1,11 +1,11 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UserService } from '../../shared/user.service';
-import { User } from '../../user.model';
-import { CommunitiesService } from '../../shared/communities.service';
-import { Community } from '../../community.model';
-import { ModalService } from '../../shared/modal/modal.service';
-import { Modals } from '../../shared/modal/modals.enum';
+import { ModalService } from '../../shared/components/modal/modal.service';
+import { Modals } from '../../shared/components/modal/modals.enum';
+import { Community } from '../../shared/models/community.model';
+import { CommunitiesService } from '../../shared/services/communities.service';
+import { UserService } from '../../shared/services/user.service';
+import { User } from '../../shared/models/user.model';
 
 @Component({
   selector: 'app-sidebar',

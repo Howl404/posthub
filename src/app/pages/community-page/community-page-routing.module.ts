@@ -4,6 +4,10 @@ import { CommunityPageComponent } from './community-page.component';
 
 const routes: Routes = [
   {
+    path: ':postId',
+    loadChildren: () => import('./post-page/post-page.module').then((m) => m.PostPageModule),
+  },
+  {
     path: '',
     component: CommunityPageComponent,
   },

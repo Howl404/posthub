@@ -2,10 +2,10 @@ import { trigger, state, style, transition, animate } from '@angular/animations'
 import { Component, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { EMPTY, catchError, first } from 'rxjs';
-import { AuthService } from '../../shared/auth.service';
-import { ModalService } from '../../shared/modal/modal.service';
+import { AuthService } from '../../shared/services/auth.service';
+import { ModalService } from '../../shared/components/modal/modal.service';
 import { logInFields } from './log-in-fields';
-import { Modals } from '../../shared/modal/modals.enum';
+import { Modals } from '../../shared/components/modal/modals.enum';
 
 export const DEFAULT_LOGIN_USER_STATE = {
   email: '',

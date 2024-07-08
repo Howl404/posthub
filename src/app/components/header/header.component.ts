@@ -1,11 +1,11 @@
 import { Component, inject } from '@angular/core';
 import { Observable, debounceTime, distinctUntilChanged, of } from 'rxjs';
-import { ModalService } from '../../shared/modal/modal.service';
-import { UserService } from '../../shared/user.service';
-import { Modals } from '../../shared/modal/modals.enum';
-import { AuthService } from '../../shared/auth.service';
-import { Community } from '../../community.model';
-import { CommunitiesService } from '../../shared/communities.service';
+import { ModalService } from '../../shared/components/modal/modal.service';
+import { Modals } from '../../shared/components/modal/modals.enum';
+import { Community } from '../../shared/models/community.model';
+import { AuthService } from '../../shared/services/auth.service';
+import { CommunitiesService } from '../../shared/services/communities.service';
+import { UserService } from '../../shared/services/user.service';
 
 @Component({
   selector: 'app-header',

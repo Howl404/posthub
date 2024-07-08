@@ -1,0 +1,30 @@
+<app-sort-by [options]="sortOptions" (selected)="onSortChange($event)"></app-sort-by>
+<div class="container">
+  <div
+    class="card"
+    *ngFor="let post of data$ | async; trackBy: trackById"
+    (click)="loadCommunityAndNavigate(post)"
+  >
+    <div class="header">
+      <div class="header-content">
+        <p>{{ post.authorName }}</p>
+        <p>{{ post.date | timeAgo }}</p>
+      </div>
+    </div>
+
+    <h3 class="title">{{ post.title }}</h3>
+    <p class="description">{{ post.description }}</p>
+
+    <div class="footer">
+      <div>
+        <mat-icon> {{ post.upvotes > 1 ? 'arrow_upward' : 'arrow_downward' }}</mat-icon>
+        {{ post.upvotes }}
+      </div>
+      <div>
+        <mat-icon>comment</mat-icon>
+        {{ post.commentsAmount }}
+      </div>
+    </div>
+  </div>
+</div>
+<app-pagination [lastPage]="lastPage" (pageChange)="onPageChange($event)"></app-pagination>

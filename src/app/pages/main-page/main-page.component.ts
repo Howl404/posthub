@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 import { Observable } from 'rxjs';
-import { TableHeader } from '../../shared/table/table-header.model';
-import { PostsService } from '../../shared/posts.service';
-import { Post } from '../../post.model';
-import { ViewService } from '../../shared/view-switcher/view.service';
-import { ViewMode } from '../../shared/view-switcher/view-mode.enum';
+import { TableHeader } from '../../shared/components/table/table-header.model';
+import { PostsService } from '../../shared/services/posts.service';
+import { Post } from '../../shared/models/post.model';
+import { ViewService } from '../../shared/components/view-switcher/view.service';
+import { ViewMode } from '../../shared/components/view-switcher/view-mode.enum';
 
 export const postsTableHeaders: TableHeader<Post>[] = [
   { value: 'Name', propertyKey: 'authorName' },

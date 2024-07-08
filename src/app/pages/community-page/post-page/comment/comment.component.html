@@ -1,0 +1,14 @@
+<div class="comment">
+  <div class="comment-header">
+    <a [routerLink]="['/u/', comment.author]">{{ comment.author }}</a>
+    <p>{{ comment.date | timeAgo }}</p>
+  </div>
+
+  <p>
+    {{ comment.text }}
+  </p>
+
+  <ng-container *ngIf="canDeleteComment">
+    <button (click)="onDelete()">Delete</button>
+  </ng-container>
+</div>
