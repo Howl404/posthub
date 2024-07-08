@@ -2,6 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import {
   Firestore,
   addDoc,
+  arrayRemove,
+  arrayUnion,
   collection,
   collectionData,
   deleteDoc,
@@ -14,7 +16,7 @@ import {
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, first, forkJoin, from, map, switchMap } from 'rxjs';
 import { Post, PostDraft, PostDTO } from '../models/post.model';
 import { Upvote } from '../models/upvote.model';
 
@@ -25,6 +27,8 @@ export class PostsService {
   firestore = inject(Firestore);
 
   postsCollection = collection(this.firestore, 'posts');
+
+  usersCollection = collection(this.firestore, 'users');
 
   getPosts(_limit: number, _startAt: number): Observable<Post[]> {
     const q = query(this.postsCollection, orderBy('date'), limit(_limit), startAt(_startAt));
@@ -100,6 +104,16 @@ export class PostsService {
     return from(promise);
   }
 
+  deletePostsByLocationId(locationId: string): Observable<string[]> {
+    return this.getPostsByLocationId(locationId, 999, 0).pipe(
+      first(),
+      switchMap((posts) => {
+        const deleteObservables = posts.map((post) => this.deletePost(post.id));
+        return forkJoin(deleteObservables).pipe(map(() => posts.map((post) => post.id)));
+      }),
+    );
+  }
+
   upvotePost(post: Post): Observable<void> {
     const currentDate = new Date();
 
@@ -160,5 +174,25 @@ export class PostsService {
       upvotesByDay: upvotes,
       upvotes: post.upvotes - 1,
     });
+  }
+
+  addUpvotedPost(userId: string, postId: string): Observable<void> {
+    const userDocRef = doc(this.usersCollection, userId);
+
+    return from(
+      updateDoc(userDocRef, {
+        upvotedPostsId: arrayUnion(postId),
+      }),
+    );
+  }
+
+  removeUpvotedPost(userId: string, postId: string): Observable<void> {
+    const userDocRef = doc(this.usersCollection, userId);
+
+    return from(
+      updateDoc(userDocRef, {
+        upvotedPostsId: arrayRemove(postId),
+      }),
+    );
   }
 }

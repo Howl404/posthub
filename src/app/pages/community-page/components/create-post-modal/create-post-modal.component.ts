@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { first, switchMap } from 'rxjs';
+import { first } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Modals } from '../../../../shared/components/modal/modals.enum';
 import { ModalService } from '../../../../shared/components/modal/modal.service';
@@ -71,17 +71,7 @@ export class CreatePostModalComponent {
 
       this.postsService
         .createPost(postDraft)
-        .pipe(
-          first(),
-          switchMap((postId) => {
-            return this.userService.getUserByName(postDraft.authorName).pipe(
-              first(),
-              switchMap((user) =>
-                this.userService.updateUser(user.id, { postsId: [...user.postsId, postId] }),
-              ),
-            );
-          }),
-        )
+        .pipe(first())
         .subscribe(() => {
           this.onClose(form);
           this.modalService.close(Modals.CreatePost);

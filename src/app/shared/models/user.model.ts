@@ -7,8 +7,6 @@ export interface User {
   subscribed: boolean;
   upvotedPostsId: string[];
   moderatingCommunitiesId: string[];
-  commentsId: string[];
-  postsId: string[];
   joinedCommunitiesId: string[];
 }
 

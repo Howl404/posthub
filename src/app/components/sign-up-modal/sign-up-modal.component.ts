@@ -68,8 +68,6 @@ export class SignUpModalComponent {
       const userDraft: UserDraft = {
         ...userDraftWithoutPassword,
         upvotedPostsId: [],
-        commentsId: [],
-        postsId: [],
         joinedCommunitiesId: [],
         moderatingCommunitiesId: [],
       };

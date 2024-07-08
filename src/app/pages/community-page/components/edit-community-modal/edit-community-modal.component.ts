@@ -10,6 +10,8 @@ import { CommunitiesService } from '../../../../shared/services/communities.serv
 import { editCommunityFields } from './edit-community-fields';
 import { UserService } from '../../../../shared/services/user.service';
 import { User } from '../../../../shared/models/user.model';
+import { PostsService } from '../../../../shared/services/posts.service';
+import { CommentsService } from '../../../../shared/services/comments.service';
 
 @Component({
   selector: 'app-edit-community-modal[community]',
@@ -54,6 +56,10 @@ export class EditCommunityModalComponent implements OnChanges {
 
   private readonly communitiesService = inject(CommunitiesService);
 
+  private readonly postsService = inject(PostsService);
+
+  private readonly commentsService = inject(CommentsService);
+
   private readonly router = inject(Router);
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -78,14 +84,13 @@ export class EditCommunityModalComponent implements OnChanges {
   onSubmit(form: NgForm): void {
     if (form.valid) {
       const oldName = this.community.name.toString();
+      if (oldName !== this.communityEdit.name) {
+        this.router.navigate(['r', this.communityEdit.name]);
+      }
       this.communitiesService
         .updateCommunity(this.community.id, this.communityEdit)
         .pipe(first())
         .subscribe(() => {
-          if (oldName !== this.communityEdit.name) {
-            // TODO: Firebase instantly refreshes observable and page handle error, nagivate doesn't occur
-            this.router.navigate(['r', this.communityEdit.name]);
-          }
           this.onClose(form);
           this.modalService.close(Modals.EditCommunity);
         });
@@ -104,8 +109,13 @@ export class EditCommunityModalComponent implements OnChanges {
     // eslint-disable-next-line no-restricted-globals
     const isConfirmed = confirm('Are you sure?');
     if (isConfirmed) {
-      // this.communitiesService.deleteCommunity(this.community.id);
-      // TODO: Delete community from everyone + delete posts inside community
+      this.postsService
+        .deletePostsByLocationId(this.community.id)
+        .pipe(first())
+        .subscribe((postsId) => {
+          postsId.forEach((postId) => this.commentsService.deleteCommentsByLocationId(postId));
+        });
+      this.communitiesService.deleteCommunity(this.community.id);
     }
   }
 

@@ -2,8 +2,6 @@ import { Injectable, inject } from '@angular/core';
 import { BehaviorSubject, Observable, first, from, map, of, switchMap } from 'rxjs';
 import {
   Firestore,
-  arrayRemove,
-  arrayUnion,
   collection,
   collectionData,
   doc,
@@ -109,25 +107,5 @@ export class UserService {
     const docRef = doc(this.usersCollection, userId);
     const promise = updateDoc(docRef, { ...userData });
     return from(promise);
-  }
-
-  addUpvotedPost(userId: string, postId: string): Observable<void> {
-    const userDocRef = doc(this.usersCollection, userId);
-
-    return from(
-      updateDoc(userDocRef, {
-        upvotedPostsId: arrayUnion(postId),
-      }),
-    );
-  }
-
-  removeUpvotedPost(userId: string, postId: string): Observable<void> {
-    const userDocRef = doc(this.usersCollection, userId);
-
-    return from(
-      updateDoc(userDocRef, {
-        upvotedPostsId: arrayRemove(postId),
-      }),
-    );
   }
 }

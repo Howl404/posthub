@@ -7,4 +7,8 @@
   <p>
     {{ comment.text }}
   </p>
+
+  <ng-container *ngIf="canDeleteComment">
+    <button (click)="onDelete()">Delete</button>
+  </ng-container>
 </div>

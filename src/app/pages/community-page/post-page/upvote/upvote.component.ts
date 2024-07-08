@@ -28,11 +28,11 @@ export class UpvoteComponent {
 
   onUpvote(user: User, post: Post): void {
     this.postService.upvotePost(post);
-    this.userService.addUpvotedPost(user.id, post.id);
+    this.postService.addUpvotedPost(user.id, post.id);
   }
 
   onDownvote(user: User, post: Post): void {
     this.postService.downvotePost(post);
-    this.userService.removeUpvotedPost(user.id, post.id);
+    this.postService.removeUpvotedPost(user.id, post.id);
   }
 }

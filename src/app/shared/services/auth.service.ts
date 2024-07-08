@@ -48,8 +48,6 @@ export class AuthService {
         dob: '',
         subscribed: false,
         upvotedPostsId: [],
-        commentsId: [],
-        postsId: [],
         joinedCommunitiesId: [],
         moderatingCommunitiesId: [],
       };

@@ -11,8 +11,9 @@ import {
   addDoc,
   doc,
   docData,
+  deleteDoc,
 } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, first, from, map } from 'rxjs';
 import { Comment, CommentDraft } from '../models/comment.model';
 
 @Injectable({
@@ -22,6 +23,8 @@ export class CommentsService {
   firestore = inject(Firestore);
 
   commentsCollection = collection(this.firestore, 'comments');
+
+  usersCollection = collection(this.firestore, 'users');
 
   getCommentsByLocationId(
     locationId: string,
@@ -67,5 +70,21 @@ export class CommentsService {
       (response) => response.id,
     );
     return from(promise);
+  }
+
+  deleteComment(commentId: string): Observable<void> {
+    const docRef = doc(this.commentsCollection, commentId);
+    const promise = deleteDoc(docRef);
+    return from(promise);
+  }
+
+  deleteCommentsByLocationId(locationId: string): void {
+    this.getCommentsByLocationId(locationId, 999, 0)
+      .pipe(first())
+      .subscribe((comments) => {
+        comments.forEach((comment) => {
+          this.deleteComment(comment.id);
+        });
+      });
   }
 }
