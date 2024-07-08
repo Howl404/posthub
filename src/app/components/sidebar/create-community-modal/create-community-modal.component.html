@@ -1,0 +1,34 @@
+<app-modal id="{{ modalId }}" (closed)="onClose(createCommunityForm)">
+  <div class="{{ modalId }}">
+    <form #createCommunityForm="ngForm" (ngSubmit)="onSubmit(createCommunityForm)">
+      <div *ngFor="let field of fields">
+        <app-dynamic-form-field
+          [field]="field"
+          [(ngModel)]="community[field.model.toString()]"
+          (ngModelChange)="onFieldChange(field.model, $event)"
+          name="{{ field.name }}"
+          #inputField="ngModel"
+          [required]="field.required"
+          [minlength]="field.minLength"
+        >
+        </app-dynamic-form-field>
+        <div
+          [@errorState]="
+            inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
+          "
+          class="error"
+        >
+          <div *ngFor="let error of field.validationMessages | keyvalue">
+            <div *ngIf="inputField.errors?.[error.key]">
+              {{ error.value }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" [disabled]="createCommunityForm.invalid && createCommunityForm.touched">
+        Create Community
+      </button>
+    </form>
+  </div>
+</app-modal>
