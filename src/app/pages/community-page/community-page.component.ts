@@ -54,9 +54,7 @@ export class CommunityPageComponent implements OnInit {
     );
 
     this.posts$ = this.communityData$.pipe(
-      switchMap((communityData) => {
-        return this.postsService.getPostsByLocationId(communityData.id, 20, 0);
-      }),
+      switchMap((communityData) => this.postsService.getPostsByLocationId(communityData.id, 20, 0)),
     );
   }
 

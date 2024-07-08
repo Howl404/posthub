@@ -1,16 +1,15 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CommunityPageComponent } from './community-page.component';
-import { PostPageComponent } from './post-page/post-page.component';
 
 const routes: Routes = [
   {
-    path: '',
-    component: CommunityPageComponent,
+    path: ':postId',
+    loadChildren: () => import('./post-page/post-page.module').then((m) => m.PostPageModule),
   },
   {
-    path: ':postId',
-    component: PostPageComponent,
+    path: '',
+    component: CommunityPageComponent,
   },
 ];
 

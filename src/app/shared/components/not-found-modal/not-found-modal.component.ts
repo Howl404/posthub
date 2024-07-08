@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { Modals } from '../../../../shared/components/modal/modals.enum';
+import { Modals } from '../modal/modals.enum';
 
 @Component({
   selector: 'app-not-found-modal[text]',

@@ -12,10 +12,11 @@ import { ViewSwitcherComponent } from './components/view-switcher/view-switcher.
 import { ModalComponent } from './components/modal/modal.component';
 import { DynamicFormFieldComponent } from './components/dynamic-form-field/dynamic-form-field.component';
 import { LoadingBlockComponent } from './components/loading-block/loading-block.component';
-import { TimeAgoPipe } from './time-ago.pipe';
+import { TimeAgoPipe } from './pipes/time-ago.pipe';
 import { CommentComponent } from '../pages/community-page/post-page/comment/comment.component';
 import { UpvoteComponent } from '../pages/community-page/post-page/upvote/upvote.component';
 import { EditPostModalComponent } from '../pages/community-page/post-page/edit-post-modal/edit-post-modal.component';
+import { NotFoundModalComponent } from './components/not-found-modal/not-found-modal.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { EditPostModalComponent } from '../pages/community-page/post-page/edit-p
     CommentComponent,
     UpvoteComponent,
     EditPostModalComponent,
+    NotFoundModalComponent,
   ],
   imports: [CommonModule, FormsModule, MatIconModule, RouterLink, NgxEchartsModule.forChild()],
   exports: [
@@ -47,6 +49,7 @@ import { EditPostModalComponent } from '../pages/community-page/post-page/edit-p
     CommentComponent,
     UpvoteComponent,
     EditPostModalComponent,
+    NotFoundModalComponent,
   ],
 })
 export class SharedModule {}

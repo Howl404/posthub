@@ -50,11 +50,13 @@ export class PostPageComponent implements OnInit {
       ),
     );
 
-    this.post$.pipe(first()).subscribe((post) => {
-      this.comments$ = this.commentsService
-        .getCommentsByLocationId(post.id, 20, 0)
-        .pipe(map((data) => data.reverse()));
-    });
+    this.comments$ = this.post$.pipe(
+      switchMap((post) =>
+        this.commentsService
+          .getCommentsByLocationId(post.id, 20, 0)
+          .pipe(map((data) => data.reverse())),
+      ),
+    );
   }
 
   onAddComment(userName: string, post: Post): void {
