@@ -15,6 +15,7 @@ import { SignUpModalComponent } from './components/sign-up-modal/sign-up-modal.c
 import { GenderSelectorComponent } from './components/sign-up-modal/components/gender-selector/gender-selector.component';
 import { SharedModule } from './shared/shared-module.module';
 import { LogInModalComponent } from './components/log-in-modal/log-in-modal.component';
+import { CreateCommunityModalComponent } from './components/sidebar/create-community-modal/create-community-modal.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { LogInModalComponent } from './components/log-in-modal/log-in-modal.comp
     SignUpModalComponent,
     LogInModalComponent,
     GenderSelectorComponent,
+    CreateCommunityModalComponent,
   ],
   imports: [
     AppRoutingModule,

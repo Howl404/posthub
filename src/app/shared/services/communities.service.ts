@@ -7,12 +7,14 @@ import {
   deleteDoc,
   doc,
   docData,
+  or,
   query,
   updateDoc,
   where,
 } from '@angular/fire/firestore';
-import { Observable, from, map } from 'rxjs';
+import { Observable, map, from, combineLatest } from 'rxjs';
 import { Community, CommunityDraft } from '../models/community.model';
+import { User } from '../models/user.model';
 
 @Injectable({
   providedIn: 'root',
@@ -21,6 +23,15 @@ export class CommunitiesService {
   firestore = inject(Firestore);
 
   communitiesCollection = collection(this.firestore, 'communities');
+
+  searchCommunities(queryText: string): Observable<Community[]> {
+    const q = query(
+      this.communitiesCollection,
+      where('name', '>=', queryText),
+      where('name', '<=', `${queryText}\uf8ff`),
+    );
+    return collectionData(q, { idField: 'id' }) as Observable<Community[]>;
+  }
 
   getCommunityByName(communityName: string): Observable<Community | null> {
     const q = query(this.communitiesCollection, where('name', '==', communityName));
@@ -56,5 +67,29 @@ export class CommunitiesService {
     const docRef = doc(this.communitiesCollection, communityId);
     const promise = deleteDoc(docRef);
     return from(promise);
+  }
+
+  getUserCommunities(user: User): Observable<Community[]> {
+    const neededCommunitiesIds = [
+      ...new Set([...user.joinedCommunitiesId, ...user.moderatingCommunitiesId]),
+    ];
+
+    const communityObservables = neededCommunitiesIds.map((id) => from(this.getCommunityById(id)));
+
+    const q = query(
+      this.communitiesCollection,
+      or(where('ownerId', '==', user.id), where('moderatorsNames', 'array-contains', user.name)),
+    );
+
+    const data = collectionData(q, { idField: 'id' }) as Observable<Community[]>;
+
+    return combineLatest([data, ...communityObservables]).pipe(
+      map((results) => {
+        const firestoreCommunities = results[0] as Community[];
+        const queriedCommunities = results.slice(1) as Community[];
+
+        return [...firestoreCommunities, ...queriedCommunities];
+      }),
+    );
   }
 }
