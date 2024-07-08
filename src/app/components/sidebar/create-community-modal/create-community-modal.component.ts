@@ -1,6 +1,7 @@
 import { Component, inject, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { first, switchMap } from 'rxjs';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ModalService } from '../../../shared/modal/modal.service';
 import { Modals } from '../../../shared/modal/modals.enum';
 import { UserService } from '../../../shared/user.service';
@@ -18,6 +19,25 @@ export const DEFAULT_COMMUNITY_STATE = {
   selector: 'app-create-community-modal',
   templateUrl: './create-community-modal.component.html',
   styleUrls: ['./create-community-modal.component.scss'],
+  animations: [
+    trigger('errorState', [
+      state(
+        'hidden',
+        style({
+          opacity: 0,
+          display: 'none',
+        }),
+      ),
+      state(
+        'visible',
+        style({
+          opacity: 1,
+          display: 'block',
+        }),
+      ),
+      transition('hidden <=> visible', [animate('0.5s ease-in-out')]),
+    ]),
+  ],
 })
 export class CreateCommunityModalComponent {
   @Input() user!: User;

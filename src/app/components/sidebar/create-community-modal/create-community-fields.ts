@@ -15,7 +15,7 @@ export const createCommunityFields: FormField[] = [
   },
   {
     placeholder: 'Color',
-    type: 'text',
+    type: 'color',
     name: 'backgroundColor',
     model: 'backgroundColor',
     required: true,
