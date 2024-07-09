@@ -1,6 +1,6 @@
 :host {
   padding: 16px;
-  border-right: 1px solid #0003;
+  border-right: 1px thin #0003;
 }
 
 nav {
@@ -8,6 +8,7 @@ nav {
   gap: 20px;
   flex-direction: column;
 
+  .add-community,
   a {
     display: flex;
     gap: 6px;
@@ -24,14 +25,9 @@ nav {
       color 0.3s;
     background-color: white;
 
-    &.active {
-      background-color: #007bff;
-      color: white;
-      border-color: #007bff;
-    }
-
     &:hover {
-      background-color: #e0e0e0;
+      color: #000000;
+      background-color: #f6f8f9;
     }
   }
 }
@@ -44,17 +40,17 @@ nav {
 
 hr {
   width: 100%;
-  border: 1px solid #0003;
+  border: 1px thin #0003;
 }
 
 h2 {
   font-size: 12px;
   color: #576f76;
+  margin-left: 20px;
 }
 
 .add-community {
   width: 100%;
-  margin-bottom: 20px;
   justify-content: flex-start;
-  gap: 6px;
+  border: 0;
 }

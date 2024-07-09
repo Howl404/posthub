@@ -2,3 +2,18 @@ div {
   display: flex;
   gap: 20px;
 }
+
+button {
+  border: 0;
+  background: transparent;
+  color: #000;
+  border-radius: 999px;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &.active {
+    background-color: #c9d7de;
+  }
+}

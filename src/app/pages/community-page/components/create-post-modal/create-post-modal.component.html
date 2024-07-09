@@ -26,7 +26,11 @@
         </div>
       </div>
 
-      <button type="submit" [disabled]="createPostForm.invalid && createPostForm.touched">
+      <button
+        class="action"
+        type="submit"
+        [disabled]="createPostForm.invalid && createPostForm.touched"
+      >
         Create Post
       </button>
     </form>

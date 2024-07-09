@@ -13,11 +13,14 @@
     <div class="header-container">
       <div class="data-container">
         <h1>r/{{ communityData.name }}</h1>
-        <h2>Members {{ communityData.joinedAmount }}</h2>
+        <div class="amount-container">
+          <mat-icon>account_circle</mat-icon>
+          <h2>{{ communityData.joinedAmount }}</h2>
+        </div>
       </div>
 
       <div *ngIf="user$ | async as user; else notAuthorizedButtons" class="buttons-container">
-        <button type="button" (click)="onCreatePost()">
+        <button class="create-btn" type="button" (click)="onCreatePost()">
           <mat-icon>add</mat-icon>
           Create a post
         </button>
@@ -26,12 +29,14 @@
             !user.joinedCommunitiesId.includes(communityData.id) &&
             communityData.ownerId !== user.id
           "
+          class="join-btn"
           type="button"
           (click)="onJoinCommunity(communityData.id, user)"
         >
           Join
         </button>
         <button
+          class="join-btn"
           *ngIf="
             user.joinedCommunitiesId.includes(communityData.id) && communityData.ownerId !== user.id
           "
@@ -78,10 +83,10 @@
 
 <ng-template #notAuthorizedButtons>
   <div class="buttons-container">
-    <button type="button" (click)="onNonAuthorized()">
+    <button class="create-btn" type="button" (click)="onNonAuthorized()">
       <mat-icon>add</mat-icon>
       Create a post
     </button>
-    <button type="button" (click)="onNonAuthorized()">Join</button>
+    <button class="join-btn" type="button" (click)="onNonAuthorized()">Join</button>
   </div>
 </ng-template>

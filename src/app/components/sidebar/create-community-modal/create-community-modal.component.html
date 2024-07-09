@@ -26,7 +26,11 @@
         </div>
       </div>
 
-      <button type="submit" [disabled]="createCommunityForm.invalid && createCommunityForm.touched">
+      <button
+        class="action"
+        type="submit"
+        [disabled]="createCommunityForm.invalid && createCommunityForm.touched"
+      >
         Create Community
       </button>
     </form>

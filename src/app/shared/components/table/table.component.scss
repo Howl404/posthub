@@ -35,15 +35,22 @@ thead {
 }
 
 th {
-  background-color: #007bff;
+  font-size: 16px;
   color: white;
+  background-color: #d93900;
+  border-color: #d93900;
+
+  &:hover {
+    background-color: #8f3717cf;
+  }
+
+  &:disabled {
+    background-color: #f2f2f2;
+    color: #c9d7de;
+  }
+
   cursor: pointer;
   position: relative;
-}
-
-th:hover {
-  background-color: #f8f8f8;
-  color: #000;
 }
 
 tbody tr:nth-child(even) {

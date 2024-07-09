@@ -1,13 +1,26 @@
 .comment {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 6px;
-  border: 1px solid #0003;
+  border: 1px thin #0003;
   padding: 6px;
   border-radius: 8px;
+
+  a {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+  }
 
   .comment-header {
     display: flex;
     gap: 10px;
+  }
+
+  button {
+    position: absolute;
+    right: 20px;
+    border-radius: 20px;
   }
 }

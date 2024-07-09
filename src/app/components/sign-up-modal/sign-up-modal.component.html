@@ -2,6 +2,15 @@
   <div class="{{ modalId }}">
     <form #signUpForm="ngForm" (ngSubmit)="onSubmit(signUpForm)">
       <h2>Sign Up</h2>
+
+      <button type="button" class="google-btn" (click)="onContinueWithGoogle(signUpForm)">
+        Continue with Google <mat-icon s>account_circle</mat-icon>
+      </button>
+
+      <div class="separator-container">
+        <span class="separator">OR</span>
+      </div>
+
       <div *ngFor="let field of fields">
         <app-dynamic-form-field
           [field]="field"
@@ -43,15 +52,14 @@
           <div *ngIf="inputField.errors?.['required']">Gender is required.</div>
         </div>
       </div>
-      <div class="separator-container">
-        <span class="separator">or</span>
-      </div>
-      <button type="button" (click)="onContinueWithGoogle(signUpForm)">Continue with Google</button>
+
       <div class="login-container">
         <p>Already signed up?</p>
-        <button type="button" (click)="switchToLogIn(signUpForm)">Log in</button>
+        <button type="button" class="switch-btn" (click)="switchToLogIn(signUpForm)">Log in</button>
       </div>
-      <button type="submit" [disabled]="signUpForm.invalid && signUpForm.touched">Sign Up</button>
+      <button type="submit" class="action" [disabled]="signUpForm.invalid && signUpForm.touched">
+        Sign Up
+      </button>
     </form>
   </div>
 </app-modal>

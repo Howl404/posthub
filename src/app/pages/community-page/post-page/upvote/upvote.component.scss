@@ -1,7 +1,23 @@
 .upvote-buttons-container {
+  padding: 4px;
+  border-radius: 12px;
+  background-color: #e9e7eb;
+
   button {
+    background-color: transparent;
     padding: 2px;
     border: 0;
+
+    border-radius: 999px;
+
+    &:hover {
+      background-color: #c5c2c7;
+    }
+
+    &:disabled:hover {
+      cursor: auto;
+      background-color: transparent;
+    }
   }
 
   align-items: center;
