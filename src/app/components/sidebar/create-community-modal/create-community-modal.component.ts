@@ -7,7 +7,6 @@ import { ModalService } from '../../../shared/components/modal/modal.service';
 import { Modals } from '../../../shared/components/modal/modals.enum';
 import { CommunityDraft } from '../../../shared/models/community.model';
 import { CommunitiesService } from '../../../shared/services/communities.service';
-import { UserService } from '../../../shared/services/user.service';
 import { createCommunityFields } from './create-community-fields';
 import { User } from '../../../shared/models/user.model';
 
@@ -48,8 +47,6 @@ export class CreateCommunityModalComponent {
   readonly fields = createCommunityFields;
 
   private readonly modalService = inject(ModalService);
-
-  private readonly userService = inject(UserService);
 
   private readonly communitiesService = inject(CommunitiesService);
 
