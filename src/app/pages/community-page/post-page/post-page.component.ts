@@ -145,18 +145,18 @@ export class PostPageComponent implements OnInit {
     if (community.ownerId === user.id) {
       return true;
     }
-    if (user.moderatingCommunitiesId.includes(community.id)) {
+    if (community.moderatorsNames.includes(user.name)) {
       return true;
     }
 
     return false;
   }
 
-  canDeleteComment(user: User, post: Post, community: Community, comment: Comment): boolean {
+  canDeleteComment(user: User, community: Community, comment: Comment): boolean {
     if (community.ownerId === user.id) {
       return true;
     }
-    if (user.moderatingCommunitiesId.includes(community.id)) {
+    if (community.moderatorsNames.includes(user.name)) {
       return true;
     }
     if (comment.author === user.name) {

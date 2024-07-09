@@ -2,21 +2,26 @@
   <thead>
     <tr>
       <th class="header" *ngFor="let header of headers" (click)="onHeaderClick(header.propertyKey)">
-        {{ header.value }}
-        <ng-container *ngIf="(currentSortProperty$ | async) === header.propertyKey">
-          <mat-icon class="sort-icon">{{
-            (sortDirection$ | async) ? 'arrow_upward' : 'arrow_downward'
-          }}</mat-icon>
-          <button class="reset-btn" type="button" (click)="onResetSort($event)">
-            <mat-icon>close</mat-icon>
-          </button>
-        </ng-container>
+        <div class="header-container">
+          <p>
+            {{ header.value }}
+          </p>
+
+          <ng-container *ngIf="(currentSortProperty$ | async) === header.propertyKey">
+            <mat-icon class="sort-icon">{{
+              (sortDirection$ | async) ? 'arrow_upward' : 'arrow_downward'
+            }}</mat-icon>
+            <button class="reset-btn" type="button" (click)="onResetSort($event)">
+              <mat-icon>close</mat-icon>
+            </button>
+          </ng-container>
+        </div>
       </th>
     </tr>
   </thead>
   <tbody>
     <ng-container *ngIf="data$ | async as data; else noDataTemplate">
-      <tr *ngFor="let row of data">
+      <tr *ngFor="let row of data" (click)="onRowClick(row)">
         <td *ngFor="let header of headers">
           <ng-container *ngIf="row[header.propertyKey] as value">
             <ng-container [ngSwitch]="header.propertyKey">

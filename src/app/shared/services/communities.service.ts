@@ -25,6 +25,8 @@ export class CommunitiesService {
   communitiesCollection = collection(this.firestore, 'communities');
 
   searchCommunities(queryText: string): Observable<Community[]> {
+    // if (!queryText) return from([]);
+
     const q = query(
       this.communitiesCollection,
       where('name', '>=', queryText),
@@ -70,11 +72,7 @@ export class CommunitiesService {
   }
 
   getUserCommunities(user: User): Observable<Community[]> {
-    const neededCommunitiesIds = [
-      ...new Set([...user.joinedCommunitiesId, ...user.moderatingCommunitiesId]),
-    ];
-
-    const communityObservables = neededCommunitiesIds.map((id) => from(this.getCommunityById(id)));
+    const communityObservables = user.joinedCommunitiesId.map((id) => this.getCommunityById(id));
 
     const q = query(
       this.communitiesCollection,

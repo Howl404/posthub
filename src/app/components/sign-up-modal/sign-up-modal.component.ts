@@ -69,7 +69,6 @@ export class SignUpModalComponent {
         ...userDraftWithoutPassword,
         upvotedPostsId: [],
         joinedCommunitiesId: [],
-        moderatingCommunitiesId: [],
       };
 
       this.authService

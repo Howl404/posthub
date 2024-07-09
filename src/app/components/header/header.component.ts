@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable, debounceTime, distinctUntilChanged, of } from 'rxjs';
+import { Observable, debounceTime, distinctUntilChanged } from 'rxjs';
 import { ModalService } from '../../shared/components/modal/modal.service';
 import { Modals } from '../../shared/components/modal/modals.enum';
 import { Community } from '../../shared/models/community.model';
@@ -13,11 +13,13 @@ import { UserService } from '../../shared/services/user.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  userService = inject(UserService);
-
-  user$ = this.userService.user$;
-
   search = '';
+
+  searchResults$: Observable<Community[]> | undefined;
+
+  private readonly userService = inject(UserService);
+
+  readonly user$ = this.userService.user$;
 
   private readonly modalService = inject(ModalService);
 
@@ -25,16 +27,10 @@ export class HeaderComponent {
 
   private readonly communitiesService = inject(CommunitiesService);
 
-  searchResults$: Observable<Community[]> | undefined;
-
   onSearchChange(query: string): void {
-    if (query.trim() !== '') {
-      this.searchResults$ = this.communitiesService
-        .searchCommunities(query)
-        .pipe(debounceTime(300), distinctUntilChanged());
-    } else {
-      this.searchResults$ = of([]);
-    }
+    this.searchResults$ = this.communitiesService
+      .searchCommunities(query.trim())
+      .pipe(debounceTime(300), distinctUntilChanged());
   }
 
   resetSearch(): void {

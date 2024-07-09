@@ -13,6 +13,8 @@ import { CommunitiesService } from '../../services/communities.service';
   providers: [PostCardsService],
 })
 export class PostCardsComponent implements OnChanges {
+  @Input() initialSortProperty!: keyof Post | undefined;
+
   @Input() initialData!: Post[] | null;
 
   lastPage = 1;
@@ -42,6 +44,12 @@ export class PostCardsComponent implements OnChanges {
 
       this.postCardsService.setInitialData(currentValue);
       this.lastPage = Math.ceil(currentValue.length / this.postCardsService.itemsPerPage) || 1;
+    }
+
+    if (changes['initialSortProperty']) {
+      const { currentValue } = changes['initialSortProperty'];
+
+      this.postCardsService.sortData(currentValue);
     }
   }
 
