@@ -8,9 +8,19 @@
   align-items: center;
   padding: 20px;
 
+  .google-btn {
+    gap: 10px;
+    border-radius: 999px;
+  }
+
+  button {
+    border-radius: 999px;
+  }
+
   h2 {
     margin-right: auto;
     margin-bottom: 0;
+    font-size: 24px;
   }
 
   form {
@@ -42,8 +52,19 @@
 
   .login-container {
     display: flex;
-    gap: 20px;
-    align-items: flex-end;
+    gap: 10px;
+    align-items: flex-start;
+
+    .switch-btn {
+      background-color: transparent;
+      color: #0000ff;
+      padding: 0;
+      border: 0;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   .separator-container {
@@ -55,7 +76,8 @@
       content: '';
       align-self: center;
       width: 100%;
-      border-top: thin solid #000;
+      height: 1px;
+      background-color: #0003;
     }
 
     .separator {

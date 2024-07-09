@@ -47,13 +47,27 @@ button {
   background-color: white;
 
   &.active {
-    background-color: #007bff;
-    color: white;
-    border-color: #007bff;
+    background-color: #c9d7de;
   }
 
   &:hover {
     background-color: #e0e0e0;
+  }
+}
+
+button.action {
+  font-size: 16px;
+  color: white;
+  background-color: #d93900;
+  border: 0;
+
+  &:hover {
+    background-color: #8f3717cf;
+  }
+
+  &:disabled {
+    background-color: #f2f2f2;
+    color: #c9d7de;
   }
 }
 

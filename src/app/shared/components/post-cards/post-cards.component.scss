@@ -41,3 +41,13 @@
     }
   }
 }
+
+.upvote,
+.comment {
+  padding: 4px 8px;
+  border-radius: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  background-color: #e9e7eb;
+}

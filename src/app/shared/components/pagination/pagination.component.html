@@ -1,5 +1,9 @@
 <div class="pagination">
-  <button (click)="prevPage()" [disabled]="currentPage === 1">&leftarrow;</button>
+  <button type="button" (click)="prevPage()" [disabled]="currentPage === 1">
+    <mat-icon>arrow_back</mat-icon>
+  </button>
   <span>{{ currentPage }} of {{ lastPage }}</span>
-  <button (click)="nextPage()" [disabled]="currentPage === lastPage">&rightarrow;</button>
+  <button type="button" (click)="nextPage()" [disabled]="currentPage === lastPage">
+    <mat-icon>arrow_forward</mat-icon>
+  </button>
 </div>

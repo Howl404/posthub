@@ -29,14 +29,14 @@
       display: flex;
       gap: 10px;
     }
-
-    input[type='checkbox'] {
-      margin: 0;
-    }
   }
 
   .error {
     transition: opacity 0.5s ease-in-out;
     color: red;
+  }
+
+  button {
+    border-radius: 999px;
   }
 }

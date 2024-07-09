@@ -1,4 +1,5 @@
 .comment {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -6,8 +7,20 @@
   padding: 6px;
   border-radius: 8px;
 
+  a {
+    text-decoration: none;
+    color: black;
+    font-weight: 700;
+  }
+
   .comment-header {
     display: flex;
     gap: 10px;
+  }
+
+  button {
+    position: absolute;
+    right: 20px;
+    border-radius: 20px;
   }
 }

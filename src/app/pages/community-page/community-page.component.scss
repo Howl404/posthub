@@ -37,6 +37,23 @@
   gap: 20px;
 
   button {
-    padding: 5px 10px;
+    font-size: 14px;
+    padding: 10px 20px;
+    border-radius: 999px;
+  }
+}
+
+.amount-container {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.join-btn {
+  color: white;
+  background-color: #1b4198;
+
+  &:hover {
+    background-color: #2e4d96;
   }
 }

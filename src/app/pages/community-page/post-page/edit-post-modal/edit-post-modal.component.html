@@ -27,7 +27,11 @@
           </div>
         </div>
 
-        <button type="submit" [disabled]="editPostForm.invalid && editPostForm.touched">
+        <button
+          class="action"
+          type="submit"
+          [disabled]="editPostForm.invalid && editPostForm.touched"
+        >
           Update Post
         </button>
       </ng-container>

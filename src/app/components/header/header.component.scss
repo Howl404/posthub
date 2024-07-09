@@ -21,6 +21,7 @@
       border-radius: 20px;
       background-color: #f6f8f9;
       border: transparent;
+      font-size: 16px;
 
       &.active {
         color: #000;
@@ -30,23 +31,20 @@
     }
 
     button {
-      color: white;
       border: 0;
       border-radius: 999px;
-      background-color: #d93900;
-
-      &:hover {
-        background-color: #8f3717cf;
-      }
     }
 
+    h1,
     h2 {
       margin: 0;
+      font-weight: 700;
     }
 
     .user-container {
       display: flex;
       gap: 20px;
+      align-items: center;
     }
   }
 }
@@ -70,6 +68,7 @@
     margin: 0;
 
     .item {
+      font-size: 16px;
       padding: 2px;
       padding: 10px 20px;
       cursor: pointer;
@@ -90,6 +89,7 @@
   }
 
   .not-found {
+    font-size: 16px;
     padding: 10px;
   }
 }

@@ -2,8 +2,8 @@
   text="There aren’t any posts with that id. Double-check the post id or try searching
       for similar posts."
 ></app-not-found-modal>
-<ng-container *ngIf="community$ | async as community">
-  <ng-container *ngIf="post$ | async as post">
+<ng-container *ngIf="community$ | async as community; else spinner">
+  <ng-container *ngIf="post$ | async as post; else spinner">
     <app-edit-post-modal [post]="post"></app-edit-post-modal>
     <div class="header">
       <div class="header-flex">
@@ -31,6 +31,7 @@
           <input placeholder="Comment" [(ngModel)]="comment" name="comment" />
           <button
             type="button"
+            class="action"
             (click)="onAddComment(user.name, post)"
             [disabled]="!comment.length"
           >
@@ -75,6 +76,11 @@
 </ng-container>
 
 <ng-template #nonAuthorized>
-  <input placeholder="Comment" disabled />
-  <button type="button" (click)="onNonAuthorized()"><mat-icon>add</mat-icon> Add comment</button>
+  <button type="button" class="action" (click)="onNonAuthorized()">
+    <mat-icon>add</mat-icon> Add comment
+  </button>
+</ng-template>
+
+<ng-template #spinner>
+  <app-loading-block></app-loading-block>
 </ng-template>

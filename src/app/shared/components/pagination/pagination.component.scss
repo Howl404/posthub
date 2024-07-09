@@ -3,4 +3,14 @@
   justify-content: center;
   align-items: center;
   gap: 10px;
+
+  button {
+    border-radius: 20px;
+    &:disabled {
+      cursor: auto;
+      &:hover {
+        background-color: transparent;
+      }
+    }
+  }
 }
