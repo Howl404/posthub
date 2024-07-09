@@ -1,0 +1,44 @@
+<ng-container *ngIf="user$ | async as user">
+  <div class="user-info">
+    <div class="header">
+      <h2>{{ user.name | uppercase }}</h2>
+      <p>u/{{ user.name }}</p>
+    </div>
+
+    <ng-container *ngIf="user.dob">
+      <p>Date of birth: {{ user.dob }}</p>
+    </ng-container>
+    <ng-container *ngIf="user.gender">
+      <p>Gender: {{ user.gender }}</p>
+    </ng-container>
+  </div>
+
+  <div class="communities-container" *ngIf="user">
+    <a *ngFor="let community of communities$ | async" [routerLink]="['/r/', community.name]">
+      <mat-icon>group</mat-icon> {{ community.name }}
+    </a>
+  </div>
+
+  <ng-container *ngIf="posts$ | async as data; else spinnerTemplate">
+    <ng-container *ngIf="data.length">
+      <app-view-switcher></app-view-switcher>
+      <ng-container [ngSwitch]="viewMode$ | async">
+        <app-post-cards
+          *ngSwitchCase="0"
+          [initialData]="data"
+          initialSortProperty="date"
+        ></app-post-cards>
+        <app-table
+          *ngSwitchCase="1"
+          [headers]="headers"
+          [initialData]="data"
+          initialSortProperty="date"
+        ></app-table>
+      </ng-container>
+    </ng-container>
+  </ng-container>
+</ng-container>
+
+<ng-template #spinnerTemplate>
+  <app-loading-block></app-loading-block>
+</ng-template>
