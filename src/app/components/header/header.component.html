@@ -5,8 +5,9 @@
     <input
       [(ngModel)]="search"
       name="search"
+      [class.active]="!!search"
       (ngModelChange)="onSearchChange($event)"
-      placeholder="Search"
+      placeholder="Search PostHub"
       #input
     />
     <div class="dropdown" *ngIf="search">
@@ -18,7 +19,7 @@
             [routerLink]="['/r/', community.name]"
             (click)="resetSearch()"
           >
-            {{ community.name }}
+            r/{{ community.name }}
           </a>
         </ng-container>
       </div>

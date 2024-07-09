@@ -1,3 +1,11 @@
 input[type='color'] {
   padding: 0;
 }
+
+input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 24px;
+  font-size: 16px;
+  background-color: #e5ebee;
+}

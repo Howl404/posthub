@@ -1,6 +1,6 @@
 :host {
   padding: 16px;
-  border-right: 1px solid #0003;
+  border-right: 1px thin #0003;
 }
 
 nav {
@@ -24,14 +24,9 @@ nav {
       color 0.3s;
     background-color: white;
 
-    &.active {
-      background-color: #007bff;
-      color: white;
-      border-color: #007bff;
-    }
-
     &:hover {
-      background-color: #e0e0e0;
+      color: #000000;
+      background-color: #f6f8f9;
     }
   }
 }
@@ -44,7 +39,7 @@ nav {
 
 hr {
   width: 100%;
-  border: 1px solid #0003;
+  border: 1px thin #0003;
 }
 
 h2 {

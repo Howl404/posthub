@@ -1,6 +1,6 @@
 <div class="dropdown">
   <button type="button" class="dropdown-open-btn" (click)="toggleDropdown()">
-    {{ selectedLabel }}
+    {{ selectedLabel }} <mat-icon>keyboard_arrow_down</mat-icon>
   </button>
   <div *ngIf="isDropdownOpen" class="dropdown-content">
     <button type="button" *ngFor="let option of options" (click)="onOptionSelect(option)">
