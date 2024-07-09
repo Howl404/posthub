@@ -1,13 +1,12 @@
 import { Component, inject, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { first, switchMap } from 'rxjs';
+import { first } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 
 import { ModalService } from '../../../shared/components/modal/modal.service';
 import { Modals } from '../../../shared/components/modal/modals.enum';
 import { CommunityDraft } from '../../../shared/models/community.model';
 import { CommunitiesService } from '../../../shared/services/communities.service';
-import { UserService } from '../../../shared/services/user.service';
 import { createCommunityFields } from './create-community-fields';
 import { User } from '../../../shared/models/user.model';
 
@@ -49,8 +48,6 @@ export class CreateCommunityModalComponent {
 
   private readonly modalService = inject(ModalService);
 
-  private readonly userService = inject(UserService);
-
   private readonly communitiesService = inject(CommunitiesService);
 
   readonly modalId = Modals.CreateCommunity;
@@ -65,24 +62,12 @@ export class CreateCommunityModalComponent {
         ...this.community,
         joinedAmount: 1,
         ownerId: this.user.id,
-        moderatorsNames: [this.user.name],
+        moderatorsNames: [],
       };
 
       this.communitiesService
         .createCommunity(communityDraft)
-        .pipe(
-          first(),
-          switchMap((communityId) => {
-            return this.userService.getUserByName(this.user.name).pipe(
-              first(),
-              switchMap((user) =>
-                this.userService.updateUser(user.id, {
-                  moderatingCommunitiesId: [...this.user.moderatingCommunitiesId, communityId],
-                }),
-              ),
-            );
-          }),
-        )
+        .pipe(first())
         .subscribe(() => {
           this.onClose(form);
           this.modalService.close(Modals.CreateCommunity);

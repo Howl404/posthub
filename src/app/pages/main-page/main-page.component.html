@@ -1,7 +1,20 @@
-<app-view-switcher></app-view-switcher>
-<ng-container *ngIf="data$ | async as data">
+<ng-container *ngIf="data$ | async as data; else spinnerTemplate">
+  <app-view-switcher></app-view-switcher>
   <ng-container [ngSwitch]="viewMode$ | async">
-    <app-post-cards *ngSwitchCase="0" [initialData]="data"></app-post-cards>
-    <app-table *ngSwitchCase="1" [headers]="headers" [initialData]="data"></app-table>
+    <app-post-cards
+      *ngSwitchCase="0"
+      [initialData]="data"
+      initialSortProperty="date"
+    ></app-post-cards>
+    <app-table
+      *ngSwitchCase="1"
+      [headers]="headers"
+      [initialData]="data"
+      initialSortProperty="date"
+    ></app-table>
   </ng-container>
 </ng-container>
+
+<ng-template #spinnerTemplate>
+  <app-loading-block></app-loading-block>
+</ng-template>

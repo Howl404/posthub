@@ -36,12 +36,4 @@ export class MainPageComponent {
   readonly viewMode$: Observable<ViewMode> = this.viewService.viewMode$;
 
   readonly data$: Observable<Post[]> = this.postsService.getPosts(30, 0);
-
-  // constructor() {
-  //   this.data$.pipe(first()).subscribe((posts) => {
-  //     posts.forEach((post) => {
-  //       this.postsService.updatePost(post.id, { commentsAmount: 0 });
-  //     });
-  //   });
-  // }
 }

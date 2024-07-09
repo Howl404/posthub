@@ -49,7 +49,7 @@
             <app-comment
               *ngFor="let comment of comments"
               [comment]="comment"
-              [canDeleteComment]="canDeleteComment(user, post, community, comment)"
+              [canDeleteComment]="canDeleteComment(user, community, comment)"
               (delete)="onRemoveComment($event, post)"
             ></app-comment>
           </ng-container>

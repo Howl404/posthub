@@ -8,6 +8,14 @@
   position: relative;
 }
 
+.header-container {
+  display: flex;
+  gap: 10px;
+  p {
+    margin: 0;
+  }
+}
+
 table {
   width: 100%;
   border-collapse: collapse;
@@ -44,6 +52,7 @@ tbody tr:nth-child(even) {
 
 tbody tr:hover {
   background-color: #e0e0e0;
+  cursor: pointer;
 }
 
 .reset-btn {

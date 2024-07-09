@@ -6,7 +6,6 @@ export interface User {
   dob: string;
   subscribed: boolean;
   upvotedPostsId: string[];
-  moderatingCommunitiesId: string[];
   joinedCommunitiesId: string[];
 }
 

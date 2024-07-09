@@ -1,8 +1,11 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
-import { Observable } from 'rxjs';
+import { first, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 import { SortDirection } from './sort-direction.enum';
 import { TableHeader } from './table-header.model';
 import { TableService } from './table-service.service';
+import { CommunitiesService } from '../../services/communities.service';
+import { Post } from '../../models/post.model';
 
 @Component({
   selector: 'app-table[headers][initialData]',
@@ -11,6 +14,8 @@ import { TableService } from './table-service.service';
   providers: [TableService],
 })
 export class TableComponent<T extends object> implements OnChanges {
+  @Input() initialSortProperty!: keyof T;
+
   @Input() headers!: TableHeader<T>[];
 
   @Input() initialData!: T[] | null;
@@ -18,6 +23,10 @@ export class TableComponent<T extends object> implements OnChanges {
   lastPage = 1;
 
   private readonly tableService = inject(TableService<T>);
+
+  private readonly router = inject(Router);
+
+  private readonly communitiesService = inject(CommunitiesService);
 
   readonly data$: Observable<T[]> | null = this.tableService.data$;
 
@@ -33,6 +42,12 @@ export class TableComponent<T extends object> implements OnChanges {
       this.tableService.setInitialData(currentValue);
       this.lastPage = Math.ceil(currentValue.length / this.tableService.itemsPerPage) || 1;
     }
+
+    if (changes['initialSortProperty']) {
+      const { currentValue } = changes['initialSortProperty'];
+
+      this.tableService.sortData(currentValue);
+    }
   }
 
   onPageChange(page: number): void {
@@ -46,5 +61,18 @@ export class TableComponent<T extends object> implements OnChanges {
   onResetSort(e: MouseEvent): void {
     e.stopImmediatePropagation();
     this.tableService.resetSort();
+  }
+
+  onRowClick(row: T): void {
+    const post = row as Post;
+    if (post.id && post.location) {
+      this.communitiesService
+        .getCommunityById(post.location)
+        .pipe(first())
+        .subscribe((community) => {
+          const communityName = community?.name ?? '';
+          this.router.navigate(['/r/', communityName, post.id]);
+        });
+    }
   }
 }

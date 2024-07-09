@@ -34,10 +34,12 @@ export class PostsService {
     const q = query(this.postsCollection, orderBy('date'), limit(_limit), startAt(_startAt));
     return collectionData(q, { idField: 'id' }).pipe(
       map((posts) =>
-        posts.map((post) => ({
-          ...post,
-          date: new Date(post['date']),
-        })),
+        posts
+          .map((post) => ({
+            ...post,
+            date: new Date(post['date']),
+          }))
+          .reverse(),
       ),
     ) as Observable<Post[]>;
   }
@@ -46,6 +48,30 @@ export class PostsService {
     const q = query(
       this.postsCollection,
       where('location', '==', locationId),
+      orderBy('date'),
+      limit(_limit),
+      startAt(_startAt),
+    );
+    return collectionData(q, { idField: 'id' }).pipe(
+      map((posts) =>
+        posts
+          .map((post) => ({
+            ...post,
+            date: new Date(post['date']),
+            upvotesByDay: post['upvotesByDay'].map((upvote) => ({
+              ...upvote,
+              date: new Date(upvote.date),
+            })),
+          }))
+          .reverse(),
+      ),
+    ) as Observable<Post[]>;
+  }
+
+  getPostsByAuthorName(authorName: string, _limit: number, _startAt: number): Observable<Post[]> {
+    const q = query(
+      this.postsCollection,
+      where('authorName', '==', authorName),
       orderBy('date'),
       limit(_limit),
       startAt(_startAt),

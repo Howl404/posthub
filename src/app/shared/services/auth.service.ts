@@ -30,7 +30,7 @@ export class AuthService {
     const promise = createUserWithEmailAndPassword(this.auth, email, password).then(
       async (userCred) => {
         const userId = userCred.user.uid;
-        await setDoc(doc(this.usersCollection, userId), { ...additionalData, email, password });
+        await setDoc(doc(this.usersCollection, userId), { ...additionalData, email });
         return true;
       },
     );
@@ -49,7 +49,6 @@ export class AuthService {
         subscribed: false,
         upvotedPostsId: [],
         joinedCommunitiesId: [],
-        moderatingCommunitiesId: [],
       };
       const userId = userData.uid;
 
