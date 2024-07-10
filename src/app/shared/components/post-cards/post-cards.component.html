@@ -9,11 +9,11 @@
       <div
         class="card"
         *ngFor="let post of data; trackBy: trackById"
-        (click)="loadCommunityAndNavigate(post)"
+        (click)="loadCommunityAndNavigate($event, post)"
       >
         <div class="header">
           <div class="header-content">
-            <p>{{ post.authorName }}</p>
+            <a class="author" [routerLink]="['/u/', post.authorName]">{{ post.authorName }}</a>
             <p>{{ post.date | timeAgo }}</p>
           </div>
         </div>

@@ -11,11 +11,10 @@
         <p>{{ post.date | timeAgo }}</p>
       </div>
       <a class="author-name" [routerLink]="['/u/', post.authorName]">{{ post.authorName }}</a>
+      <h2>{{ post.title }}</h2>
     </div>
 
     <div class="container">
-      <h2>{{ post.title }}</h2>
-
       <p>{{ post.description }}</p>
 
       <div class="footer">

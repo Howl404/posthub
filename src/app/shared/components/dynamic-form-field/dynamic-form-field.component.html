@@ -18,7 +18,7 @@
     <ng-container *ngSwitchDefault>
       <input
         placeholder="{{ field.placeholder }}"
-        type="text"
+        type="{{ field.type }}"
         [ngModel]="value"
         (ngModelChange)="onValueChange($event)"
       />

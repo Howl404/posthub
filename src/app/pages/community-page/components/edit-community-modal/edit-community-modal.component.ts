@@ -109,6 +109,7 @@ export class EditCommunityModalComponent implements OnChanges {
     // eslint-disable-next-line no-restricted-globals
     const isConfirmed = confirm('Are you sure?');
     if (isConfirmed) {
+      this.router.navigateByUrl('/');
       this.postsService
         .deletePostsByLocationId(this.community.id)
         .pipe(first())
