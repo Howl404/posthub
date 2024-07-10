@@ -1,6 +1,6 @@
 import { Component, Input, inject } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { first, map, skip, switchMap } from 'rxjs';
+import { first, map, switchMap } from 'rxjs';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { Modals } from '../../../../shared/components/modal/modals.enum';
 import { ModalService } from '../../../../shared/components/modal/modal.service';
@@ -98,7 +98,6 @@ export class CreatePostModalComponent {
                 };
 
                 return this.userService.getCommunityMembers(community.id).pipe(
-                  skip(1),
                   first(),
                   map((users) => ({
                     users: users.filter((user1) => user1.id !== user.id),

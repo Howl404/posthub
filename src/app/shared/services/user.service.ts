@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Observable, first, from, map, of, switchMap } from 'rxjs';
+import { Observable, first, from, map, of, skip, switchMap } from 'rxjs';
 import {
   Firestore,
   collection,
@@ -44,6 +44,7 @@ export class UserService {
     );
 
     return collectionData(q, { idField: 'id' }).pipe(
+      skip(1),
       map((users) => {
         return users.map((user) => ({
           ...user,
