@@ -143,9 +143,13 @@ export class PostPageComponent implements OnInit {
   }
 
   onDelete(postId: string, communityName: string): void {
-    this.router.navigate(['/r/', communityName]);
-    this.postService.deletePost(postId);
-    this.commentsService.deleteCommentsByLocationId(postId);
+    // eslint-disable-next-line no-restricted-globals
+    const isConfirmed = confirm('Are you sure?');
+    if (isConfirmed) {
+      this.router.navigate(['/r/', communityName]);
+      this.postService.deletePost(postId);
+      this.commentsService.deleteCommentsByLocationId(postId);
+    }
   }
 
   checkUserAccess(user: User, post: Post, community: Community): boolean {
