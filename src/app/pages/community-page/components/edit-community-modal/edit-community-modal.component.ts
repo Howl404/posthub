@@ -1,6 +1,6 @@
 import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import { NgForm, NgModel } from '@angular/forms';
-import { Observable, first } from 'rxjs';
+import { Observable, first, skip } from 'rxjs';
 import { Router } from '@angular/router';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Community } from '../../../../shared/models/community.model';
@@ -118,7 +118,7 @@ export class EditCommunityModalComponent implements OnChanges {
         });
       this.communitiesService.deleteCommunity(this.community.id);
       const users$ = this.userService.getCommunityMembers(this.community.id);
-      users$.pipe(first()).subscribe((users) => {
+      users$.pipe(skip(1), first()).subscribe((users) => {
         users.forEach((user) => this.userService.leaveCommunity(this.community.id, user.id, user));
       });
     }

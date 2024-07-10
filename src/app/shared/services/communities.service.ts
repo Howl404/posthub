@@ -25,8 +25,6 @@ export class CommunitiesService {
   communitiesCollection = collection(this.firestore, 'communities');
 
   searchCommunities(queryText: string): Observable<Community[]> {
-    // if (!queryText) return from([]);
-
     const q = query(
       this.communitiesCollection,
       where('name', '>=', queryText),

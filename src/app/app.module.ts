@@ -16,6 +16,7 @@ import { GenderSelectorComponent } from './components/sign-up-modal/components/g
 import { SharedModule } from './shared/shared-module.module';
 import { LogInModalComponent } from './components/log-in-modal/log-in-modal.component';
 import { CreateCommunityModalComponent } from './components/sidebar/create-community-modal/create-community-modal.component';
+import { NotificationComponent } from './components/header/notification/notification.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { CreateCommunityModalComponent } from './components/sidebar/create-commu
     LogInModalComponent,
     GenderSelectorComponent,
     CreateCommunityModalComponent,
+    NotificationComponent,
   ],
   imports: [
     AppRoutingModule,

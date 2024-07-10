@@ -49,6 +49,7 @@ export class AuthService {
         subscribed: false,
         upvotedPostsId: [],
         joinedCommunitiesId: [],
+        notifications: [],
       };
       const userId = userData.uid;
 
