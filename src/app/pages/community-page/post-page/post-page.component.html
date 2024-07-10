@@ -33,18 +33,20 @@
             [name]="comment"
             [field]="field"
           ></app-dynamic-form-field>
-          <button
-            type="button"
-            class="action"
-            (click)="onAddComment(user.name, post)"
-            [disabled]="!comment.length"
-          >
-            <mat-icon>add</mat-icon> Add comment
-          </button>
-          <ng-container *ngIf="checkUserAccess(user, post, community)">
-            <button (click)="onEdit()">Edit</button>
-            <button (click)="onDelete(post.id, community.name)">Delete</button>
-          </ng-container>
+          <div class="add-comment-btns">
+            <button
+              type="button"
+              class="action"
+              (click)="onAddComment(user.name, post)"
+              [disabled]="!comment.length"
+            >
+              <mat-icon>add</mat-icon> Add comment
+            </button>
+            <ng-container *ngIf="checkUserAccess(user, post, community)">
+              <button (click)="onEdit()">Edit</button>
+              <button (click)="onDelete(post.id, community.name)">Delete</button>
+            </ng-container>
+          </div>
         </ng-container>
       </div>
 
