@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { Observable, switchMap } from 'rxjs';
+import { filter, Observable, switchMap } from 'rxjs';
 import { ModalService } from '../../shared/components/modal/modal.service';
 import { Modals } from '../../shared/components/modal/modals.enum';
 import { Community } from '../../shared/models/community.model';
@@ -22,6 +22,7 @@ export class SidebarComponent {
   user$: Observable<User> | null = this.userService.user$;
 
   communities$: Observable<Community[]> | null = this.user$.pipe(
+    filter((value) => !!value),
     switchMap((user) => this.communitiesService.getUserCommunities(user)),
   );
 

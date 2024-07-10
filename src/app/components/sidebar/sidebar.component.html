@@ -22,3 +22,5 @@
 <ng-container *ngIf="user$ | async as user">
   <app-create-community-modal [user]="user"></app-create-community-modal>
 </ng-container>
+
+<ng-template #nonAuthorized></ng-template>

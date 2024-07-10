@@ -47,6 +47,14 @@ export class UserService {
     return this.user.getValue();
   }
 
+  getCommunityMembers(communityId: string): Observable<User[]> {
+    const q = query(
+      this.usersCollection,
+      where('joinedCommunitiesId', 'array-contains', communityId),
+    );
+    return collectionData(q, { idField: 'id' }) as Observable<User[]>;
+  }
+
   joinCommunity(communityId: string, userId: string, userData: Partial<User>): Observable<void> {
     userData.joinedCommunitiesId.push(communityId);
     this.communitiesService

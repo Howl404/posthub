@@ -117,6 +117,10 @@ export class EditCommunityModalComponent implements OnChanges {
           postsId.forEach((postId) => this.commentsService.deleteCommentsByLocationId(postId));
         });
       this.communitiesService.deleteCommunity(this.community.id);
+      const users$ = this.userService.getCommunityMembers(this.community.id);
+      users$.pipe(first()).subscribe((users) => {
+        users.forEach((user) => this.userService.leaveCommunity(this.community.id, user.id, user));
+      });
     }
   }
 
