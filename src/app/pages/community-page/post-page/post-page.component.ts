@@ -13,6 +13,8 @@ import { CommentDraft, Comment } from '../../../shared/models/comment.model';
 import { Community } from '../../../shared/models/community.model';
 import { CommunitiesService } from '../../../shared/services/communities.service';
 import { User } from '../../../shared/models/user.model';
+import { FormField } from '../../../shared/components/dynamic-form-field/form-field.model';
+import { convertPostToChart } from '../../../utils/convertPostToChart';
 
 @Component({
   selector: 'app-post-page',
@@ -27,6 +29,15 @@ export class PostPageComponent implements OnInit {
   comments$: Observable<Comment[]> | undefined;
 
   comment = '';
+
+  field: FormField = {
+    name: 'comment',
+    placeholder: 'Comment',
+    type: 'textarea',
+    model: 'comment',
+    required: true,
+    minLength: 10,
+  };
 
   private readonly route = inject(ActivatedRoute);
 
@@ -85,28 +96,7 @@ export class PostPageComponent implements OnInit {
   }
 
   returnCharts(post: Post): EChartsOption {
-    const sortedUpvotes = post.upvotesByDay.sort((a, b) => a.date.getTime() - b.date.getTime());
-
-    const categories = sortedUpvotes.map((upvote) => upvote.date.toDateString());
-
-    const data = sortedUpvotes.map((upvote) => upvote.amount);
-
-    return {
-      xAxis: {
-        type: 'category',
-        data: categories,
-      },
-      yAxis: {
-        type: 'value',
-      },
-      series: [
-        {
-          data,
-          type: 'line',
-          smooth: true,
-        },
-      ],
-    };
+    return convertPostToChart(post);
   }
 
   onAddComment(userName: string, post: Post): void {
@@ -133,9 +123,13 @@ export class PostPageComponent implements OnInit {
   }
 
   onDelete(postId: string, communityName: string): void {
-    this.router.navigate(['/r/', communityName]);
-    this.postService.deletePost(postId);
-    this.commentsService.deleteCommentsByLocationId(postId);
+    // eslint-disable-next-line no-restricted-globals
+    const isConfirmed = confirm('Are you sure?');
+    if (isConfirmed) {
+      this.router.navigate(['/r/', communityName]);
+      this.postService.deletePost(postId);
+      this.commentsService.deleteCommentsByLocationId(postId);
+    }
   }
 
   checkUserAccess(user: User, post: Post, community: Community): boolean {

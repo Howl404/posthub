@@ -5,15 +5,13 @@
 
 nav {
   display: flex;
-  gap: 20px;
+  gap: 10px;
   flex-direction: column;
 
   .add-community,
   a {
     display: flex;
     gap: 6px;
-    text-decoration: none;
-    color: #000;
     padding: 6px;
     border-radius: 8px;
 
@@ -26,7 +24,6 @@ nav {
     background-color: white;
 
     &:hover {
-      color: #000000;
       background-color: #f6f8f9;
     }
   }
@@ -47,6 +44,7 @@ h2 {
   font-size: 12px;
   color: #576f76;
   margin-left: 20px;
+  margin-bottom: 0;
 }
 
 .add-community {

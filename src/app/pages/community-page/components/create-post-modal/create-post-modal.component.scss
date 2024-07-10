@@ -14,7 +14,8 @@
   }
 
   form {
-    width: 300px;
+    min-width: 500px;
+    max-width: 500px;
     display: flex;
     flex-direction: column;
     gap: 20px;

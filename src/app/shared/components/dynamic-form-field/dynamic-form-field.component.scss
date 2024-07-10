@@ -1,10 +1,17 @@
+:host {
+  max-width: 100%;
+}
+
 input[type='color'] {
   padding: 10px;
   height: 50px;
 }
 
-input {
+input,
+textarea {
   width: 100%;
+  max-width: 100%;
+  min-width: 100%;
   box-sizing: border-box;
   border-radius: 24px;
   font-size: 16px;

@@ -20,6 +20,10 @@ export class CommentComponent {
   postsService = inject(PostsService);
 
   onDelete(): void {
-    this.delete.emit(this.comment.id);
+    // eslint-disable-next-line no-restricted-globals
+    const isConfirmed = confirm('Are you sure?');
+    if (isConfirmed) {
+      this.delete.emit(this.comment.id);
+    }
   }
 }

@@ -66,15 +66,18 @@ export class PostCardsComponent implements OnChanges {
     this.postCardsService.resetSort();
   }
 
-  loadCommunityAndNavigate(post: Post): void {
-    this.communitiesService
-      .getCommunityById(post.location)
-      .pipe(first())
-      .subscribe((community) => {
-        const name = community?.name ?? '';
+  loadCommunityAndNavigate(event: MouseEvent, post: Post): void {
+    const element = event.target as HTMLElement;
+    if (!element.classList.contains('author')) {
+      this.communitiesService
+        .getCommunityById(post.location)
+        .pipe(first())
+        .subscribe((community) => {
+          const name = community?.name ?? '';
 
-        this.router.navigate(['/r/', name, post.id]);
-      });
+          this.router.navigate(['/r/', name, post.id]);
+        });
+    }
   }
 
   trackById(index: number, post: Post): string {

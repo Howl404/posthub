@@ -20,12 +20,20 @@
       background-color 0.3s,
       color 0.3s;
     background-color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
 
     &:hover {
       background-color: #f6f8f9;
     }
-    p {
+    p,
+    h3 {
       margin: 0;
+    }
+
+    h3 {
+      font-weight: 700;
     }
 
     .header,
