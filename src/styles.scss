@@ -36,6 +36,7 @@ button {
 }
 
 input,
+textarea,
 button {
   padding: 10px 20px;
   border-radius: 4px;
@@ -52,6 +53,10 @@ button {
 
   &:hover {
     background-color: #e0e0e0;
+  }
+
+  &:disabled {
+    cursor: auto;
   }
 }
 
@@ -76,7 +81,8 @@ button {
   padding: 10px 20px;
 }
 
-input {
+input,
+textarea {
   padding: 15px 20px;
 }
 

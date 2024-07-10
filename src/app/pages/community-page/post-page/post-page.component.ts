@@ -13,6 +13,7 @@ import { CommentDraft, Comment } from '../../../shared/models/comment.model';
 import { Community } from '../../../shared/models/community.model';
 import { CommunitiesService } from '../../../shared/services/communities.service';
 import { User } from '../../../shared/models/user.model';
+import { FormField } from '../../../shared/components/dynamic-form-field/form-field.model';
 
 @Component({
   selector: 'app-post-page',
@@ -27,6 +28,15 @@ export class PostPageComponent implements OnInit {
   comments$: Observable<Comment[]> | undefined;
 
   comment = '';
+
+  field: FormField = {
+    name: 'comment',
+    placeholder: 'Comment',
+    type: 'textarea',
+    model: 'comment',
+    required: true,
+    minLength: 10,
+  };
 
   private readonly route = inject(ActivatedRoute);
 

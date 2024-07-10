@@ -1,16 +1,27 @@
 <div [ngClass]="{ 'form-group': field.type !== 'checkbox' }">
-  <ng-container *ngIf="field.type !== 'checkbox'; else checkboxTemplate">
-    <input
-      placeholder="{{ field.placeholder }}"
-      type="{{ field.type }}"
-      [ngModel]="value"
-      (ngModelChange)="onValueChange($event)"
-    />
+  <ng-container [ngSwitch]="field.type">
+    <ng-container *ngSwitchCase="'textarea'">
+      <textarea
+        placeholder="{{ field.placeholder }}"
+        [ngModel]="value"
+        (ngModelChange)="onValueChange($event)"
+      ></textarea>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'checkbox'">
+      <label>
+        <input type="checkbox" [ngModel]="value" (ngModelChange)="onValueChange($event)" />
+        {{ field.placeholder }}
+      </label>
+    </ng-container>
+
+    <ng-container *ngSwitchDefault>
+      <input
+        placeholder="{{ field.placeholder }}"
+        type="text"
+        [ngModel]="value"
+        (ngModelChange)="onValueChange($event)"
+      />
+    </ng-container>
   </ng-container>
-  <ng-template #checkboxTemplate>
-    <label>
-      <input type="checkbox" [ngModel]="value" (ngModelChange)="onValueChange($event)" />
-      {{ field.placeholder }}
-    </label>
-  </ng-template>
 </div>

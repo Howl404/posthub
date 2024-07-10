@@ -28,7 +28,12 @@
 
       <div class="add-comment">
         <ng-container *ngIf="user$ | async as user; else nonAuthorized">
-          <input placeholder="Comment" [(ngModel)]="comment" name="comment" />
+          <app-dynamic-form-field
+            [value]="comment"
+            [(ngModel)]="comment"
+            [name]="comment"
+            [field]="field"
+          ></app-dynamic-form-field>
           <button
             type="button"
             class="action"
