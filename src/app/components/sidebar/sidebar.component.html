@@ -8,9 +8,12 @@
   <hr />
   <div>
     <h2>COMMUNITIES</h2>
-    <button class="add-community" (click)="onCreateCommunity()">
-      <mat-icon>add</mat-icon>Create a community
-    </button>
+    <ng-container *ngIf="user$ | async as user; else nonAuthorized">
+      <button class="add-community" (click)="onCreateCommunity()">
+        <mat-icon>add</mat-icon>Create a community
+      </button></ng-container
+    >
+
     <div class="communities-container" *ngIf="user$ | async as user">
       <a *ngFor="let community of communities$ | async" [routerLink]="['/r/', community.name]">
         <mat-icon>group</mat-icon> {{ community.name }}
@@ -23,4 +26,8 @@
   <app-create-community-modal [user]="user"></app-create-community-modal>
 </ng-container>
 
-<ng-template #nonAuthorized></ng-template>
+<ng-template #nonAuthorized>
+  <button class="add-community" (click)="onNonAuthorized()">
+    <mat-icon>add</mat-icon>Create a community
+  </button>
+</ng-template>

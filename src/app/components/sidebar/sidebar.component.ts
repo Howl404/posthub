@@ -29,4 +29,8 @@ export class SidebarComponent {
   onCreateCommunity(): void {
     this.modalService.open(Modals.CreateCommunity);
   }
+
+  onNonAuthorized(): void {
+    this.modalService.open(Modals.LogIn);
+  }
 }
