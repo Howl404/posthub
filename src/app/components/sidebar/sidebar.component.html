@@ -1,7 +1,9 @@
 <nav>
   <div class="links">
     <a routerLink="/"><mat-icon>home</mat-icon>Home</a>
-    <a *ngIf="user" [routerLink]="['/u/', user.name]"><mat-icon>perm_identity</mat-icon>Profile</a>
+    <a *ngIf="user$ | async as user" [routerLink]="['/u/', user.name]"
+      ><mat-icon>perm_identity</mat-icon>Profile</a
+    >
   </div>
   <hr />
   <div>
@@ -9,7 +11,7 @@
     <button class="add-community" (click)="onCreateCommunity()">
       <mat-icon>add</mat-icon>Create a community
     </button>
-    <div class="communities-container" *ngIf="user">
+    <div class="communities-container" *ngIf="user$ | async as user">
       <a *ngFor="let community of communities$ | async" [routerLink]="['/r/', community.name]">
         <mat-icon>group</mat-icon> {{ community.name }}
       </a>
@@ -17,6 +19,6 @@
   </div>
 </nav>
 
-<ng-container *ngIf="user">
+<ng-container *ngIf="user$ | async as user">
   <app-create-community-modal [user]="user"></app-create-community-modal>
 </ng-container>
