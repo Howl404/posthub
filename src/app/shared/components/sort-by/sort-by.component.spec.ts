@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SortByComponent } from './sort-by.component';
 
 describe('SortByComponent', () => {
-  let component: SortByComponent;
-  let fixture: ComponentFixture<SortByComponent>;
+  let component: SortByComponent<object>;
+  let fixture: ComponentFixture<SortByComponent<object>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
