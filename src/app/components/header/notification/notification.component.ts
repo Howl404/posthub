@@ -1,6 +1,4 @@
 import { Component, inject, Input } from '@angular/core';
-
-import { Router } from '@angular/router';
 import { Notification } from '../../../shared/models/notification';
 import { UserService } from '../../../shared/services/user.service';
 import { User } from '../../../shared/models/user.model';
@@ -18,13 +16,11 @@ export class NotificationComponent {
 
   isDropdownOpen = false;
 
-  userService = inject(UserService);
+  private readonly userService = inject(UserService);
 
-  notificationsService = inject(NotificationsService);
+  private readonly notificationsService = inject(NotificationsService);
 
-  router = inject(Router);
-
-  user$ = this.userService.user$;
+  readonly user$ = this.userService.user$;
 
   toggleDropdown(): void {
     this.isDropdownOpen = !this.isDropdownOpen;

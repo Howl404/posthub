@@ -59,7 +59,7 @@ export class CreatePostModalComponent {
 
   private readonly communitiesService = inject(CommunitiesService);
 
-  user$ = this.userService.user$;
+  readonly user$ = this.userService.user$;
 
   readonly modalId = Modals.CreatePost;
 
