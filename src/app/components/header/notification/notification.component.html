@@ -14,6 +14,7 @@
         (click)="onNotificationClick(user, notification)"
       >
         {{ notification.text }}
+        {{ notification.date | timeAgo }}
       </a>
     </ng-container>
   </div>
