@@ -91,7 +91,7 @@ export class CreatePostModalComponent {
               first(),
               switchMap((community) => {
                 const notification: Notification = {
-                  text: `New post in community "${community.name}"`,
+                  text: `New post in "${community.name}"`,
                   type: NotificationType.Info,
                   date: new Date(),
                   link: `/r/${community.name}/${postId}`,
