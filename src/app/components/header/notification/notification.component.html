@@ -1,0 +1,27 @@
+<div class="dropdown">
+  <button type="button" class="dropdown-open-btn" (click)="toggleDropdown()">
+    <ng-container *ngIf="list.length; else noNotificationIcon">
+      <mat-icon>notifications</mat-icon>
+      {{ list.length }}
+    </ng-container>
+  </button>
+  <div *ngIf="isDropdownOpen" class="dropdown-content">
+    <ng-container *ngIf="list.length; else noNotificationList">
+      <a
+        type="button"
+        *ngFor="let notification of list"
+        [routerLink]="notification.link"
+        (click)="onNotificationClick(user, notification)"
+      >
+        {{ notification.text }}
+        {{ notification.date | timeAgo }}
+      </a>
+    </ng-container>
+  </div>
+</div>
+
+<ng-template #noNotificationIcon>
+  <mat-icon>notifications_none</mat-icon>
+</ng-template>
+
+<ng-template #noNotificationList><p>No notifications</p> </ng-template>

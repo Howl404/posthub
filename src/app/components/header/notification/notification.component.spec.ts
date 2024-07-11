@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SortByComponent } from './sort-by.component';
+import { NotificationComponent } from './notification.component';
 
-describe('SortByComponent', () => {
-  let component: SortByComponent<object>;
-  let fixture: ComponentFixture<SortByComponent<object>>;
+describe('NotificationComponent', () => {
+  let component: NotificationComponent;
+  let fixture: ComponentFixture<NotificationComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SortByComponent],
+      declarations: [NotificationComponent],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SortByComponent);
+    fixture = TestBed.createComponent(NotificationComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

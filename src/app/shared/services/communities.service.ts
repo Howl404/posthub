@@ -25,8 +25,6 @@ export class CommunitiesService {
   communitiesCollection = collection(this.firestore, 'communities');
 
   searchCommunities(queryText: string): Observable<Community[]> {
-    // if (!queryText) return from([]);
-
     const q = query(
       this.communitiesCollection,
       where('name', '>=', queryText),
@@ -86,7 +84,15 @@ export class CommunitiesService {
         const firestoreCommunities = results[0] as Community[];
         const queriedCommunities = results.slice(1) as Community[];
 
-        return [...firestoreCommunities, ...queriedCommunities];
+        const communities = [...firestoreCommunities, ...queriedCommunities];
+
+        const communityMap = new Map<string, Community>();
+
+        communities.forEach((community) => {
+          communityMap.set(community.id, community);
+        });
+
+        return Array.from(communityMap.values());
       }),
     );
   }

@@ -46,11 +46,7 @@
           Leave
         </button>
 
-        <ng-container
-          *ngIf="
-            communityData.ownerId === user.id || communityData.moderatorsNames.includes(user.name)
-          "
-        >
+        <ng-container *ngIf="communityData.ownerId === user.id">
           <button type="button" (click)="onEditCommunity()">Edit</button>
         </ng-container>
       </div>

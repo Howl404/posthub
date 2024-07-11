@@ -1,38 +1,40 @@
-<app-modal id="{{ modalId }}" (closed)="onClose(createPostForm)">
-  <div class="{{ modalId }}">
-    <form #createPostForm="ngForm" (ngSubmit)="onSubmit(createPostForm)">
-      <div *ngFor="let field of fields">
-        <app-dynamic-form-field
-          [field]="field"
-          [(ngModel)]="post[field.model.toString()]"
-          (ngModelChange)="onFieldChange(field.model, $event)"
-          name="{{ field.name }}"
-          #inputField="ngModel"
-          [required]="field.required"
-          [minlength]="field.minLength"
-        >
-        </app-dynamic-form-field>
-        <div
-          [@errorState]="
-            inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
-          "
-          class="error"
-        >
-          <div *ngFor="let error of field.validationMessages | keyvalue">
-            <div *ngIf="inputField.errors?.[error.key]">
-              {{ error.value }}
+<ng-container *ngIf="user$ | async as user">
+  <app-modal id="{{ modalId }}" (closed)="onClose(createPostForm)">
+    <div class="{{ modalId }}">
+      <form #createPostForm="ngForm" (ngSubmit)="onSubmit(createPostForm, user)">
+        <div *ngFor="let field of fields">
+          <app-dynamic-form-field
+            [field]="field"
+            [(ngModel)]="post[field.model.toString()]"
+            (ngModelChange)="onFieldChange(field.model, $event)"
+            name="{{ field.name }}"
+            #inputField="ngModel"
+            [required]="field.required"
+            [minlength]="field.minLength"
+          >
+          </app-dynamic-form-field>
+          <div
+            [@errorState]="
+              inputField.invalid && (inputField.dirty || inputField.touched) ? 'visible' : 'hidden'
+            "
+            class="error"
+          >
+            <div *ngFor="let error of field.validationMessages | keyvalue">
+              <div *ngIf="inputField.errors?.[error.key]">
+                {{ error.value }}
+              </div>
             </div>
           </div>
         </div>
-      </div>
 
-      <button
-        class="action"
-        type="submit"
-        [disabled]="createPostForm.invalid && createPostForm.touched"
-      >
-        Create Post
-      </button>
-    </form>
-  </div>
-</app-modal>
+        <button
+          class="action"
+          type="submit"
+          [disabled]="createPostForm.invalid && createPostForm.touched"
+        >
+          Create Post
+        </button>
+      </form>
+    </div>
+  </app-modal>
+</ng-container>
